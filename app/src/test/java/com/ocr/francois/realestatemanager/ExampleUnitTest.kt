@@ -11,7 +11,8 @@ import org.junit.Assert.*
  */
 class ExampleUnitTest {
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun dateFormat() {
+        val today = "04/06/2020"
+        assertEquals(today, Utils.getTodayDate())
     }
 }
