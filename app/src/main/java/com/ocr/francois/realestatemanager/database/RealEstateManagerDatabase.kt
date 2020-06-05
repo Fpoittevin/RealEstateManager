@@ -1,9 +1,10 @@
-package com.ocr.francois.realestatemanager.database.dao
+package com.ocr.francois.realestatemanager.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.ocr.francois.realestatemanager.database.dao.PropertyDao
 import com.ocr.francois.realestatemanager.models.Property
 
 @Database(entities = [Property::class], version = 1, exportSchema = false)
@@ -16,8 +17,13 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
     @Volatile private var INSTANCE: RealEstateManagerDatabase? = null
 
         fun getInstance(context: Context): RealEstateManagerDatabase =
-            INSTANCE ?: synchronized(this) {
-                INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
+            INSTANCE
+                ?: synchronized(this) {
+                INSTANCE
+                    ?: buildDatabase(
+                        context
+                    )
+                        .also { INSTANCE = it }
             }
 
         private fun buildDatabase(context: Context) =
