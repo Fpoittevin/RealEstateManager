@@ -30,9 +30,15 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.3.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    //ROOM
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
+    //VIEW MODEL & LIVE DATA
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    //JODA TIME
     implementation 'joda-time:joda-time:2.10.4'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
 }

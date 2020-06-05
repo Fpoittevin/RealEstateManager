@@ -1,9 +1,13 @@
 package com.ocr.francois.realestatemanager.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.sql.Timestamp
 
+@Entity
 data class Property(
-    val id: String,
+    @PrimaryKey(autoGenerate = true)
+    val id: Long,
     var type: String,
     var price: Float,
     var surface: Float,
