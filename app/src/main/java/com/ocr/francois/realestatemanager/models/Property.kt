@@ -8,17 +8,18 @@ import java.sql.Timestamp
 data class Property(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
-    var type: String,
-    var price: Float,
-    var surface: Float,
-    var numberOfRooms: Int,
-    var description: String,
-    var address: String,
-    var pointsOfInterest: String,
-    var status: Status,
-    var creationTimestamp: Timestamp,
-    var saleTimestamp: Timestamp,
-    var estateAgent: String
+    val type: String,
+    val price: Int,
+    val surface: Float,
+    val numberOfRooms: Int,
+    val description: String,
+    val address: String,
+    val district: String,
+    val pointsOfInterest: String,
+    //val status: Status,
+    //val creationTimestamp: Timestamp,
+    //val saleTimestamp: Timestamp,
+    val estateAgent: String
 ) {
     enum class Status {
         SOLD,

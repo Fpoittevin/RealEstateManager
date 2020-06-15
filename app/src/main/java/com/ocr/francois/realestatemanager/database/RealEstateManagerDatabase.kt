@@ -12,23 +12,26 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
 
     abstract fun propertyDao(): PropertyDao
 
-    companion object{
+    companion object {
 
-    @Volatile private var INSTANCE: RealEstateManagerDatabase? = null
+        @Volatile
+        private var instance: RealEstateManagerDatabase? = null
 
         fun getInstance(context: Context): RealEstateManagerDatabase =
-            INSTANCE
+            instance
                 ?: synchronized(this) {
-                INSTANCE
-                    ?: buildDatabase(
-                        context
-                    )
-                        .also { INSTANCE = it }
-            }
+                    instance
+                        ?: buildDatabase(
+                            context
+                        )
+                            .also { instance = it }
+                }
 
         private fun buildDatabase(context: Context) =
-            Room.databaseBuilder(context.applicationContext,
-                RealEstateManagerDatabase::class.java, "RealEstateManagerDatabase.db")
+            Room.databaseBuilder(
+                context,
+                RealEstateManagerDatabase::class.java, "RealEstateManagerDatabase.db"
+            )
                 .build()
     }
 }
