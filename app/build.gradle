@@ -48,6 +48,9 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "androidx.room:room-compiler:2.2.5"
 
+    //MATERIAL
+    implementation 'com.google.android.material:material:1.1.0'
+
     //VIEW MODEL & LIVE DATA
     implementation "android.arch.lifecycle:extensions:1.1.1"
     //JODA TIME

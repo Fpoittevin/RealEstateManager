@@ -9,15 +9,15 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/activity_property_details_toolbar"
+            android:id="@+id/activity_property_creation_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
-        android:id="@+id/activity_details_frame_layout"
+        android:id="@+id/activity_creation_frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

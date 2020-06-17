@@ -11,10 +11,10 @@ import com.ocr.francois.realestatemanager.models.Property
 interface PropertyDao {
 
     @Insert
-    suspend fun insertProperty(property: Property)
+    fun insertProperty(property: Property)
 
     @Update
-    suspend fun updateProperty(property: Property)
+    fun updateProperty(property: Property)
 
     @Query("SELECT * FROM Property")
     fun selectAllProperties(): LiveData<List<Property>>

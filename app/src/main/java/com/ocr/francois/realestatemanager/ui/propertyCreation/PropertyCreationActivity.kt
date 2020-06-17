@@ -1,25 +1,22 @@
-package com.ocr.francois.realestatemanager.ui.propertyDetails
+package com.ocr.francois.realestatemanager.ui.propertyCreation
 
 import android.os.Bundle
 import android.view.MenuItem
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_property_details.*
+import kotlinx.android.synthetic.main.activity_property_creation.*
 
-private const val PROPERTY_ID_KEY = "propertyId"
-
-class PropertyDetailsActivity : BaseActivity() {
+class PropertyCreationActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_property_details)
+        setContentView(R.layout.activity_property_creation)
 
-        val propertyId = intent.getLongExtra(PROPERTY_ID_KEY,1)
         configureToolbar()
-        displayFragment(R.id.activity_details_frame_layout, PropertyDetailsFragment.newInstance(propertyId))
+        displayFragment(R.id.activity_creation_frame_layout, PropertyCreationFragment.newInstance())
     }
 
     private fun configureToolbar() {
-        setSupportActionBar(activity_property_details_toolbar)
+        setSupportActionBar(activity_property_creation_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

@@ -1,5 +1,32 @@
 <resources>
     <string name="app_name">RealEstateManager</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    // MAIN ACTIVITY TOOLBAR MENU
+    <string name="main_activity_toolbar_menu_creation_button_title">add new property</string>
+
+    // DETAILS FRAGMENT
+    <string name="media_title_details_fragment">Media</string>
+    <string name="description_title_details_fragment">Description</string>
+    <string name="surface_title_details_fragment">Surface</string>
+    <string name="number_of_rooms_title_details_fragment">Number of rooms</string>
+    <string name="number_of_bathrooms_title_details_fragment">Number of bathrooms</string>
+    <string name="number_of_bedrooms_title_details_fragment">Number of bedrooms</string>
+    <string name="location_title_details_fragment">Location</string>
+
+    // CREATION FRAGMENT
+    <string name="type_hint_creation_fragment">type</string>
+    <string name="price_hint_creation_fragment">price</string>
+    <string name="surface_hint_creation_fragment">surface</string>
+    <string name="number_of_rooms_hint_creation_fragment">number of rooms</string>
+    <string name="number_of_bathrooms_hint_creation_fragment">number of bathrooms</string>
+    <string name="number_of_bedrooms_hint_creation_fragment">number of bedrooms</string>
+    <string name="description_hint_creation_fragment">description</string>
+    <string name="address_hint_creation_fragment">address</string>
+    <string name="address_complements_hint_creation_fragment">address complements</string>
+    <string name="district_hint_creation_fragment">district</string>
+    <string name="city_hint_creation_fragment">city</string>
+    <string name="zip_code_hint_creation_fragment">zip code</string>
+    <string name="state_hint_creation_fragment">state</string>
+    <string name="points_of_interest_hint_creation_fragment">points of interest</string>
+    <string name="estate_agent_hint_creation_fragment">estate agent</string>
 </resources>

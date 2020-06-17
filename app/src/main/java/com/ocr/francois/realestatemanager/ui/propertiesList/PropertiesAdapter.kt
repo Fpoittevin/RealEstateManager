@@ -28,7 +28,7 @@ class PropertiesAdapter() :
         holder.updateUi(property)
         holder.itemView.setOnClickListener {
             propertyItemClickCallback.onPropertyItemClick(
-                property.id
+                property.id as Long
             )
         }
     }

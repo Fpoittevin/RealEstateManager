@@ -3,19 +3,18 @@ package com.ocr.francois.realestatemanager.injection
 import android.content.Context
 import com.ocr.francois.realestatemanager.database.RealEstateManagerDatabase
 import com.ocr.francois.realestatemanager.repositories.PropertyRepository
+import java.util.concurrent.Executors
 
 class Injection {
 
     companion object {
-        fun providePropertyRepository(context: Context): PropertyRepository {
+        private fun providePropertyRepository(context: Context): PropertyRepository {
             val db = RealEstateManagerDatabase.getInstance(context)
             return PropertyRepository(db.propertyDao())
         }
 
-        fun provideViewModelFactory(context: Context): ViewModelFactory {
-            val propertyRepository = providePropertyRepository(context)
+        private fun provideExecutor() = Executors.newSingleThreadExecutor()
 
-            return ViewModelFactory(propertyRepository)
-        }
+        fun provideViewModelFactory(context: Context) = ViewModelFactory(providePropertyRepository(context), provideExecutor())
     }
 }

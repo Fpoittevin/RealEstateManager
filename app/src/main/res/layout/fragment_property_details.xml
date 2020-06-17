@@ -1,13 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.propertyDetails.PropertyDetailsFragment">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="detail fragment" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/media_title_details_fragment" />
 
-</FrameLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/description_title_details_fragment" />
+
+    <TextView
+        android:id="@+id/fragment_property_details_description_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_baseline_surface_24"
+        android:text="@string/surface_title_details_fragment" />
+
+    <TextView
+        android:id="@+id/fragment_property_details_surface_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_baseline_rooms_24"
+        android:text="@string/number_of_rooms_title_details_fragment" />
+
+    <TextView
+        android:id="@+id/fragment_property_details_number_of_rooms_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_baseline_bathrooms_24"
+        android:text="@string/number_of_bathrooms_title_details_fragment" />
+
+    <TextView
+        android:id="@+id/fragment_property_details_number_of_bathrooms_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_baseline_bedrooms_24"
+        android:text="@string/number_of_bedrooms_title_details_fragment" />
+
+    <TextView
+        android:id="@+id/fragment_property_details_number_of_bedrooms_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_baseline_location_24"
+        android:text="@string/location_title_details_fragment" />
+
+</LinearLayout>
