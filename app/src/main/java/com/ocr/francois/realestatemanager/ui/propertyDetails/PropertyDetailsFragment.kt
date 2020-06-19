@@ -44,12 +44,45 @@ class PropertyDetailsFragment : Fragment() {
     }
 
     private fun updateUi(property: Property) {
-        fragment_property_details_description_text_view.text = property.description
-        fragment_property_details_surface_text_view.text = property.surface.toString()
-        fragment_property_details_number_of_rooms_text_view.text = property.numberOfRooms.toString()
+        property.description?.let { fragment_property_details_description_text_view.text = it }
+
+        property.surface?.let { fragment_property_details_surface_text_view.text = it.toString() }
+        property.price?.let { fragment_property_details_price_text_view.text = it.toString() }
+
+        fragment_property_details_number_of_rooms_text_view.text =
+            getString(R.string.rooms_title_details_fragment, property.numberOfRooms)
         fragment_property_details_number_of_bathrooms_text_view.text =
-            property.numberOfBathrooms.toString()
+            getString(R.string.bathrooms_title_details_fragment, property.numberOfBathrooms)
         fragment_property_details_number_of_bedrooms_text_view.text =
-            property.numberOfBedrooms.toString()
+            getString(R.string.bedrooms_title_details_fragment, property.numberOfBedrooms)
+
+        val addressBuilder = StringBuilder()
+        property.addressFirst?.let { addressBuilder.append(it) }
+        property.addressSecond?.let {
+            addressBuilder
+                .append("\n")
+                .append(it)
+        }
+        property.district?.let {
+            addressBuilder
+                .append("\n")
+                .append(it)
+        }
+        property.zipCode?.let {
+            addressBuilder
+                .append("\n")
+                .append(it)
+        }
+        property.city?.let {
+            addressBuilder
+                .append(", ")
+                .append(it)
+        }
+        property.state?.let {
+            addressBuilder
+                .append("\n")
+                .append(it)
+        }
+        fragment_property_details_address_text_view.text = addressBuilder.toString()
     }
 }

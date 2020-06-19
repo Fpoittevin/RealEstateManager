@@ -12,5 +12,5 @@ class PropertyRepository(private val propertyDao: PropertyDao) {
 
     fun updateProperty(property: Property) = propertyDao.updateProperty(property)
 
-    fun insertProperty(property: Property) = propertyDao.insertProperty(property)
+    suspend fun insertProperty(property: Property) = propertyDao.insertProperty(property)
 }

@@ -4,14 +4,21 @@
     // MAIN ACTIVITY TOOLBAR MENU
     <string name="main_activity_toolbar_menu_creation_button_title">add new property</string>
 
+    // CARD VIEW TITLES
+    <string name="card_view_title_general">General</string>
+    <string name="card_view_title_rooms">Rooms</string>
+    <string name="card_view_title_location">Location</string>
+    <string name="card_view_title_more">More</string>
+    <string name="card_view_title_description">Description</string>
+
     // DETAILS FRAGMENT
     <string name="media_title_details_fragment">Media</string>
     <string name="description_title_details_fragment">Description</string>
-    <string name="surface_title_details_fragment">Surface</string>
-    <string name="number_of_rooms_title_details_fragment">Number of rooms</string>
-    <string name="number_of_bathrooms_title_details_fragment">Number of bathrooms</string>
-    <string name="number_of_bedrooms_title_details_fragment">Number of bedrooms</string>
-    <string name="location_title_details_fragment">Location</string>
+    <string name="surface_title_details_fragment">%1$s m²</string>
+    <string name="rooms_title_details_fragment">%1$d rooms</string>
+    <string name="bathrooms_title_details_fragment">%1$d bathrooms</string>
+    <string name="bedrooms_title_details_fragment">%1$d bedrooms</string>
+    <string name="location_title_details_fragment">$addressFirst$s\n$addressSecond$s\n%district$s\n%zip$s n%city$s</string>
 
     // CREATION FRAGMENT
     <string name="type_hint_creation_fragment">type</string>

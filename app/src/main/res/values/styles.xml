@@ -7,4 +7,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CardViewStyle" parent="Widget.MaterialComponents.CardView">
+        <item name="android:layout_margin">@dimen/default_margin</item>
+    </style>
+
+    <style name="CardViewTitleStyle" parent="AppTheme">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:layout_margin">@dimen/default_margin</item>
+    </style>
+
+    <style name="cardViewTextStyle" parent="AppTheme">
+        <item name="android:layout_margin">@dimen/default_margin</item>
+        <item name="android:drawablePadding">5dp</item>
+    </style>
+
 </resources>
