@@ -14,7 +14,6 @@
     // DETAILS FRAGMENT
     <string name="media_title_details_fragment">Media</string>
     <string name="description_title_details_fragment">Description</string>
-    <string name="surface_title_details_fragment">%1$s m²</string>
     <string name="rooms_title_details_fragment">%1$d rooms</string>
     <string name="bathrooms_title_details_fragment">%1$d bathrooms</string>
     <string name="bedrooms_title_details_fragment">%1$d bedrooms</string>

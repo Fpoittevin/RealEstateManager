@@ -10,7 +10,9 @@ import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesAdapter
 import com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesListFragment
 import com.ocr.francois.realestatemanager.ui.propertyCreation.PropertyCreationActivity
+import com.ocr.francois.realestatemanager.ui.propertyCreation.PropertyCreationFragment
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsActivity
+import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 private const val PROPERTY_ID_KEY = "propertyId"
@@ -36,15 +38,23 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
     }
 
     private fun startPropertyDetailsActivity(id: Long) {
-        val propertyDetailsIntent = Intent(this, PropertyDetailsActivity::class.java).apply {
-            putExtra(PROPERTY_ID_KEY, id)
+        activity_main_frame_layout_second?.let {
+            displayFragment(R.id.activity_main_frame_layout_second, PropertyDetailsFragment.newInstance(id))
+        } ?: kotlin.run {
+            val propertyDetailsIntent = Intent(this, PropertyDetailsActivity::class.java).apply {
+                putExtra(PROPERTY_ID_KEY, id)
+            }
+            startActivity(propertyDetailsIntent)
         }
-        startActivity(propertyDetailsIntent)
     }
 
     private fun startPropertyCreationActivity() {
-        val propertyCreationIntent = Intent(this, PropertyCreationActivity::class.java)
-        startActivity(propertyCreationIntent)
+        activity_main_frame_layout_second?.let {
+            displayFragment(R.id.activity_main_frame_layout_second, PropertyCreationFragment.newInstance())
+        } ?: kotlin.run {
+            val propertyCreationIntent = Intent(this, PropertyCreationActivity::class.java)
+            startActivity(propertyCreationIntent)
+        }
     }
 
     private fun configureToolbar() {

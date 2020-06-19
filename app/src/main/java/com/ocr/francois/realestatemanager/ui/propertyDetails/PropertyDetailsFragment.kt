@@ -46,7 +46,12 @@ class PropertyDetailsFragment : Fragment() {
     private fun updateUi(property: Property) {
         property.description?.let { fragment_property_details_description_text_view.text = it }
 
-        property.surface?.let { fragment_property_details_surface_text_view.text = it.toString() }
+        property.surface?.let {
+            fragment_property_details_surface_text_view.text = StringBuilder()
+                .append(it.toString())
+                .append(" m²")
+                .toString()
+        }
         property.price?.let { fragment_property_details_price_text_view.text = it.toString() }
 
         fragment_property_details_number_of_rooms_text_view.text =
@@ -56,33 +61,33 @@ class PropertyDetailsFragment : Fragment() {
         fragment_property_details_number_of_bedrooms_text_view.text =
             getString(R.string.bedrooms_title_details_fragment, property.numberOfBedrooms)
 
-        val addressBuilder = StringBuilder()
-        property.addressFirst?.let { addressBuilder.append(it) }
+        val addressStringBuilder = StringBuilder()
+        property.addressFirst?.let { addressStringBuilder.append(it) }
         property.addressSecond?.let {
-            addressBuilder
+            addressStringBuilder
                 .append("\n")
                 .append(it)
         }
         property.district?.let {
-            addressBuilder
+            addressStringBuilder
                 .append("\n")
                 .append(it)
         }
         property.zipCode?.let {
-            addressBuilder
+            addressStringBuilder
                 .append("\n")
                 .append(it)
         }
         property.city?.let {
-            addressBuilder
+            addressStringBuilder
                 .append(", ")
                 .append(it)
         }
         property.state?.let {
-            addressBuilder
+            addressStringBuilder
                 .append("\n")
                 .append(it)
         }
-        fragment_property_details_address_text_view.text = addressBuilder.toString()
+        fragment_property_details_address_text_view.text = addressStringBuilder.toString()
     }
 }
