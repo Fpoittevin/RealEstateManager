@@ -13,9 +13,12 @@ class PropertyDetailsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_property_details)
 
-        val propertyId = intent.getLongExtra(PROPERTY_ID_KEY,1)
+        val propertyId = intent.getLongExtra(PROPERTY_ID_KEY, 1)
         configureToolbar()
-        displayFragment(R.id.activity_details_frame_layout, PropertyDetailsFragment.newInstance(propertyId))
+        displayFragment(
+            R.id.activity_details_frame_layout,
+            PropertyDetailsFragment.newInstance(propertyId)
+        )
     }
 
     private fun configureToolbar() {

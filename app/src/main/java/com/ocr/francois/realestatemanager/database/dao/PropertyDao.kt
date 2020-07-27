@@ -11,7 +11,7 @@ import com.ocr.francois.realestatemanager.models.Property
 interface PropertyDao {
 
     @Insert
-    fun insertProperty(property: Property)
+    fun insertProperty(property: Property): Long
 
     @Update
     fun updateProperty(property: Property)

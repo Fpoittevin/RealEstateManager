@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class Property(
     @PrimaryKey(autoGenerate = true)
-    val id: Long? = null,
+    var id: Long? = null,
     var type: String?,
     var price: Int?,
     var surface: Float?,
@@ -21,7 +21,10 @@ data class Property(
     var zipCode: String?,
     var state: String?,
     var pointsOfInterest: String?,
-    //var creationTimestamp: Timestamp?,
-    //var saleTimestamp: Timestamp?,
-    var estateAgent: String?
+    var creationTimestamp: Long?,
+    var saleTimestamp: Long?,
+    var estateAgent: String?,
+
+    var lat: Double?,
+    var lng: Double?
 )

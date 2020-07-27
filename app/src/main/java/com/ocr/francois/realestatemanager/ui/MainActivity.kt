@@ -4,6 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityMainBinding
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
@@ -39,7 +43,10 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
 
     private fun startPropertyDetailsActivity(id: Long) {
         activity_main_frame_layout_second?.let {
-            displayFragment(R.id.activity_main_frame_layout_second, PropertyDetailsFragment.newInstance(id))
+            displayFragment(
+                R.id.activity_main_frame_layout_second,
+                PropertyDetailsFragment.newInstance(id)
+            )
         } ?: kotlin.run {
             val propertyDetailsIntent = Intent(this, PropertyDetailsActivity::class.java).apply {
                 putExtra(PROPERTY_ID_KEY, id)
@@ -50,7 +57,10 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
 
     private fun startPropertyCreationActivity() {
         activity_main_frame_layout_second?.let {
-            displayFragment(R.id.activity_main_frame_layout_second, PropertyCreationFragment.newInstance())
+            displayFragment(
+                R.id.activity_main_frame_layout_second,
+                PropertyCreationFragment.newInstance()
+            )
         } ?: kotlin.run {
             val propertyCreationIntent = Intent(this, PropertyCreationActivity::class.java)
             startActivity(propertyCreationIntent)

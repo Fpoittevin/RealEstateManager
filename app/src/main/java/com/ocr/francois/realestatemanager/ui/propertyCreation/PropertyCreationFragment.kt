@@ -1,7 +1,6 @@
 package com.ocr.francois.realestatemanager.ui.propertyCreation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import com.ocr.francois.realestatemanager.models.Property
 import com.ocr.francois.realestatemanager.viewmodels.PropertyViewModel
 import kotlinx.android.synthetic.main.fragment_property_creation.*
 import kotlinx.android.synthetic.main.fragment_property_creation.view.*
+import java.util.*
 
 class PropertyCreationFragment : Fragment() {
 
@@ -55,7 +55,11 @@ class PropertyCreationFragment : Fragment() {
             fragment_property_creation_zip_code_text_input.text.toString(),
             fragment_property_creation_state_text_input.text.toString(),
             fragment_property_creation_points_of_interest_text_input.text.toString(),
-            fragment_property_creation_estate_agent_text_input.text.toString()
+            Date().time,
+            null,
+            fragment_property_creation_estate_agent_text_input.text.toString(),
+            null,
+            null
         )
 
         propertyViewModel.insertProperty(property)

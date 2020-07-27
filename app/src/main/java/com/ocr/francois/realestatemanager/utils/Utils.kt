@@ -1,4 +1,4 @@
-package com.ocr.francois.realestatemanager
+package com.ocr.francois.realestatemanager.utils
 
 import android.content.Context
 import org.joda.time.LocalDate
@@ -15,7 +15,7 @@ class Utils {
         fun isInternetAvailable(context: Context): Boolean = true
 
         fun getTodayDate(): String {
-            val today = LocalDate.now();
+            val today = LocalDate.now()
             val dateFormatter = DateTimeFormat.forPattern("dd/MM/YYYY")
 
             return dateFormatter.print(today)

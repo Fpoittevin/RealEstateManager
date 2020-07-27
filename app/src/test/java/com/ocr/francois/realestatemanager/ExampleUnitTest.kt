@@ -1,5 +1,6 @@
 package com.ocr.francois.realestatemanager
 
+import com.ocr.francois.realestatemanager.utils.Utils
 import org.junit.Test
 
 import org.junit.Assert.*

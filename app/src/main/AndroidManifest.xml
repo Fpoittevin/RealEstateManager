@@ -3,6 +3,8 @@
     package="com.ocr.francois.realestatemanager">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.propertyCreation.PropertyCreationActivity"></activity>
+        <activity android:name=".ui.propertyCreation.PropertyCreationActivity" />
         <activity android:name=".ui.propertyDetails.PropertyDetailsActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>

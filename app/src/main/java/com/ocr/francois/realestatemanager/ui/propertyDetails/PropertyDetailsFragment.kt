@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.models.Property
+import com.ocr.francois.realestatemanager.utils.LocationTool
 import com.ocr.francois.realestatemanager.viewmodels.PropertyViewModel
 import kotlinx.android.synthetic.main.fragment_property_details.*
 
@@ -61,33 +62,6 @@ class PropertyDetailsFragment : Fragment() {
         fragment_property_details_number_of_bedrooms_text_view.text =
             getString(R.string.bedrooms_title_details_fragment, property.numberOfBedrooms)
 
-        val addressStringBuilder = StringBuilder()
-        property.addressFirst?.let { addressStringBuilder.append(it) }
-        property.addressSecond?.let {
-            addressStringBuilder
-                .append("\n")
-                .append(it)
-        }
-        property.district?.let {
-            addressStringBuilder
-                .append("\n")
-                .append(it)
-        }
-        property.zipCode?.let {
-            addressStringBuilder
-                .append("\n")
-                .append(it)
-        }
-        property.city?.let {
-            addressStringBuilder
-                .append(", ")
-                .append(it)
-        }
-        property.state?.let {
-            addressStringBuilder
-                .append("\n")
-                .append(it)
-        }
-        fragment_property_details_address_text_view.text = addressStringBuilder.toString()
+        fragment_property_details_address_text_view.text = LocationTool.addressConcatenation(property, true)
     }
 }

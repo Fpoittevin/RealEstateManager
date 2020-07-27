@@ -9,6 +9,8 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ocr.francois.realestatemanager.database.dao.PropertyDao
 import com.ocr.francois.realestatemanager.models.Property
+import java.util.*
+import kotlin.collections.ArrayList
 
 @Database(entities = [Property::class], version = 1, exportSchema = false)
 abstract class RealEstateManagerDatabase : RoomDatabase() {
@@ -50,17 +52,18 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     3,
                     2,
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    "5th avenue, NYC",
+                    "5th avenue",
                     "Apt 6/7A",
                     "Manhattan",
                     "NYC",
                     "10021",
                     "NY",
                     "school, cinema",
-                    //Timestamp(System.currentTimeMillis()),
-                    //null,
-                    "Bob"
-
+                    Date().time,
+                    null,
+                    "Bob",
+                    40.7267391,
+                    -73.9860395
                 )
                 val propertyB = Property(
                     2,
@@ -71,16 +74,18 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     3,
                     2,
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    "5th avenue, NYC",
+                    "5th avenue",
                     "Apt 6/7A",
                     "Manhattan",
                     "NYC",
                     "10021",
                     "NY",
                     "school, cinema",
-                    //Timestamp(System.currentTimeMillis()),
-                    //null,
-                    "Bob"
+                    Date().time,
+                    null,
+                    "Bob",
+                    null,
+                    null
                 )
                 val propertyC = Property(
                     3,
@@ -91,16 +96,18 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     3,
                     2,
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    "5th avenue, NYC",
+                    "5th avenue",
                     "Apt 6/7A",
                     "Manhattan",
                     "NYC",
                     "10021",
                     "NY",
                     "school, cinema",
-                    //Timestamp(System.currentTimeMillis()),
-                    //null,
-                    "Bob"
+                    Date().time,
+                    null,
+                    "Bob",
+                    null,
+                    null
                 )
                 val propertyD = Property(
                     4,
@@ -111,16 +118,18 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     3,
                     2,
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    "5th avenue, NYC",
+                    "5th avenue",
                     "Apt 6/7A",
                     "Manhattan",
                     "NYC",
                     "10021",
                     "NY",
                     "school, cinema",
-                    //Timestamp(System.currentTimeMillis()),
-                    //null,
-                    "Bob"
+                    Date().time,
+                    null,
+                    "Bob",
+                    null,
+                    null
                 )
 
                 val properties = ArrayList<Property>(0)
@@ -145,7 +154,7 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     contentValues.put("zipCode", property.zipCode)
                     contentValues.put("state", property.state)
                     contentValues.put("pointsOfInterest", property.pointsOfInterest)
-                    //contentValues.put("creationTimestamp", property.creationTimestamp)
+                    contentValues.put("creationTimestamp", property.creationTimestamp)
                     //contentValues.put("saleTimestamp", property.saleTimestamp)
                     contentValues.put("estateAgent", property.estateAgent)
 
