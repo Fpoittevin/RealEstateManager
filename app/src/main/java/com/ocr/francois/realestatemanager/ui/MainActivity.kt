@@ -7,6 +7,7 @@ import android.view.MenuItem
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityMainBinding
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
+import com.ocr.francois.realestatemanager.ui.mapView.MapViewActivity
 import com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesAdapter
 import com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesListFragment
 import com.ocr.francois.realestatemanager.ui.propertyCreation.PropertyCreationActivity
@@ -66,6 +67,11 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
         }
     }
 
+    private fun startMapViewActivity() {
+        val mapViewIntent = Intent(this, MapViewActivity::class.java)
+        startActivity(mapViewIntent)
+    }
+
     private fun configureToolbar() {
         setSupportActionBar(activity_main_toolbar)
     }
@@ -78,6 +84,7 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.main_activity_toolbar_menu_creation_button -> startPropertyCreationActivity()
+            R.id.main_activity_toolbar_menu_map_view_button -> startMapViewActivity()
         }
         return super.onOptionsItemSelected(item)
     }
