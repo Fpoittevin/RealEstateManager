@@ -3,6 +3,7 @@
 
     // MAIN ACTIVITY TOOLBAR MENU
     <string name="main_activity_toolbar_menu_creation_button_title">add new property</string>
+    <string name="main_activity_toolbar_menu_map_view_button_title">map view</string>
 
     // CARD VIEW TITLES
     <string name="card_view_title_general">General</string>
