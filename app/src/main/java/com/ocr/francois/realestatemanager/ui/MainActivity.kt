@@ -4,10 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityMainBinding
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
@@ -19,9 +15,12 @@ import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsActi
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-private const val PROPERTY_ID_KEY = "propertyId"
 
 class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback {
+
+    companion object {
+        const val PROPERTY_ID_KEY = "propertyId"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

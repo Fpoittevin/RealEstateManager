@@ -35,4 +35,5 @@
     <string name="state_hint_creation_fragment">state</string>
     <string name="points_of_interest_hint_creation_fragment">points of interest</string>
     <string name="estate_agent_hint_creation_fragment">estate agent</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

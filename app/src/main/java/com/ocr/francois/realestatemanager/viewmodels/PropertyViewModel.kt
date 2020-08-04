@@ -1,11 +1,8 @@
 package com.ocr.francois.realestatemanager.viewmodels
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.work.WorkManager
 import com.ocr.francois.realestatemanager.models.Property
 import com.ocr.francois.realestatemanager.repositories.PropertyRepository
 import kotlinx.coroutines.Dispatchers

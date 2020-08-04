@@ -84,8 +84,8 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     Date().time,
                     null,
                     "Bob",
-                    null,
-                    null
+                    40.7300416,
+                    -73.9867517
                 )
                 val propertyC = Property(
                     3,
@@ -106,8 +106,8 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     Date().time,
                     null,
                     "Bob",
-                    null,
-                    null
+                    40.7327449,
+                    -73.9851557
                 )
                 val propertyD = Property(
                     4,
@@ -157,6 +157,8 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     contentValues.put("creationTimestamp", property.creationTimestamp)
                     //contentValues.put("saleTimestamp", property.saleTimestamp)
                     contentValues.put("estateAgent", property.estateAgent)
+                    contentValues.put("lat", property.lat)
+                    contentValues.put("lng", property.lng)
 
                     db.insert("Property", OnConflictStrategy.REPLACE, contentValues)
                 }
