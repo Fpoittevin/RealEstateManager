@@ -13,9 +13,10 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.viewmodels.PropertyViewModel
+import pub.devrel.easypermissions.EasyPermissions
 
 
-class MapViewActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapViewActivity : AppCompatActivity(), OnMapReadyCallback, EasyPermissions.PermissionCallbacks {
 
     private val propertyViewModel: PropertyViewModel by viewModels {
         Injection.provideViewModelFactory(this)
@@ -26,8 +27,30 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map_view)
 
-        configureMap()
+        checkLocationPermissions()
+        //TODO: check network
     }
+
+    private fun checkLocationPermissions() {
+        if (!EasyPermissions.hasPermissions(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        ) {
+            EasyPermissions.requestPermissions(
+                this,
+                "need location",
+                123,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        }
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        finish()
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {}
 
     private fun configureMap() {
         val mapFragment = supportFragmentManager
