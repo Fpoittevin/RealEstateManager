@@ -1,12 +1,9 @@
 package com.ocr.francois.realestatemanager.utils
 
+import android.Manifest
 import android.content.Context
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import com.ocr.francois.realestatemanager.models.Property
+import pub.devrel.easypermissions.EasyPermissions
 
 class LocationTool {
 

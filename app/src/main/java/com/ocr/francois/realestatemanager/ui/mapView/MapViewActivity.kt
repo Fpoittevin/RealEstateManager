@@ -17,7 +17,7 @@ import com.ocr.francois.realestatemanager.viewmodels.PropertyViewModel
 
 class MapViewActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private val propertyViewModel: PropertyViewModel by viewModels() {
+    private val propertyViewModel: PropertyViewModel by viewModels {
         Injection.provideViewModelFactory(this)
     }
     private lateinit var map: GoogleMap
@@ -27,7 +27,6 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(R.layout.activity_map_view)
 
         configureMap()
-
     }
 
     private fun configureMap() {
@@ -47,6 +46,8 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback {
         map.addMarker(markerOptions)
         map.moveCamera(CameraUpdateFactory.newLatLng(latLng))
         map.moveCamera(CameraUpdateFactory.zoomTo(15F))
+
+        // TODO: ADD USER LOCATION AND MOVE CAMERA TO
     }
 
     private fun getAllProperties() {

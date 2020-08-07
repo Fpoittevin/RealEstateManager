@@ -15,9 +15,11 @@ import com.ocr.francois.realestatemanager.ui.propertyCreation.PropertyCreationFr
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsActivity
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import pub.devrel.easypermissions.EasyPermissions
 
 
-class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback {
+class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback,
+    EasyPermissions.PermissionCallbacks {
 
     companion object {
         const val PROPERTY_ID_KEY = "propertyId"
@@ -67,6 +69,30 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
         }
     }
 
+    private fun checkLocationPermissionsBeforeStartMapViewActivity() {
+
+        if (EasyPermissions.hasPermissions(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        ) {
+            startMapViewActivity()
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                "need location",
+                123,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        }
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {}
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+        startMapViewActivity()
+    }
+
     private fun startMapViewActivity() {
         val mapViewIntent = Intent(this, MapViewActivity::class.java)
         startActivity(mapViewIntent)
@@ -84,7 +110,10 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.main_activity_toolbar_menu_creation_button -> startPropertyCreationActivity()
-            R.id.main_activity_toolbar_menu_map_view_button -> startMapViewActivity()
+            R.id.main_activity_toolbar_menu_map_view_button -> {
+                // TODO: check network before start activity
+                checkLocationPermissionsBeforeStartMapViewActivity()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
