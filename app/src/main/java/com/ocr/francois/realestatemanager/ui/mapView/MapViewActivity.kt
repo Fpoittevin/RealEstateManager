@@ -12,23 +12,26 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.injection.Injection
+import com.ocr.francois.realestatemanager.utils.LocationTracker
 import com.ocr.francois.realestatemanager.viewmodels.PropertyViewModel
 import pub.devrel.easypermissions.EasyPermissions
 
 
-class MapViewActivity : AppCompatActivity(), OnMapReadyCallback, EasyPermissions.PermissionCallbacks {
+class MapViewActivity : AppCompatActivity(), OnMapReadyCallback,
+    EasyPermissions.PermissionCallbacks {
 
     private val propertyViewModel: PropertyViewModel by viewModels {
         Injection.provideViewModelFactory(this)
     }
     private lateinit var map: GoogleMap
+    private val locationTracker = LocationTracker(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map_view)
 
-        checkLocationPermissions()
         //TODO: check network
+        checkLocationPermissions()
     }
 
     private fun checkLocationPermissions() {
@@ -43,6 +46,8 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback, EasyPermissions
                 123,
                 android.Manifest.permission.ACCESS_FINE_LOCATION
             )
+        } else {
+            configureMap()
         }
     }
 
@@ -50,7 +55,9 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback, EasyPermissions
         finish()
     }
 
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {}
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+        configureMap()
+    }
 
     private fun configureMap() {
         val mapFragment = supportFragmentManager
@@ -60,6 +67,7 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback, EasyPermissions
 
     override fun onMapReady(map: GoogleMap) {
         this.map = map
+        getUserLocation()
         getAllProperties()
     }
 
@@ -67,10 +75,6 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback, EasyPermissions
         val latLng = LatLng(lat, lng)
         val markerOptions = MarkerOptions().position(latLng)
         map.addMarker(markerOptions)
-        map.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-        map.moveCamera(CameraUpdateFactory.zoomTo(15F))
-
-        // TODO: ADD USER LOCATION AND MOVE CAMERA TO
     }
 
     private fun getAllProperties() {
@@ -80,6 +84,14 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback, EasyPermissions
                     addMarker(property.lat!!, property.lng!!)
                 }
             }
+        })
+    }
+
+    private fun getUserLocation() {
+        locationTracker.getLocation().observe(this, Observer {
+            val userLocation = LatLng(it.latitude, it.longitude)
+            map.moveCamera(CameraUpdateFactory.newLatLng(userLocation))
+            map.moveCamera(CameraUpdateFactory.zoomTo(10F))
         })
     }
 }

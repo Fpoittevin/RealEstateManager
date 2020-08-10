@@ -1,9 +1,7 @@
 package com.ocr.francois.realestatemanager.utils
 
-import android.Manifest
 import android.content.Context
 import com.ocr.francois.realestatemanager.models.Property
-import pub.devrel.easypermissions.EasyPermissions
 
 class LocationTool {
 
