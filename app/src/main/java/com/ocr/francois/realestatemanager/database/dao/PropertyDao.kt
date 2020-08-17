@@ -19,6 +19,14 @@ interface PropertyDao {
     @Query("SELECT * FROM Property")
     fun selectAllProperties(): LiveData<List<Property>>
 
+    @Query("SELECT * FROM Property WHERE (lat BETWEEN :minLat AND :maxLat) AND (lng BETWEEN :minLng AND :maxLng)")
+    fun selectPropertiesInBounds(
+        minLat: Double,
+        maxLat: Double,
+        minLng: Double,
+        maxLng: Double
+    ): LiveData<List<Property>>
+
     @Query("SELECT * FROM Property WHERE id = :id")
     fun selectProperty(id: Long): LiveData<Property>
 }

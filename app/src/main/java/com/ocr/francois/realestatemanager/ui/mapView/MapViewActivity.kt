@@ -17,13 +17,14 @@ import com.ocr.francois.realestatemanager.viewmodels.PropertyViewModel
 import pub.devrel.easypermissions.EasyPermissions
 
 
-class MapViewActivity : AppCompatActivity(), OnMapReadyCallback,
+class MapViewActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCameraMoveListener,
     EasyPermissions.PermissionCallbacks {
 
     private val propertyViewModel: PropertyViewModel by viewModels {
         Injection.provideViewModelFactory(this)
     }
     private lateinit var map: GoogleMap
+
     private val locationTracker = LocationTracker(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,8 +68,17 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback,
 
     override fun onMapReady(map: GoogleMap) {
         this.map = map
+        map.setOnCameraMoveListener(this)
         getUserLocation()
-        getAllProperties()
+    }
+
+    private fun getAndShowPropertiesInMapBounds() {
+        propertyViewModel.getPropertiesInBounds(map.projection.visibleRegion.latLngBounds)
+            .observe(this, Observer { properties ->
+                for (property in properties) {
+                    addMarker(property.lat!!, property.lng!!)
+                }
+            })
     }
 
     private fun addMarker(lat: Double, lng: Double) {
@@ -77,21 +87,15 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback,
         map.addMarker(markerOptions)
     }
 
-    private fun getAllProperties() {
-        propertyViewModel.getAllProperties().observe(this, Observer { properties ->
-            for (property in properties) {
-                if (property.lat != null && property.lng != null) {
-                    addMarker(property.lat!!, property.lng!!)
-                }
-            }
-        })
-    }
-
     private fun getUserLocation() {
         locationTracker.getLocation().observe(this, Observer {
             val userLocation = LatLng(it.latitude, it.longitude)
             map.moveCamera(CameraUpdateFactory.newLatLng(userLocation))
-            map.moveCamera(CameraUpdateFactory.zoomTo(10F))
+            map.moveCamera(CameraUpdateFactory.zoomTo(15F))
         })
+    }
+
+    override fun onCameraMove() {
+        getAndShowPropertiesInMapBounds()
     }
 }
