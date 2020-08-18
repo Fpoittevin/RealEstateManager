@@ -1,6 +1,7 @@
 package com.ocr.francois.realestatemanager.ui.mapView
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -14,6 +15,7 @@ import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.utils.LocationTracker
 import com.ocr.francois.realestatemanager.viewmodels.PropertyViewModel
+import kotlinx.android.synthetic.main.activity_map_view.*
 import pub.devrel.easypermissions.EasyPermissions
 
 
@@ -30,9 +32,22 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCam
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map_view)
+        configureToolbar()
 
         //TODO: check network
         checkLocationPermissions()
+    }
+
+    private fun configureToolbar() {
+        setSupportActionBar(activity_map_view_toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun checkLocationPermissions() {

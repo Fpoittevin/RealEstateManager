@@ -22,10 +22,11 @@ class LocationTracker(private val context: Context) {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     private lateinit var locationCallback: LocationCallback
-    //TODO: add location request for location update
 
     @SuppressLint("MissingPermission")
     fun getLocation(): MutableLiveData<Location> {
+
+        // TODO: ADD LOCATION UPDATES
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
 
@@ -38,6 +39,7 @@ class LocationTracker(private val context: Context) {
 
         if (hasLocationPermissions()) {
             fusedLocationProviderClient.lastLocation.addOnSuccessListener { result ->
+
                 if (result != null) {
                     location.value = result
                 }
@@ -50,6 +52,7 @@ class LocationTracker(private val context: Context) {
         location.value = newLocation
     }
 
+    @SuppressLint("MissingPermission")
     fun startLocationUpdates() {
         fusedLocationProviderClient.requestLocationUpdates(
             locationRequest,
@@ -70,7 +73,6 @@ class LocationTracker(private val context: Context) {
     }
 
     companion object {
-
         const val LOCATION_REQUEST_INTERVAL = 30000
         const val LOCATION_REQUEST_SMALLEST_DISPLACEMENT = 100
         const val LOCATION_REQUEST_FASTEST_DISPLACEMENT = 2000
