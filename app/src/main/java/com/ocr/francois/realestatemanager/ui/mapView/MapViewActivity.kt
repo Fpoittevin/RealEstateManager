@@ -1,5 +1,6 @@
 package com.ocr.francois.realestatemanager.ui.mapView
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -10,16 +11,21 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.injection.Injection
+import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsActivity
 import com.ocr.francois.realestatemanager.utils.LocationTracker
 import com.ocr.francois.realestatemanager.viewmodels.PropertyViewModel
 import kotlinx.android.synthetic.main.activity_map_view.*
 import pub.devrel.easypermissions.EasyPermissions
 
 
-class MapViewActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCameraMoveListener,
+class MapViewActivity : AppCompatActivity(),
+    OnMapReadyCallback,
+    GoogleMap.OnCameraMoveListener,
+    GoogleMap.OnMarkerClickListener,
     EasyPermissions.PermissionCallbacks {
 
     private val propertyViewModel: PropertyViewModel by viewModels {
@@ -84,6 +90,7 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCam
     override fun onMapReady(map: GoogleMap) {
         this.map = map
         map.setOnCameraMoveListener(this)
+        map.setOnMarkerClickListener(this)
         getUserLocation()
     }
 
@@ -91,15 +98,16 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCam
         propertyViewModel.getPropertiesInBounds(map.projection.visibleRegion.latLngBounds)
             .observe(this, Observer { properties ->
                 for (property in properties) {
-                    addMarker(property.lat!!, property.lng!!)
+                    addMarker(property.id!!, property.lat!!, property.lng!!)
                 }
             })
     }
 
-    private fun addMarker(lat: Double, lng: Double) {
+    private fun addMarker(id: Long, lat: Double, lng: Double) {
         val latLng = LatLng(lat, lng)
         val markerOptions = MarkerOptions().position(latLng)
-        map.addMarker(markerOptions)
+        val marker = map.addMarker(markerOptions)
+        marker.tag = id
     }
 
     private fun getUserLocation() {
@@ -112,5 +120,19 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCam
 
     override fun onCameraMove() {
         getAndShowPropertiesInMapBounds()
+    }
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        val id = marker.tag
+        val propertyDetailsIntent = Intent(this, PropertyDetailsActivity::class.java).apply {
+            putExtra(PROPERTY_ID_KEY, id as Long)
+        }
+        startActivity(propertyDetailsIntent)
+
+        return true
+    }
+
+    companion object {
+        const val PROPERTY_ID_KEY = "propertyId"
     }
 }
