@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.activity_property_details.*
 
 class PropertyDetailsActivity : BaseActivity() {
 
+
     companion object {
         private const val PROPERTY_ID_KEY = "propertyId"
     }

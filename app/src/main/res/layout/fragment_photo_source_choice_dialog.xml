@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".ui.photosGallery.PhotoSourceChoiceDialogFragment">
+
+    <Button
+        android:id="@+id/fragment_photo_source_choice_dialog_camera_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_baseline_camera_alt_24" />
+
+    <Button
+        android:id="@+id/fragment_photo_source_choice_dialog_gallery_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_baseline_photo_library_24" />
+
+</LinearLayout>

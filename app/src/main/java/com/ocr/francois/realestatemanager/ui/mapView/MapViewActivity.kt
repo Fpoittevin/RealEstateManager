@@ -21,7 +21,6 @@ import com.ocr.francois.realestatemanager.viewmodels.PropertyViewModel
 import kotlinx.android.synthetic.main.activity_map_view.*
 import pub.devrel.easypermissions.EasyPermissions
 
-
 class MapViewActivity : AppCompatActivity(),
     OnMapReadyCallback,
     GoogleMap.OnCameraMoveListener,
@@ -123,6 +122,9 @@ class MapViewActivity : AppCompatActivity(),
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
+
+        //todo: gérer le click sur tablette
+
         val id = marker.tag
         val propertyDetailsIntent = Intent(this, PropertyDetailsActivity::class.java).apply {
             putExtra(PROPERTY_ID_KEY, id as Long)

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.models.Property
 
-class PropertiesAdapter() :
+class PropertiesAdapter :
     RecyclerView.Adapter<PropertyViewHolder>() {
 
     private lateinit var propertyItemClickCallback: PropertyItemClickCallback

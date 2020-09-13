@@ -11,6 +11,7 @@
     <string name="card_view_title_location">Location</string>
     <string name="card_view_title_more">More</string>
     <string name="card_view_title_description">Description</string>
+    <string name="card_view_title_photo">Photos</string>
 
     // DETAILS FRAGMENT
     <string name="media_title_details_fragment">Media</string>
@@ -37,4 +38,6 @@
     <string name="points_of_interest_hint_creation_fragment">points of interest</string>
     <string name="estate_agent_hint_creation_fragment">estate agent</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="request_camera_permission">RealEstateManager needs access to the camera</string>
 </resources>
