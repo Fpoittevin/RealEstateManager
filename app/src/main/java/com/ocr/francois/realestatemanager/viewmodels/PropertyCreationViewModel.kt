@@ -6,16 +6,21 @@ import android.os.Environment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ocr.francois.realestatemanager.models.Photo
 import com.ocr.francois.realestatemanager.models.Property
+import com.ocr.francois.realestatemanager.repositories.PhotoRepository
 import com.ocr.francois.realestatemanager.repositories.PropertyRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
+
 
 class PropertyCreationViewModel(
-    private val propertyRepository: PropertyRepository
+    private val propertyRepository: PropertyRepository,
+    private val photoRepository: PhotoRepository
 
 ) : ViewModel() {
 
@@ -54,7 +59,15 @@ class PropertyCreationViewModel(
     }
 
     fun saveProperty(property: Property) {
-        viewModelScope.launch(Dispatchers.IO) { propertyRepository.insertProperty(property) }
-        //fun insertProperty(property: Property) = executor.execute { propertyRepository.insertProperty(property) }
+
+        val photos = ArrayList<Photo>()
+
+        photosURIList.forEach {
+            val photo = Photo(null, it.toString(), null)
+            photos.add(photo)
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            propertyRepository.insertProperty(property, photos)
+        }
     }
 }

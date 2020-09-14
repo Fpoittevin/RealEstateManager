@@ -38,9 +38,13 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
         // Inflate the layout for this fragment
         val propertyId = requireArguments().getLong(PROPERTY_ID_KEY)
         propertyViewModel.getProperty(propertyId)
-            .observe(viewLifecycleOwner, Observer { property ->
+            .observe(viewLifecycleOwner, { property ->
                 this.property = property
                 updateUi()
+            })
+        propertyViewModel.getPhotosOfProperty(propertyId)
+            .observe(viewLifecycleOwner, {
+                Log.e("PHOTOS !!!", it.toString())
             })
         return inflater.inflate(R.layout.fragment_property_details, container, false)
     }

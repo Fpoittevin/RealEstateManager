@@ -28,6 +28,8 @@ class PhotosGalleryFragment : Fragment(),
     private var isEditable: Boolean = true
     private lateinit var binding: FragmentPhotosGalleryBinding
 
+    private var newPhotoURI: Uri? = null
+
     private val propertyCreationViewModel: PropertyCreationViewModel by activityViewModels {
         Injection.provideViewModelFactory(
             requireContext()
@@ -35,6 +37,8 @@ class PhotosGalleryFragment : Fragment(),
     }
 
     private val photoSourceChoiceDialogFragment = PhotoSourceChoiceDialogFragment.newInstance(this)
+
+
 
     companion object {
 
@@ -114,7 +118,6 @@ class PhotosGalleryFragment : Fragment(),
     }
 
     private fun openCameraForImage() {
-        var photoURI: Uri
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
                 val photoFile: File? = try {
@@ -125,13 +128,12 @@ class PhotosGalleryFragment : Fragment(),
                     null
                 }
                 photoFile?.also {
-                    photoURI = FileProvider.getUriForFile(
+                    newPhotoURI = FileProvider.getUriForFile(
                         requireContext(),
                         FILE_PROVIDER_AUTHORITY,
                         it
                     )
-                    propertyCreationViewModel.addImageURIInList(photoURI)
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, newPhotoURI)
                 }
                 startActivityForResult(takePictureIntent, REQUEST_CAMERA_CODE)
             }
@@ -147,29 +149,28 @@ class PhotosGalleryFragment : Fragment(),
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == AppCompatActivity.RESULT_OK) {
-            when (requestCode) {
-                REQUEST_CAMERA_CODE -> {
+        if (resultCode == AppCompatActivity.RESULT_OK && requestCode == REQUEST_GALLERY_CODE) {
+            data?.let {
+                val photoURI = it.data!!
 
-                }
-                REQUEST_GALLERY_CODE -> {
-                    data?.let {
-                        val photoURI = it.data!!
+                val imageStream =
+                    requireActivity().contentResolver.openInputStream(photoURI)
+                val selectedImage = BitmapFactory.decodeStream(imageStream)
 
-                        val imageStream =
-                            requireActivity().contentResolver.openInputStream(photoURI)
-                        val selectedImage = BitmapFactory.decodeStream(imageStream)
-
-                        val imageFile =
-                            ImageUtil.saveBitmapToFile(
-                                requireContext(),
-                                selectedImage,
-                                propertyCreationViewModel.createImageFile(requireActivity())
-                            )
-                        propertyCreationViewModel.addImageURIInList(Uri.parse(imageFile?.path))
-                    }
-                }
+                val imageFile =
+                    ImageUtil.saveBitmapToFile(
+                        requireContext(),
+                        selectedImage,
+                        propertyCreationViewModel.createImageFile(requireActivity())
+                    )
+                newPhotoURI = Uri.parse(imageFile?.path)
             }
+        }
+
+        newPhotoURI?.let {
+            propertyCreationViewModel.addImageURIInList(it)
+            newPhotoURI = null
+
         }
     }
 

@@ -7,15 +7,18 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.ocr.francois.realestatemanager.database.dao.PhotoDao
 import com.ocr.francois.realestatemanager.database.dao.PropertyDao
+import com.ocr.francois.realestatemanager.models.Photo
 import com.ocr.francois.realestatemanager.models.Property
 import java.util.*
 import kotlin.collections.ArrayList
 
-@Database(entities = [Property::class], version = 1, exportSchema = false)
+@Database(entities = [Property::class, Photo::class], version = 1, exportSchema = false)
 abstract class RealEstateManagerDatabase : RoomDatabase() {
 
     abstract fun propertyDao(): PropertyDao
+    abstract fun photoDao(): PhotoDao
 
     companion object {
 

@@ -3,6 +3,7 @@ package com.ocr.francois.realestatemanager.repositories
 import androidx.lifecycle.LiveData
 import com.google.android.gms.maps.model.LatLngBounds
 import com.ocr.francois.realestatemanager.database.dao.PropertyDao
+import com.ocr.francois.realestatemanager.models.Photo
 import com.ocr.francois.realestatemanager.models.Property
 
 class PropertyRepository(private val propertyDao: PropertyDao) {
@@ -21,7 +22,5 @@ class PropertyRepository(private val propertyDao: PropertyDao) {
 
     fun updateProperty(property: Property) = propertyDao.updateProperty(property)
 
-    fun insertProperty(property: Property) {
-        property.id = propertyDao.insertProperty(property)
-    }
+    fun insertProperty(property: Property, photos: List<Photo>) = propertyDao.insertPropertyWithPhotos(property, photos)
 }
