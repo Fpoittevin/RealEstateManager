@@ -24,6 +24,11 @@ class PropertyCreationViewModel(
 
 ) : ViewModel() {
 
+    private val photosList = mutableListOf<Photo>()
+    val photosListLiveData = MutableLiveData<MutableList<Photo>>().apply {
+        value = photosList
+    }
+
     private val photosURIList = mutableListOf<Uri>()
     val photosURIListLiveData = MutableLiveData<MutableList<Uri>>().apply {
         value = photosURIList
@@ -46,6 +51,11 @@ class PropertyCreationViewModel(
         photosURIListLiveData.value = photosURIList
     }
 
+    fun addPhotoInList(photo: Photo) {
+        photosList.add(0, photo)
+        photosListLiveData.value = photosList
+    }
+
     fun addImageURIInList(imageURI: Uri) {
         photosURIList.add(0, imageURI)
         photosURIListLiveData.value = photosURIList
@@ -59,15 +69,23 @@ class PropertyCreationViewModel(
     }
 
     fun saveProperty(property: Property) {
-
+/*
         val photos = ArrayList<Photo>()
 
         photosURIList.forEach {
             val photo = Photo(null, it.toString(), null)
             photos.add(photo)
         }
+
+ */
         viewModelScope.launch(Dispatchers.IO) {
-            propertyRepository.insertProperty(property, photos)
+            propertyRepository.insertProperty(property, photosList)
+        }
+    }
+
+    fun getPhotosListLiveData(propertyId: Long?) {
+        propertyId.let {
+
         }
     }
 }

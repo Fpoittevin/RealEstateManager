@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +13,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
+import com.google.android.material.tabs.TabLayoutMediator
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.FragmentPhotosGalleryBinding
 import com.ocr.francois.realestatemanager.injection.Injection
+import com.ocr.francois.realestatemanager.models.Photo
 import com.ocr.francois.realestatemanager.utils.ImageUtil
-import com.ocr.francois.realestatemanager.viewmodels.PropertyCreationViewModel
+import com.ocr.francois.realestatemanager.viewmodels.PhotosGalleryViewModel
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 import java.io.IOException
@@ -30,15 +34,14 @@ class PhotosGalleryFragment : Fragment(),
 
     private var newPhotoURI: Uri? = null
 
-    private val propertyCreationViewModel: PropertyCreationViewModel by activityViewModels {
+    private val photosGalleryViewModel: PhotosGalleryViewModel by activityViewModels {
         Injection.provideViewModelFactory(
             requireContext()
         )
     }
 
     private val photoSourceChoiceDialogFragment = PhotoSourceChoiceDialogFragment.newInstance(this)
-
-
+    private lateinit var photosListLiveData: LiveData<List<Photo>>
 
     companion object {
 
@@ -81,9 +84,16 @@ class PhotosGalleryFragment : Fragment(),
         binding.fragmentPhotosGalleryViewPager.apply {
             adapter = photosGalleryAdapter
         }
-        propertyCreationViewModel.photosURIListLiveData.observe(viewLifecycleOwner, {
-            photosGalleryAdapter.updateList(it)
-        })
+
+        TabLayoutMediator(binding.fragmentPhotosGalleryTabLayout, binding.fragmentPhotosGalleryViewPager){ _, _ ->
+
+        }.attach()
+
+        photosGalleryViewModel.getPhotosListLiveData(null)
+            .observe(viewLifecycleOwner, { photosList ->
+                photosGalleryAdapter.updateList(photosList)
+                Log.e("nbPhotos : ", photosList.size.toString())
+            })
     }
 
     private fun configurePhotosSourceChoiceDialog() {
@@ -121,7 +131,7 @@ class PhotosGalleryFragment : Fragment(),
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
                 val photoFile: File? = try {
-                    propertyCreationViewModel.createImageFile(requireActivity())
+                    photosGalleryViewModel.createImageFile(requireActivity())
                 } catch (ex: IOException) {
                     // Error occurred while creating the File$
                     TODO("ERROR")
@@ -161,14 +171,14 @@ class PhotosGalleryFragment : Fragment(),
                     ImageUtil.saveBitmapToFile(
                         requireContext(),
                         selectedImage,
-                        propertyCreationViewModel.createImageFile(requireActivity())
+                        photosGalleryViewModel.createImageFile(requireActivity())
                     )
                 newPhotoURI = Uri.parse(imageFile?.path)
             }
         }
 
         newPhotoURI?.let {
-            propertyCreationViewModel.addImageURIInList(it)
+            photosGalleryViewModel.addPhoto(Photo(null, it.toString(), null))
             newPhotoURI = null
 
         }
