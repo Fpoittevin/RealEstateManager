@@ -32,6 +32,7 @@ class PhotosGalleryFragment : Fragment(),
     private var isEditable: Boolean = true
     private lateinit var binding: FragmentPhotosGalleryBinding
 
+    private var propertyId: Long? = null
     private var newPhotoURI: Uri? = null
 
     private val photosGalleryViewModel: PhotosGalleryViewModel by activityViewModels {
@@ -46,16 +47,20 @@ class PhotosGalleryFragment : Fragment(),
     companion object {
 
         private const val ARG_IS_EDITABLE = "isEditable"
+        private const val ARG_PROPERTY_ID = "propertyId"
         private const val TAG_PHOTO_SOURCE_CHOICE_DIALOG = "photoSourceChoiceDialog"
         private const val FILE_PROVIDER_AUTHORITY = "com.ocr.francois.realestatemanager"
         private const val REQUEST_GALLERY_CODE = 100
         private const val REQUEST_CAMERA_CODE = 200
         private const val REQUEST_CAMERA_PERMISSION_CODE = 300
 
-        fun newInstance(isEditable: Boolean) =
+        fun newInstance(isEditable: Boolean, propertyId: Long?) =
             PhotosGalleryFragment().apply {
                 arguments = Bundle().apply {
                     putBoolean(ARG_IS_EDITABLE, isEditable)
+                    propertyId?.let {
+                        putLong(ARG_PROPERTY_ID, it)
+                    }
                 }
             }
     }
@@ -64,6 +69,10 @@ class PhotosGalleryFragment : Fragment(),
         super.onCreate(savedInstanceState)
         arguments?.let {
             isEditable = it.getBoolean(ARG_IS_EDITABLE)
+            it.getLong(ARG_PROPERTY_ID).let { propertyId ->
+                this.propertyId = propertyId
+
+            }
         }
     }
 
@@ -85,11 +94,14 @@ class PhotosGalleryFragment : Fragment(),
             adapter = photosGalleryAdapter
         }
 
-        TabLayoutMediator(binding.fragmentPhotosGalleryTabLayout, binding.fragmentPhotosGalleryViewPager){ _, _ ->
+        TabLayoutMediator(
+            binding.fragmentPhotosGalleryTabLayout,
+            binding.fragmentPhotosGalleryViewPager
+        ) { _, _ ->
 
         }.attach()
 
-        photosGalleryViewModel.getPhotosListLiveData(null)
+        photosGalleryViewModel.getPhotosListLiveData(propertyId)
             .observe(viewLifecycleOwner, { photosList ->
                 photosGalleryAdapter.updateList(photosList)
                 Log.e("nbPhotos : ", photosList.size.toString())
@@ -97,11 +109,15 @@ class PhotosGalleryFragment : Fragment(),
     }
 
     private fun configurePhotosSourceChoiceDialog() {
-        binding.fragmentPhotosGalleryAddPhotoButton.setOnClickListener {
-            photoSourceChoiceDialogFragment.show(
-                requireActivity().supportFragmentManager,
-                TAG_PHOTO_SOURCE_CHOICE_DIALOG
-            )
+        if (isEditable) {
+            binding.fragmentPhotosGalleryAddPhotoButton.setOnClickListener {
+                photoSourceChoiceDialogFragment.show(
+                    requireActivity().supportFragmentManager,
+                    TAG_PHOTO_SOURCE_CHOICE_DIALOG
+                )
+            }
+        } else {
+            binding.fragmentPhotosGalleryAddPhotoButton.visibility = View.GONE
         }
     }
 

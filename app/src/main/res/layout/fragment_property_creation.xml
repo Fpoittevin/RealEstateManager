@@ -334,19 +334,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <!--
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/fragment_property_creation_gallery_view_pager"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp" />
-
-                <Button
-                    android:id="@+id/fragment_property_creation_add_picture_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_baseline_add_24"
-                    app:drawableTint="@android:color/white" />
--->
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

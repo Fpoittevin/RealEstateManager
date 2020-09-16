@@ -39,14 +39,12 @@ class PropertyCreationFragment : Fragment() {
                 it.saveButton.setOnClickListener { saveProperty() }
             }
         configurePhotosGallery()
-        //configurePhotosGalleryViewPager()
-        //configurePictureSourceChoiceDialog()
 
         return binding.root
     }
 
     private fun configurePhotosGallery() {
-        val photosGalleryFragment = PhotosGalleryFragment.newInstance(true)
+        val photosGalleryFragment = PhotosGalleryFragment.newInstance(true, null)
         childFragmentManager.beginTransaction()
             .replace(R.id.fragment_property_creation_gallery_container, photosGalleryFragment)
             .commit()

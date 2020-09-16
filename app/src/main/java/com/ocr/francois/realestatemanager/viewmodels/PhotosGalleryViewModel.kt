@@ -2,6 +2,7 @@ package com.ocr.francois.realestatemanager.viewmodels
 
 import android.app.Activity
 import android.os.Environment
+import android.util.Log
 import androidx.lifecycle.*
 import com.ocr.francois.realestatemanager.models.Photo
 import com.ocr.francois.realestatemanager.repositories.PhotoRepository
@@ -19,6 +20,7 @@ class PhotosGalleryViewModel(
     fun getPhotosListLiveData(propertyId: Long?): MutableLiveData<MutableList<Photo>> {
 
         propertyId?.let {
+            Log.e("PROPERTY ID: ", propertyId.toString())
             photosListLiveData.addSource(photoRepository.getPhotosOfProperty(it)) { photosOfProperty ->
                 photosOfProperty.forEach { photo ->
                     addPhoto(photo)

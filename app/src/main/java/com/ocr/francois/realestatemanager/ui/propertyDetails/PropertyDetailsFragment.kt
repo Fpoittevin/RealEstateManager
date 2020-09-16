@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -15,8 +14,10 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.ocr.francois.realestatemanager.R
+import com.ocr.francois.realestatemanager.databinding.FragmentPropertyDetailsBinding
 import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.models.Property
+import com.ocr.francois.realestatemanager.ui.photosGallery.PhotosGalleryFragment
 import com.ocr.francois.realestatemanager.utils.LocationTool
 import com.ocr.francois.realestatemanager.viewmodels.PropertyViewModel
 import kotlinx.android.synthetic.main.fragment_property_details.*
@@ -24,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_property_details.*
 class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var property: Property
+    private lateinit var binding: FragmentPropertyDetailsBinding
 
     private val propertyViewModel: PropertyViewModel by activityViewModels {
         Injection.provideViewModelFactory(
@@ -35,6 +37,11 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        //TODO: change findViewById with ViewBinding
+
+        binding = FragmentPropertyDetailsBinding.inflate(inflater, container, false)
+
         // Inflate the layout for this fragment
         val propertyId = requireArguments().getLong(PROPERTY_ID_KEY)
         propertyViewModel.getProperty(propertyId)
@@ -46,7 +53,15 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
             .observe(viewLifecycleOwner, {
                 Log.e("PHOTOS !!!", it.toString())
             })
-        return inflater.inflate(R.layout.fragment_property_details, container, false)
+
+        return binding.root
+    }
+
+    private fun configurePhotosGallery() {
+        val photosGalleryFragment = PhotosGalleryFragment.newInstance(false, property.id)
+        childFragmentManager.beginTransaction()
+            .replace(R.id.fragment_property_details_gallery_container, photosGalleryFragment)
+            .commit()
     }
 
     companion object {
@@ -83,6 +98,7 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
             LocationTool.addressConcatenation(property, true)
 
         configureMap()
+        configurePhotosGallery()
     }
 
     private fun configureMap() {
