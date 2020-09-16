@@ -42,7 +42,6 @@ class PhotosGalleryFragment : Fragment(),
     }
 
     private val photoSourceChoiceDialogFragment = PhotoSourceChoiceDialogFragment.newInstance(this)
-    private lateinit var photosListLiveData: LiveData<List<Photo>>
 
     companion object {
 

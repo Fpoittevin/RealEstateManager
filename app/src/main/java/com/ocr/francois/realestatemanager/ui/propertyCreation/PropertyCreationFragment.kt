@@ -68,10 +68,13 @@ class PropertyCreationFragment : Fragment() {
             binding.fragmentPropertyCreationCityTextInput.text.toString(),
             binding.fragmentPropertyCreationZipCodeTextInput.text.toString(),
             binding.fragmentPropertyCreationStateTextInput.text.toString(),
-            binding.fragmentPropertyCreationPointsOfInterestTextInput.text.toString(),
             Date().time,
             null,
             binding.fragmentPropertyCreationEstateAgentTextInput.text.toString(),
+            false,
+            false,
+            false,
+            false,
             null,
             null
         )

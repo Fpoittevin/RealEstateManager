@@ -20,10 +20,16 @@ data class Property(
     var city: String?,
     var zipCode: String?,
     var state: String?,
-    var pointsOfInterest: String?,
     var creationTimestamp: Long?,
     var saleTimestamp: Long?,
     var estateAgent: String?,
+
+    //points of interests
+    var nearSchool: Boolean = false,
+    var nearTransports: Boolean = false,
+    var nearShops: Boolean = false,
+    var nearParks: Boolean = false,
+
 
     var lat: Double?,
     var lng: Double?

@@ -61,10 +61,13 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     "NYC",
                     "10021",
                     "NY",
-                    "school, cinema",
                     Date().time,
                     null,
                     "Bob",
+                    false,
+                    false,
+                    false,
+                    false,
                     40.7267391,
                     -73.9860395
                 )
@@ -83,10 +86,13 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     "NYC",
                     "10021",
                     "NY",
-                    "school, cinema",
                     Date().time,
                     null,
                     "Bob",
+                    false,
+                    false,
+                    false,
+                    false,
                     40.7300416,
                     -73.9867517
                 )
@@ -105,10 +111,13 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     "NYC",
                     "10021",
                     "NY",
-                    "school, cinema",
                     Date().time,
                     null,
                     "Bob",
+                    false,
+                    false,
+                    false,
+                    false,
                     40.7327449,
                     -73.9851557
                 )
@@ -127,10 +136,13 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     "NYC",
                     "10021",
                     "NY",
-                    "school, cinema",
                     Date().time,
                     null,
                     "Bob",
+                    false,
+                    false,
+                    false,
+                    false,
                     null,
                     null
                 )
@@ -156,10 +168,15 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     contentValues.put("city", property.city)
                     contentValues.put("zipCode", property.zipCode)
                     contentValues.put("state", property.state)
-                    contentValues.put("pointsOfInterest", property.pointsOfInterest)
                     contentValues.put("creationTimestamp", property.creationTimestamp)
                     //contentValues.put("saleTimestamp", property.saleTimestamp)
                     contentValues.put("estateAgent", property.estateAgent)
+
+                    contentValues.put("nearSchool", property.nearSchool)
+                    contentValues.put("nearTransports", property.nearTransports)
+                    contentValues.put("nearShops", property.nearShops)
+                    contentValues.put("nearParks", property.nearParks)
+
                     contentValues.put("lat", property.lat)
                     contentValues.put("lng", property.lng)
 

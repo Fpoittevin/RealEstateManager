@@ -34,7 +34,7 @@ class PhotosGalleryViewModel(
 
     fun addPhoto(photo: Photo) {
         if (!photosList.contains(photo)) {
-            photosList.add(photo)
+            photosList.add(0, photo)
             photosListLiveData.value = photosList
         }
     }
