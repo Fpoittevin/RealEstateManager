@@ -5,13 +5,14 @@
     <string name="main_activity_toolbar_menu_creation_button_title">add new property</string>
     <string name="main_activity_toolbar_menu_map_view_button_title">map view</string>
 
-    // CARD VIEW TITLES
-    <string name="card_view_title_general">General</string>
-    <string name="card_view_title_rooms">Rooms</string>
-    <string name="card_view_title_location">Location</string>
-    <string name="card_view_title_more">More</string>
-    <string name="card_view_title_description">Description</string>
-    <string name="card_view_title_photo">Photos</string>
+    // PROPERTY INFO TITLES
+    <string name="info_title_general">General</string>
+    <string name="info_title_rooms">Rooms</string>
+    <string name="info_title_location">Location</string>
+    <string name="info_title_more">More</string>
+    <string name="info_title_description">Description</string>
+    <string name="info_title_points_of_interests">Points of interests</string>
+    <string name="info_title_photo">Photos</string>
 
     // DETAILS FRAGMENT
     <string name="media_title_details_fragment">Media</string>
@@ -22,19 +23,17 @@
     <string name="location_title_details_fragment">$addressFirst$s\n$addressSecond$s\n%district$s\n%zip$s n%city$s</string>
 
     // CREATION FRAGMENT
-    <string name="type_hint_creation_fragment">type</string>
-    <string name="price_hint_creation_fragment">price</string>
-    <string name="surface_hint_creation_fragment">surface</string>
+    <string name="type_hint_creation_fragment">type*</string>
+    <string name="price_hint_creation_fragment">price*</string>
+    <string name="surface_hint_creation_fragment">surface*</string>
     <string name="number_of_rooms_hint_creation_fragment">number of rooms</string>
     <string name="number_of_bathrooms_hint_creation_fragment">number of bathrooms</string>
     <string name="number_of_bedrooms_hint_creation_fragment">number of bedrooms</string>
     <string name="description_hint_creation_fragment">description</string>
-    <string name="address_hint_creation_fragment">address</string>
+    <string name="address_hint_creation_fragment">address*</string>
     <string name="address_complements_hint_creation_fragment">address complements</string>
-    <string name="district_hint_creation_fragment">district</string>
-    <string name="city_hint_creation_fragment">city</string>
-    <string name="zip_code_hint_creation_fragment">zip code</string>
-    <string name="state_hint_creation_fragment">state</string>
+    <string name="city_hint_creation_fragment">city*</string>
+    <string name="zip_code_hint_creation_fragment">zip code*</string>
     <string name="points_of_interest_hint_creation_fragment">points of interest</string>
     <string name="estate_agent_hint_creation_fragment">estate agent</string>
     <string name="title_activity_maps">Map</string>

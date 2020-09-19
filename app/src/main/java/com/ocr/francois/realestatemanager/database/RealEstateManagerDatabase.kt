@@ -57,10 +57,8 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                     "5th avenue",
                     "Apt 6/7A",
-                    "Manhattan",
                     "NYC",
                     "10021",
-                    "NY",
                     Date().time,
                     null,
                     "Bob",
@@ -82,10 +80,8 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                     "5th avenue",
                     "Apt 6/7A",
-                    "Manhattan",
                     "NYC",
                     "10021",
-                    "NY",
                     Date().time,
                     null,
                     "Bob",
@@ -107,10 +103,8 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                     "5th avenue",
                     "Apt 6/7A",
-                    "Manhattan",
                     "NYC",
                     "10021",
-                    "NY",
                     Date().time,
                     null,
                     "Bob",
@@ -132,10 +126,8 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                     "5th avenue",
                     "Apt 6/7A",
-                    "Manhattan",
                     "NYC",
                     "10021",
-                    "NY",
                     Date().time,
                     null,
                     "Bob",
@@ -164,10 +156,8 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     contentValues.put("description", property.description)
                     contentValues.put("addressFirst", property.addressFirst)
                     contentValues.put("addressSecond", property.addressSecond)
-                    contentValues.put("district", property.district)
                     contentValues.put("city", property.city)
                     contentValues.put("zipCode", property.zipCode)
-                    contentValues.put("state", property.state)
                     contentValues.put("creationTimestamp", property.creationTimestamp)
                     //contentValues.put("saleTimestamp", property.saleTimestamp)
                     contentValues.put("estateAgent", property.estateAgent)

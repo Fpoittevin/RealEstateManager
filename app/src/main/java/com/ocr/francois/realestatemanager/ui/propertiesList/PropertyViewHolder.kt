@@ -10,15 +10,12 @@ class PropertyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val typeTextView: TextView =
         itemView.findViewById(R.id.recycler_view_property_item_type_text_view)
-    private val districtTextView: TextView =
-        itemView.findViewById(R.id.recycler_view_property_item_district_text_view)
     private val priceTextView: TextView =
         itemView.findViewById(R.id.recycler_view_property_item_price_text_view)
 
 
     fun updateUi(property: Property) {
         typeTextView.text = property.type
-        districtTextView.text = property.district
         priceTextView.text = "$" + property.price
     }
 }

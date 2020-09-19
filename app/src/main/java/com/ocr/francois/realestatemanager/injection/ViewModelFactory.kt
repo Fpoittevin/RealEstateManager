@@ -17,7 +17,7 @@ class ViewModelFactory(
         if (modelClass.isAssignableFrom(PropertyViewModel::class.java)) {
             return PropertyViewModel(propertyRepository, photoRepository) as T
         } else if (modelClass.isAssignableFrom(PropertyCreationViewModel::class.java)) {
-            return PropertyCreationViewModel(propertyRepository, photoRepository) as T
+            return PropertyCreationViewModel(propertyRepository) as T
         } else if (modelClass.isAssignableFrom(PhotosGalleryViewModel::class.java)) {
             return PhotosGalleryViewModel(photoRepository) as T
         }

@@ -23,7 +23,7 @@
                     style="@style/CardViewTitleStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/card_view_title_description" />
+                    android:text="@string/info_title_description" />
 
                 <TextView
                     android:id="@+id/fragment_property_details_description_text_view"
@@ -49,7 +49,7 @@
                     style="@style/CardViewTitleStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/card_view_title_general" />
+                    android:text="@string/info_title_general" />
 
                 <TextView
                     android:id="@+id/fragment_property_details_surface_text_view"
@@ -83,7 +83,7 @@
                     style="@style/CardViewTitleStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/card_view_title_rooms" />
+                    android:text="@string/info_title_rooms" />
 
                 <TextView
                     android:id="@+id/fragment_property_details_number_of_rooms_text_view"
@@ -124,7 +124,7 @@
                     style="@style/CardViewTitleStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/card_view_title_location" />
+                    android:text="@string/info_title_location" />
 
                 <TextView
                     android:id="@+id/fragment_property_details_address_text_view"
@@ -157,7 +157,7 @@
                     style="@style/CardViewTitleStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/card_view_title_photo" />
+                    android:text="@string/info_title_photo" />
 
                 <FrameLayout
                     android:id="@+id/fragment_property_details_gallery_container"

@@ -7,22 +7,20 @@ import androidx.room.PrimaryKey
 data class Property(
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null,
-    var type: String?,
-    var price: Int?,
-    var surface: Float?,
-    var numberOfRooms: Int?,
-    var numberOfBathrooms: Int?,
-    var numberOfBedrooms: Int?,
-    var description: String?,
-    var addressFirst: String?,
-    var addressSecond: String?,
-    var district: String?,
-    var city: String?,
-    var zipCode: String?,
-    var state: String?,
-    var creationTimestamp: Long?,
-    var saleTimestamp: Long?,
-    var estateAgent: String?,
+    var type: String? = null,
+    var price: Int? = null,
+    var surface: Float? = null,
+    var numberOfRooms: Int? = null,
+    var numberOfBathrooms: Int? = null,
+    var numberOfBedrooms: Int? = null,
+    var description: String? = null,
+    var addressFirst: String? = null,
+    var addressSecond: String? = null,
+    var city: String? = null,
+    var zipCode: String? = null,
+    var creationTimestamp: Long? = null,
+    var saleTimestamp: Long? = null,
+    var estateAgent: String? = null,
 
     //points of interests
     var nearSchool: Boolean = false,
@@ -31,6 +29,6 @@ data class Property(
     var nearParks: Boolean = false,
 
 
-    var lat: Double?,
-    var lng: Double?
+    var lat: Double? = null,
+    var lng: Double? = null
 )

@@ -20,7 +20,6 @@ class PhotosGalleryViewModel(
     fun getPhotosListLiveData(propertyId: Long?): MutableLiveData<MutableList<Photo>> {
 
         propertyId?.let {
-            Log.e("PROPERTY ID: ", propertyId.toString())
             photosListLiveData.addSource(photoRepository.getPhotosOfProperty(it)) { photosOfProperty ->
                 photosOfProperty.forEach { photo ->
                     addPhoto(photo)
