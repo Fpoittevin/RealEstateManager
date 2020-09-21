@@ -26,6 +26,7 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var property: Property
     private lateinit var binding: FragmentPropertyDetailsBinding
+    private lateinit var propertyModificationFabListener: PropertyModificationFabListener
 
     private val propertyViewModel: PropertyViewModel by activityViewModels {
         Injection.provideViewModelFactory(
@@ -42,17 +43,22 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
 
         binding = FragmentPropertyDetailsBinding.inflate(inflater, container, false)
 
-        // Inflate the layout for this fragment
-        val propertyId = requireArguments().getLong(PROPERTY_ID_KEY)
-        propertyViewModel.getProperty(propertyId)
-            .observe(viewLifecycleOwner, { property ->
-                this.property = property
-                updateUi()
-            })
-        propertyViewModel.getPhotosOfProperty(propertyId)
-            .observe(viewLifecycleOwner, {
-                Log.e("PHOTOS !!!", it.toString())
-            })
+        arguments?.let {
+            val propertyId = it.getLong(PROPERTY_ID_KEY)
+            propertyViewModel.getProperty(propertyId)
+                .observe(viewLifecycleOwner, { property ->
+                    this.property = property
+                    updateUi()
+                })
+            propertyViewModel.getPhotosOfProperty(propertyId)
+                .observe(viewLifecycleOwner, {
+                    Log.e("PHOTOS !!!", it.toString())
+                })
+
+            binding.fragmentPropertyDetailsModificationFab.setOnClickListener {
+                propertyModificationFabListener.onPropertyModificationClick(propertyId)
+            }
+        }
 
         return binding.root
     }
@@ -67,11 +73,15 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
     companion object {
         private const val PROPERTY_ID_KEY = "propertyId"
 
-        fun newInstance(propertyId: Long) =
+        fun newInstance(
+            propertyId: Long,
+            propertyModificationFabListener: PropertyModificationFabListener
+        ) =
             PropertyDetailsFragment().apply {
                 arguments = Bundle().apply {
                     putLong(PROPERTY_ID_KEY, propertyId)
                 }
+                this.propertyModificationFabListener = propertyModificationFabListener
             }
     }
 
@@ -122,5 +132,9 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
 
         val markerOptions = MarkerOptions().position(latLng)
         map.addMarker(markerOptions)
+    }
+
+    interface PropertyModificationFabListener {
+        fun onPropertyModificationClick(propertyId: Long)
     }
 }

@@ -14,10 +14,10 @@ class PropertyCreationActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPropertyCreationBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
         configureToolbar()
+
         displayFragment(R.id.activity_creation_frame_layout, PropertyCreationFragment.newInstance())
     }
 

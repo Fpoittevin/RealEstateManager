@@ -17,7 +17,8 @@ import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFrag
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback {
+class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback,
+    PropertyDetailsFragment.PropertyModificationFabListener {
 
     companion object {
         const val PROPERTY_ID_KEY = "propertyId"
@@ -45,7 +46,7 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
         activity_main_frame_layout_second?.let {
             displayFragment(
                 R.id.activity_main_frame_layout_second,
-                PropertyDetailsFragment.newInstance(id)
+                PropertyDetailsFragment.newInstance(id, this)
             )
         } ?: kotlin.run {
             val propertyDetailsIntent = Intent(this, PropertyDetailsActivity::class.java).apply {
@@ -87,5 +88,9 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
             R.id.main_activity_toolbar_menu_map_view_button -> startMapViewActivity()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onPropertyModificationClick(propertyId: Long) {
+        // TODO: launch modification fragment
     }
 }

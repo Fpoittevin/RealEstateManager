@@ -20,7 +20,7 @@ class PropertyRepository(private val propertyDao: PropertyDao) {
             bounds.northeast.longitude
         )
 
-    fun updateProperty(property: Property) = propertyDao.updateProperty(property)
+    suspend fun updateProperty(property: Property) = propertyDao.updateProperty(property)
 
     fun insertProperty(property: Property, photos: List<Photo>) = propertyDao.insertPropertyWithPhotos(property, photos)
 }

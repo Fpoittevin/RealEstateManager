@@ -1,13 +1,15 @@
 package com.ocr.francois.realestatemanager.ui.propertyDetails
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import com.ocr.francois.realestatemanager.R
+import com.ocr.francois.realestatemanager.ui.MainActivity
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
+import com.ocr.francois.realestatemanager.ui.propertyModification.PropertyModificationActivity
 import kotlinx.android.synthetic.main.activity_property_details.*
 
-class PropertyDetailsActivity : BaseActivity() {
-
+class PropertyDetailsActivity : BaseActivity(), PropertyDetailsFragment.PropertyModificationFabListener {
 
     companion object {
         private const val PROPERTY_ID_KEY = "propertyId"
@@ -21,7 +23,7 @@ class PropertyDetailsActivity : BaseActivity() {
         configureToolbar()
         displayFragment(
             R.id.activity_details_frame_layout,
-            PropertyDetailsFragment.newInstance(propertyId)
+            PropertyDetailsFragment.newInstance(propertyId, this)
         )
     }
 
@@ -35,5 +37,13 @@ class PropertyDetailsActivity : BaseActivity() {
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onPropertyModificationClick(propertyId: Long) {
+        val propertyModificationIntent = Intent(this, PropertyModificationActivity::class.java).apply {
+            putExtra(MainActivity.PROPERTY_ID_KEY, propertyId)
+        }
+        startActivity(propertyModificationIntent)
+
     }
 }

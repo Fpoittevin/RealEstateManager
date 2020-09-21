@@ -18,7 +18,7 @@ interface PropertyDao {
     fun insertPhotos(photos: List<Photo>)
 
     @Update
-    fun updateProperty(property: Property)
+    suspend fun updateProperty(property: Property)
 
     @Query("SELECT * FROM Property")
     fun selectAllProperties(): LiveData<List<Property>>
