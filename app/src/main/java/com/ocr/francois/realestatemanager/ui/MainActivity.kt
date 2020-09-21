@@ -11,9 +11,9 @@ import com.ocr.francois.realestatemanager.ui.mapView.MapViewActivity
 import com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesAdapter
 import com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesListFragment
 import com.ocr.francois.realestatemanager.ui.propertyCreation.PropertyCreationActivity
-import com.ocr.francois.realestatemanager.ui.propertyCreation.PropertyCreationFragment
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsActivity
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFragment
+import com.ocr.francois.realestatemanager.ui.propertyForm.PropertyFormFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -60,7 +60,7 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
         activity_main_frame_layout_second?.let {
             displayFragment(
                 R.id.activity_main_frame_layout_second,
-                PropertyCreationFragment.newInstance()
+                PropertyFormFragment.newInstance()
             )
         } ?: kotlin.run {
             val propertyCreationIntent = Intent(this, PropertyCreationActivity::class.java)

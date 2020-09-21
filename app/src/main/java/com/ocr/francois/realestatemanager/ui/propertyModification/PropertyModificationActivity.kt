@@ -5,6 +5,7 @@ import android.view.MenuItem
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityPropertyModificationBinding
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
+import com.ocr.francois.realestatemanager.ui.propertyForm.PropertyFormFragment
 import kotlinx.android.synthetic.main.activity_property_modification.*
 
 class PropertyModificationActivity : BaseActivity() {
@@ -26,7 +27,7 @@ class PropertyModificationActivity : BaseActivity() {
 
         displayFragment(
             R.id.activity_property_modification_frame_layout,
-            PropertyModificationFragment.newInstance(propertyId)
+            PropertyFormFragment.newInstance(propertyId)
         )
     }
 

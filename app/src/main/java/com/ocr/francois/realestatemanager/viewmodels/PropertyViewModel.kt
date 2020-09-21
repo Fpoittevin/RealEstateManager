@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLngBounds
+import com.ocr.francois.realestatemanager.models.Photo
 import com.ocr.francois.realestatemanager.models.Property
 import com.ocr.francois.realestatemanager.repositories.PhotoRepository
 import com.ocr.francois.realestatemanager.repositories.PropertyRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PropertyViewModel(
@@ -23,6 +25,12 @@ class PropertyViewModel(
     fun getPhotosOfProperty(propertyId: Long) = photoRepository.getPhotosOfProperty(propertyId)
 
     fun updateProperty(property: Property) {
-        viewModelScope.launch { propertyRepository.updateProperty(property) }
+        viewModelScope.launch(Dispatchers.IO) { propertyRepository.updateProperty(property) }
+    }
+
+    fun createProperty(property: Property, photosList: MutableList<Photo>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            propertyRepository.insertProperty(property, photosList)
+        }
     }
 }

@@ -22,6 +22,26 @@
     <string name="bedrooms_title_details_fragment">%1$d bedrooms</string>
     <string name="location_title_details_fragment">$addressFirst$s\n$addressSecond$s\n%district$s\n%zip$s n%city$s</string>
 
+    // FORM FRAGMENT
+    <string name="required_info_form_fragment">* required</string>
+    <string name="type_hint_form_fragment">type*</string>
+    <string name="price_hint_form_fragment">price*</string>
+    <string name="surface_hint_form_fragment">surface*</string>
+    <string name="estate_agent_hint_form_fragment">estate agent</string>
+    <string name="description_hint_form_fragment">description</string>
+    <string name="number_of_rooms_hint_form_fragment">number of rooms</string>
+    <string name="number_of_bathrooms_hint_form_fragment">number of bathrooms</string>
+    <string name="number_of_bedrooms_hint_form_fragment">number of bedrooms</string>
+    <string name="address_first_hint_form_fragment">address*</string>
+    <string name="address_second_hint_form_fragment">address complements</string>
+    <string name="city_hint_form_fragment">city*</string>
+    <string name="zip_code_hint_form_fragment">zip code*</string>
+    <string name="near_school_hint_form_fragment">near school</string>
+    <string name="near_transports_hint_form_fragment">near transports</string>
+    <string name="near_shops_hint_form_fragment">near shops</string>
+    <string name="near_parks_hint_form_fragment">near parks</string>
+    <string name="required_field">this field is required</string>
+
     // CREATION FRAGMENT
     <string name="type_hint_creation_fragment">type*</string>
     <string name="price_hint_creation_fragment">price*</string>

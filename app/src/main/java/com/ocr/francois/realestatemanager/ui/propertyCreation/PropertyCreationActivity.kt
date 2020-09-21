@@ -5,6 +5,7 @@ import android.view.MenuItem
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityPropertyCreationBinding
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
+import com.ocr.francois.realestatemanager.ui.propertyForm.PropertyFormFragment
 import kotlinx.android.synthetic.main.activity_property_creation.*
 
 class PropertyCreationActivity : BaseActivity() {
@@ -18,7 +19,10 @@ class PropertyCreationActivity : BaseActivity() {
 
         configureToolbar()
 
-        displayFragment(R.id.activity_creation_frame_layout, PropertyCreationFragment.newInstance())
+        displayFragment(
+            R.id.activity_creation_frame_layout,
+            PropertyFormFragment.newInstance()
+        )
     }
 
     private fun configureToolbar() {
