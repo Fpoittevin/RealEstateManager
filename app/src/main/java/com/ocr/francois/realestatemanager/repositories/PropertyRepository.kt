@@ -5,6 +5,7 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.ocr.francois.realestatemanager.database.dao.PropertyDao
 import com.ocr.francois.realestatemanager.models.Photo
 import com.ocr.francois.realestatemanager.models.Property
+import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 
 class PropertyRepository(private val propertyDao: PropertyDao) {
 
@@ -20,7 +21,13 @@ class PropertyRepository(private val propertyDao: PropertyDao) {
             bounds.northeast.longitude
         )
 
-    suspend fun updateProperty(property: Property) = propertyDao.updateProperty(property)
+    fun getPropertiesWithPhotos() : LiveData<List<PropertyWithPhotos>> = propertyDao.getPropertiesWithPhotos()
 
-    fun insertProperty(property: Property, photos: List<Photo>) = propertyDao.insertPropertyWithPhotos(property, photos)
+    fun getPropertyWithPhotos(id: Long): LiveData<PropertyWithPhotos> = propertyDao.getPropertyWithPhotos(id)
+
+    suspend fun insertPropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos) =
+        propertyDao.insertPropertyWithPhotos(propertyWithPhotos)
+
+    suspend fun updatePropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos) =
+        propertyDao.updatePropertyWithPhotos(propertyWithPhotos)
 }

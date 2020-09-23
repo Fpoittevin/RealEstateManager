@@ -1,5 +1,6 @@
 package com.ocr.francois.realestatemanager.ui.propertyForm
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,16 +11,16 @@ import com.google.android.material.textfield.TextInputEditText
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.FragmentPropertyFormBinding
 import com.ocr.francois.realestatemanager.injection.Injection
-import com.ocr.francois.realestatemanager.models.Photo
-import com.ocr.francois.realestatemanager.models.Property
+import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 import com.ocr.francois.realestatemanager.ui.photosGallery.PhotosGalleryFragment
+import com.ocr.francois.realestatemanager.utils.ImageUtil
 import com.ocr.francois.realestatemanager.viewmodels.PropertyViewModel
 
 class PropertyFormFragment : Fragment() {
 
     private lateinit var binding: FragmentPropertyFormBinding
-    private lateinit var property: Property
-    private lateinit var photosList: MutableList<Photo>
+    private lateinit var propertyWithPhotos: PropertyWithPhotos
+    private val photosGalleryFragment = PhotosGalleryFragment.newInstance(true)
     private lateinit var formTarget: FormTarget
     private var errorInForm = false
 
@@ -55,23 +56,19 @@ class PropertyFormFragment : Fragment() {
             it.fragmentPropertyFormSaveFab.setOnClickListener { saveProperty() }
         }
 
+        configurePhotosGallery()
+
         arguments?.let {
             it.getLong(PROPERTY_ID_KEY).let { propertyId ->
-                propertyViewModel.getProperty(propertyId)
-                    .observe(viewLifecycleOwner, { property ->
-                        this.property = property
+
+                propertyViewModel.getPropertyWithPhotos(propertyId)
+                    .observe(viewLifecycleOwner, { propertyWithPhotos ->
+                        this.propertyWithPhotos = propertyWithPhotos
+                        formTarget = FormTarget.MODIFICATION
                         updateUi()
                     })
             }
-            val propertyId = it.getLong(PROPERTY_ID_KEY)
-            propertyViewModel.getProperty(propertyId)
-                .observe(viewLifecycleOwner, { property ->
-                    this.property = property
-                    formTarget = FormTarget.MODIFICATION
-                    updateUi()
-                })
         } ?: run {
-            property = Property()
             formTarget = FormTarget.CREATION
         }
 
@@ -81,55 +78,57 @@ class PropertyFormFragment : Fragment() {
     private fun updateUi() {
 
         binding.run {
-            property.type?.let {
-                fragmentPropertyFormTypeTextInput.setText(it)
-            }
-            property.price?.let {
-                fragmentPropertyFormPriceTextInput.setText(it.toString())
-            }
-            property.surface?.let {
-                fragmentPropertyFormSurfaceTextInput.setText(it.toString())
-            }
-            property.estateAgent?.let {
-                fragmentPropertyFormEstateAgentTextInput.setText(property.estateAgent)
-            }
-            property.description?.let {
-                fragmentPropertyFormDescriptionTextInput.setText(property.description)
-            }
+            propertyWithPhotos.property.run {
+                type?.let {
+                    fragmentPropertyFormTypeTextInput.setText(it)
+                }
+                price?.let {
+                    fragmentPropertyFormPriceTextInput.setText(it.toString())
+                }
+                surface?.let {
+                    fragmentPropertyFormSurfaceTextInput.setText(it.toString())
+                }
+                estateAgent?.let {
+                    fragmentPropertyFormEstateAgentTextInput.setText(estateAgent)
+                }
+                description?.let {
+                    fragmentPropertyFormDescriptionTextInput.setText(description)
+                }
 
-            property.numberOfRooms?.let {
-                fragmentPropertyFormNumberOfRoomsTextInput.setText(it.toString())
-            }
-            property.numberOfBathrooms?.let {
-                fragmentPropertyFormNumberOfBathroomsTextInput.setText(it.toString())
-            }
-            property.numberOfBedrooms?.let {
-                fragmentPropertyFormNumberOfBedroomsTextInput.setText(it.toString())
-            }
+                numberOfRooms?.let {
+                    fragmentPropertyFormNumberOfRoomsTextInput.setText(it.toString())
+                }
+                numberOfBathrooms?.let {
+                    fragmentPropertyFormNumberOfBathroomsTextInput.setText(it.toString())
+                }
+                numberOfBedrooms?.let {
+                    fragmentPropertyFormNumberOfBedroomsTextInput.setText(it.toString())
+                }
 
-            property.addressFirst?.let {
-                fragmentPropertyFormAddressFirstTextInput.setText(it)
+                addressFirst?.let {
+                    fragmentPropertyFormAddressFirstTextInput.setText(it)
+                }
+                addressSecond?.let {
+                    fragmentPropertyFormAddressSecondTextInput.setText(it)
+                }
+                city?.let {
+                    fragmentPropertyFormCityTextInput.setText(it)
+                }
+                zipCode?.let {
+                    fragmentPropertyFormZipCodeTextInput.setText(it)
+                }
+                fragmentPropertyFormNearSchoolSwitch.isChecked = nearSchool
+                fragmentPropertyFormNearTransportsSwitch.isChecked = nearTransports
+                fragmentPropertyFormNearShopsSwitch.isChecked = nearShops
+                fragmentPropertyFormNearParksSwitch.isChecked = nearParks
             }
-            property.addressSecond?.let {
-                fragmentPropertyFormAddressSecondTextInput.setText(it)
-            }
-            property.city?.let {
-                fragmentPropertyFormCityTextInput.setText(it)
-            }
-            property.zipCode?.let {
-                fragmentPropertyFormZipCodeTextInput.setText(it)
-            }
-            fragmentPropertyFormNearSchoolSwitch.isChecked = property.nearSchool
-            fragmentPropertyFormNearTransportsSwitch.isChecked = property.nearTransports
-            fragmentPropertyFormNearShopsSwitch.isChecked = property.nearShops
-            fragmentPropertyFormNearParksSwitch.isChecked = property.nearParks
         }
 
-        configurePhotosGallery()
+        photosGalleryFragment.updateList(propertyWithPhotos.photosList)
     }
 
     private fun configurePhotosGallery() {
-        val photosGalleryFragment = PhotosGalleryFragment.newInstance(true, property.id)
+
         childFragmentManager.beginTransaction()
             .replace(R.id.fragment_property_form_gallery_container, photosGalleryFragment)
             .commit()
@@ -144,7 +143,7 @@ class PropertyFormFragment : Fragment() {
     }
 
     private fun checkDataAndHydrateProperty() {
-        property.apply {
+        propertyWithPhotos.property.apply {
             // TYPE
             checkTextInputValue(binding.fragmentPropertyFormTypeTextInput)?.let {
                 type = it
@@ -227,7 +226,7 @@ class PropertyFormFragment : Fragment() {
             nearParks = binding.fragmentPropertyFormNearParksSwitch.isChecked
 
             //  PHOTOS
-            if (photosList.size == 0) {
+            if (photosGalleryFragment.getPhotosList().isEmpty()) {
                 errorInForm = true
             }
         }
@@ -238,13 +237,28 @@ class PropertyFormFragment : Fragment() {
         checkDataAndHydrateProperty()
 
         if (!errorInForm) {
-            when (formTarget) {
-                FormTarget.CREATION -> propertyViewModel.createProperty(property, photosList)
-                FormTarget.MODIFICATION -> propertyViewModel.updateProperty(property)
+            propertyWithPhotos.apply {
+                photosList.apply {
+                    forEach {
+                        if (!photosGalleryFragment.getPhotosList().contains(it)) {
+                            ImageUtil.deleteFileFromUri(Uri.parse(it.uri), requireContext())
+                        }
+                        clear()
+                        addAll(photosGalleryFragment.getPhotosList())
+                    }
+                }
             }
-            activity?.finish()
-        } else {
-            errorInForm = false
+                when (formTarget) {
+                    FormTarget.CREATION -> propertyViewModel.createPropertyWithPhotos(
+                        propertyWithPhotos
+                    )
+                    FormTarget.MODIFICATION -> propertyViewModel.updatePropertyWithPhotos(
+                        propertyWithPhotos
+                    )
+                }
+                activity?.finish()
+            } else {
+                errorInForm = false
+            }
         }
     }
-}

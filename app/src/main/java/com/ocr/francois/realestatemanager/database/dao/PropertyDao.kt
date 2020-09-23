@@ -1,12 +1,10 @@
 package com.ocr.francois.realestatemanager.database.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.ocr.francois.realestatemanager.models.Photo
 import com.ocr.francois.realestatemanager.models.Property
+import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 
 @Dao
 interface PropertyDao {
@@ -16,6 +14,9 @@ interface PropertyDao {
 
     @Insert
     fun insertPhotos(photos: List<Photo>)
+
+    @Query("DELETE FROM Photo WHERE propertyId= :propertyId")
+    fun deletePhotosOfProperty(propertyId: Long)
 
     @Update
     suspend fun updateProperty(property: Property)
@@ -34,11 +35,26 @@ interface PropertyDao {
     @Query("SELECT * FROM Property WHERE id = :id")
     fun selectProperty(id: Long): LiveData<Property>
 
-    fun insertPropertyWithPhotos(property: Property, photos: List<Photo>) {
-        property.id = insertProperty(property)
-        photos.forEach {
-            it.propertyId = property.id
+    suspend fun insertPropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos) {
+        propertyWithPhotos.property.id = insertProperty(propertyWithPhotos.property)
+        propertyWithPhotos.photosList.forEach {
+            it.propertyId = propertyWithPhotos.property.id
         }
-        insertPhotos(photos)
+        insertPhotos(propertyWithPhotos.photosList)
     }
+
+    suspend fun updatePropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos) {
+        updateProperty(propertyWithPhotos.property)
+
+        deletePhotosOfProperty(propertyWithPhotos.property.id!!)
+        insertPhotos(propertyWithPhotos.photosList)
+    }
+
+    @Transaction
+    @Query("SELECT * FROM Property")
+    fun getPropertiesWithPhotos(): LiveData<List<PropertyWithPhotos>>
+
+    @Transaction
+    @Query("SELECT * FROM Property WHERE id = :id")
+    fun getPropertyWithPhotos(id: Long): LiveData<PropertyWithPhotos>
 }

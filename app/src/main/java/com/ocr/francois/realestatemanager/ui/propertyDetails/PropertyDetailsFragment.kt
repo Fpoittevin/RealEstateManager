@@ -1,7 +1,6 @@
 package com.ocr.francois.realestatemanager.ui.propertyDetails
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,7 @@ import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.FragmentPropertyDetailsBinding
 import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.models.Property
+import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 import com.ocr.francois.realestatemanager.ui.photosGallery.PhotosGalleryFragment
 import com.ocr.francois.realestatemanager.utils.LocationTool
 import com.ocr.francois.realestatemanager.viewmodels.PropertyViewModel
@@ -25,8 +25,10 @@ import kotlinx.android.synthetic.main.fragment_property_details.*
 class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var property: Property
+    private lateinit var propertyWithPhotos: PropertyWithPhotos
     private lateinit var binding: FragmentPropertyDetailsBinding
     private lateinit var propertyModificationFabListener: PropertyModificationFabListener
+    private val photosGalleryFragment = PhotosGalleryFragment.newInstance(false)
 
     private val propertyViewModel: PropertyViewModel by activityViewModels {
         Injection.provideViewModelFactory(
@@ -43,18 +45,16 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
 
         binding = FragmentPropertyDetailsBinding.inflate(inflater, container, false)
 
+        configurePhotosGallery()
+
         arguments?.let {
             val propertyId = it.getLong(PROPERTY_ID_KEY)
-            propertyViewModel.getProperty(propertyId)
-                .observe(viewLifecycleOwner, { property ->
-                    this.property = property
+
+            propertyViewModel.getPropertyWithPhotos(propertyId)
+                .observe(viewLifecycleOwner, { propertyWithPhotos ->
+                    this.propertyWithPhotos = propertyWithPhotos
                     updateUi()
                 })
-            propertyViewModel.getPhotosOfProperty(propertyId)
-                .observe(viewLifecycleOwner, {
-                    Log.e("PHOTOS !!!", it.toString())
-                })
-
             binding.fragmentPropertyDetailsModificationFab.setOnClickListener {
                 propertyModificationFabListener.onPropertyModificationClick(propertyId)
             }
@@ -64,7 +64,6 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun configurePhotosGallery() {
-        val photosGalleryFragment = PhotosGalleryFragment.newInstance(false, property.id)
         childFragmentManager.beginTransaction()
             .replace(R.id.fragment_property_details_gallery_container, photosGalleryFragment)
             .commit()
@@ -86,6 +85,8 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun updateUi() {
+        this.property = propertyWithPhotos.property
+
         property.description?.let { fragment_property_details_description_text_view.text = it }
 
         property.surface?.let {
@@ -107,8 +108,8 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
         fragment_property_details_address_text_view.text =
             LocationTool.addressConcatenation(property, true)
 
+        photosGalleryFragment.updateList(propertyWithPhotos.photosList)
         configureMap()
-        configurePhotosGallery()
     }
 
     private fun configureMap() {

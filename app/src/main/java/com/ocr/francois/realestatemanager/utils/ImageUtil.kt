@@ -1,11 +1,17 @@
 package com.ocr.francois.realestatemanager.utils
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Environment
+import android.util.Log
 import android.widget.Toast
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ImageUtil {
 
@@ -40,6 +46,24 @@ class ImageUtil {
                     it.close()
                 }
             }
+        }
+
+        fun createImageFile(activity: Activity): File {
+            val timeStamp: String =
+                SimpleDateFormat("yyyyMMdd_HHmmss", Locale.FRENCH).format(Date())
+            val storageDir: File? =
+                activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+
+            return File.createTempFile(
+                "JPEG_${timeStamp}_",
+                ".jpg",
+                storageDir
+            )
+        }
+
+        fun deleteFileFromUri(uri: Uri, context: Context) {
+            val contentResolver = context.contentResolver
+            contentResolver.delete(uri, null, null)
         }
     }
 }

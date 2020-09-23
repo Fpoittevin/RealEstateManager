@@ -9,5 +9,5 @@ data class PropertyWithPhotos(
         parentColumn = "id",
         entityColumn = "propertyId"
     )
-    val photosList: List<Photo>
+    val photosList: MutableList<Photo>
 )

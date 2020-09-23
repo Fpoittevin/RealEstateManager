@@ -2,6 +2,7 @@ package com.ocr.francois.realestatemanager.ui.propertiesList
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,6 +41,10 @@ class PropertiesListFragment : Fragment() {
 
         propertyViewModel.getAllProperties().observe(viewLifecycleOwner, Observer { properties ->
             propertiesAdapter.updateProperties(properties)
+        })
+
+        propertyViewModel.getPropertiesWithPhotos().observe(viewLifecycleOwner, {
+            Log.e("prop with photos: ", it.toString())
         })
 
         return view

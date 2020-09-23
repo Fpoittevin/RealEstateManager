@@ -1,14 +1,18 @@
 package com.ocr.francois.realestatemanager.ui.photosGallery
 
+import android.net.Uri
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ocr.francois.realestatemanager.R
+import com.ocr.francois.realestatemanager.databinding.PhotosGalleryItemBinding
 import com.ocr.francois.realestatemanager.models.Photo
 
-class PhotosGalleryAdapter : RecyclerView.Adapter<PhotosGalleryViewHolder>() {
+class PhotosGalleryAdapter(private val isEditable: Boolean) :
+    RecyclerView.Adapter<PhotosGalleryAdapter.PhotosGalleryViewHolder>() {
 
-    private val photosList = mutableListOf<Photo>()
+    internal val photosList = mutableListOf<Photo>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotosGalleryViewHolder {
 
@@ -19,14 +23,46 @@ class PhotosGalleryAdapter : RecyclerView.Adapter<PhotosGalleryViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: PhotosGalleryViewHolder, position: Int) {
-        holder.updateUi(photosList[position])
+
+        val photo = photosList[position]
+        holder.updateUi(photo)
+
+        if (isEditable) {
+            holder.binding.photosGalleryItemDeleteButton.setOnClickListener {
+                this.removePhotoFromList(photo)
+            }
+        } else {
+            holder.binding.photosGalleryItemDeleteButton.visibility = View.GONE
+        }
+
     }
 
     override fun getItemCount() = photosList.size
 
     fun updateList(photos: List<Photo>) {
-        photosList.clear()
-        photosList.addAll(photos)
+        photosList.run {
+            clear()
+            addAll(photos)
+        }
         notifyDataSetChanged()
+    }
+
+    internal fun addPhotoInList(photo: Photo) {
+        photosList.add(photo)
+        notifyDataSetChanged()
+    }
+
+    private fun removePhotoFromList(photo: Photo) {
+        photosList.remove(photo)
+        notifyDataSetChanged()
+    }
+
+    class PhotosGalleryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        internal var binding: PhotosGalleryItemBinding = PhotosGalleryItemBinding.bind(itemView)
+
+        fun updateUi(photo: Photo) {
+            binding.photosGalleryItemImageView.setImageURI(Uri.parse(photo.uri))
+        }
     }
 }

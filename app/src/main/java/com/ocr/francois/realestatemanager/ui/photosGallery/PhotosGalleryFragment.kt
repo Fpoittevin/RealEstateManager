@@ -11,14 +11,11 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.FragmentPhotosGalleryBinding
-import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.models.Photo
 import com.ocr.francois.realestatemanager.utils.ImageUtil
-import com.ocr.francois.realestatemanager.viewmodels.PhotosGalleryViewModel
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 import java.io.IOException
@@ -30,34 +27,23 @@ class PhotosGalleryFragment : Fragment(),
     private var isEditable: Boolean = true
     private lateinit var binding: FragmentPhotosGalleryBinding
 
-    private var propertyId: Long? = null
     private var newPhotoURI: Uri? = null
-
-    private val photosGalleryViewModel: PhotosGalleryViewModel by activityViewModels {
-        Injection.provideViewModelFactory(
-            requireContext()
-        )
-    }
+    private lateinit var photosGalleryAdapter: PhotosGalleryAdapter
 
     private val photoSourceChoiceDialogFragment = PhotoSourceChoiceDialogFragment.newInstance(this)
 
     companion object {
 
         private const val ARG_IS_EDITABLE = "isEditable"
-        private const val ARG_PROPERTY_ID = "propertyId"
         private const val TAG_PHOTO_SOURCE_CHOICE_DIALOG = "photoSourceChoiceDialog"
-        private const val FILE_PROVIDER_AUTHORITY = "com.ocr.francois.realestatemanager"
         private const val REQUEST_GALLERY_CODE = 100
         private const val REQUEST_CAMERA_CODE = 200
         private const val REQUEST_CAMERA_PERMISSION_CODE = 300
 
-        fun newInstance(isEditable: Boolean, propertyId: Long?) =
+        fun newInstance(isEditable: Boolean) =
             PhotosGalleryFragment().apply {
                 arguments = Bundle().apply {
                     putBoolean(ARG_IS_EDITABLE, isEditable)
-                    propertyId?.let {
-                        putLong(ARG_PROPERTY_ID, it)
-                    }
                 }
             }
     }
@@ -66,10 +52,7 @@ class PhotosGalleryFragment : Fragment(),
         super.onCreate(savedInstanceState)
         arguments?.let {
             isEditable = it.getBoolean(ARG_IS_EDITABLE)
-            it.getLong(ARG_PROPERTY_ID).let { propertyId ->
-                this.propertyId = propertyId
-
-            }
+            photosGalleryAdapter = PhotosGalleryAdapter(isEditable)
         }
     }
 
@@ -85,8 +68,12 @@ class PhotosGalleryFragment : Fragment(),
         return binding.root
     }
 
+    fun updateList(photosList: List<Photo>) {
+            photosGalleryAdapter.updateList(photosList)
+    }
+
     private fun configurePhotosGalleryViewPager() {
-        val photosGalleryAdapter = PhotosGalleryAdapter()
+
         binding.fragmentPhotosGalleryViewPager.apply {
             adapter = photosGalleryAdapter
         }
@@ -97,11 +84,6 @@ class PhotosGalleryFragment : Fragment(),
         ) { _, _ ->
 
         }.attach()
-
-        photosGalleryViewModel.getPhotosListLiveData(propertyId)
-            .observe(viewLifecycleOwner, { photosList ->
-                photosGalleryAdapter.updateList(photosList)
-            })
     }
 
     private fun configurePhotosSourceChoiceDialog() {
@@ -143,7 +125,7 @@ class PhotosGalleryFragment : Fragment(),
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
                 val photoFile: File? = try {
-                    photosGalleryViewModel.createImageFile(requireActivity())
+                    ImageUtil.createImageFile(requireActivity())
                 } catch (ex: IOException) {
                     // Error occurred while creating the File$
                     TODO("ERROR")
@@ -152,7 +134,7 @@ class PhotosGalleryFragment : Fragment(),
                 photoFile?.also {
                     newPhotoURI = FileProvider.getUriForFile(
                         requireContext(),
-                        FILE_PROVIDER_AUTHORITY,
+                        requireContext().packageName,
                         it
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, newPhotoURI)
@@ -183,14 +165,14 @@ class PhotosGalleryFragment : Fragment(),
                     ImageUtil.saveBitmapToFile(
                         requireContext(),
                         selectedImage,
-                        photosGalleryViewModel.createImageFile(requireActivity())
+                        ImageUtil.createImageFile(requireActivity())
                     )
                 newPhotoURI = Uri.parse(imageFile?.path)
             }
         }
 
         newPhotoURI?.let {
-            photosGalleryViewModel.addPhoto(Photo(null, it.toString(), null))
+            photosGalleryAdapter.addPhotoInList(Photo(null, it.toString(), null))
             newPhotoURI = null
 
         }
@@ -203,4 +185,8 @@ class PhotosGalleryFragment : Fragment(),
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {}
+
+    fun getPhotosList(): List<Photo> {
+        return photosGalleryAdapter.photosList
+    }
 }

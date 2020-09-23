@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.ocr.francois.realestatemanager.repositories.PhotoRepository
 import com.ocr.francois.realestatemanager.repositories.PropertyRepository
 import com.ocr.francois.realestatemanager.viewmodels.PhotosGalleryViewModel
-import com.ocr.francois.realestatemanager.viewmodels.PropertyCreationViewModel
 import com.ocr.francois.realestatemanager.viewmodels.PropertyViewModel
 
 class ViewModelFactory(
@@ -15,9 +14,7 @@ class ViewModelFactory(
     ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PropertyViewModel::class.java)) {
-            return PropertyViewModel(propertyRepository, photoRepository) as T
-        } else if (modelClass.isAssignableFrom(PropertyCreationViewModel::class.java)) {
-            return PropertyCreationViewModel(propertyRepository) as T
+            return PropertyViewModel(propertyRepository) as T
         } else if (modelClass.isAssignableFrom(PhotosGalleryViewModel::class.java)) {
             return PhotosGalleryViewModel(photoRepository) as T
         }
