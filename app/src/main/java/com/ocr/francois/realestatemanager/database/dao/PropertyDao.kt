@@ -1,5 +1,6 @@
 package com.ocr.francois.realestatemanager.database.dao
 
+import android.database.Cursor
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.ocr.francois.realestatemanager.models.Photo
@@ -57,4 +58,7 @@ interface PropertyDao {
     @Transaction
     @Query("SELECT * FROM Property WHERE id = :id")
     fun getPropertyWithPhotos(id: Long): LiveData<PropertyWithPhotos>
+
+    @Query("SELECT * FROM Property WHERE id = :id")
+    fun getPropertyWithCursor(id: Long): Cursor
 }
