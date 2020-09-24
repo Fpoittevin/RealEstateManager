@@ -13,6 +13,7 @@ class PropertyContentProvider : ContentProvider() {
     companion object {
         const val AUTHORITY = "com.ocr.francois.realestatemanager.provider"
         val TABLE_NAME = Property::class.java.simpleName
+        val URI_PROPERTY: Uri = Uri.parse("content://$AUTHORITY/$TABLE_NAME")
     }
 
     override fun onCreate(): Boolean {
@@ -40,7 +41,19 @@ class PropertyContentProvider : ContentProvider() {
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
-        return null
+
+        var returnUri: Uri? = null
+
+        val id = RealEstateManagerDatabase
+            .getInstance(context!!)
+            .propertyDao()
+            .insertProperty(Property.fromContentValues(values!!))
+        if (id != 0.toLong()) {
+            context!!.contentResolver.notifyChange(uri, null)
+            returnUri = ContentUris.withAppendedId(uri, id)
+        }
+
+        return returnUri
     }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {

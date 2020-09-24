@@ -37,34 +37,47 @@ data class Property(
         fun fromContentValues(values: ContentValues): Property {
             val property = Property()
             values.run {
-                if (containsKey("type")) property.type = getAsString("type")
-                if (containsKey("price")) property.price = getAsInteger("price")
-                if (containsKey("surface")) property.surface = getAsFloat("surface")
+                if (containsKey("type")) property.type =
+                    getAsString("type")
+                if (containsKey("price")) property.price =
+                    getAsInteger("price")
+                if (containsKey("surface")) property.surface =
+                    getAsFloat("surface")
                 if (containsKey("numberOfRooms")) property.numberOfRooms =
                     getAsInteger("numberOfRooms")
                 if (containsKey("numberOfBathrooms")) property.numberOfBathrooms =
                     getAsInteger("numberOfBathrooms")
                 if (containsKey("numberOfBedrooms")) property.numberOfBedrooms =
                     getAsInteger("numberOfBedrooms")
-                if (containsKey("description")) property.description = getAsString("description")
-                if (containsKey("addressFirst")) property.addressFirst = getAsString("addressFirst")
+                if (containsKey("description")) property.description =
+                    getAsString("description")
+                if (containsKey("addressFirst")) property.addressFirst =
+                    getAsString("addressFirst")
                 if (containsKey("addressSecond")) property.addressSecond =
                     getAsString("addressSecond")
-                if (containsKey("city")) property.city = getAsString("city")
-                if (containsKey("zipCode")) property.zipCode = getAsString("zipCode")
+                if (containsKey("city")) property.city =
+                    getAsString("city")
+                if (containsKey("zipCode")) property.zipCode =
+                    getAsString("zipCode")
                 if (containsKey("creationTimestamp")) property.creationTimestamp =
                     getAsLong("creationTimestamp")
                 if (containsKey("saleTimestamp")) property.saleTimestamp =
                     getAsLong("saleTimestamp")
-                if (containsKey("estateAgent")) property.estateAgent = getAsString("estateAgent")
-                if (containsKey("nearSchool")) property.nearSchool = getAsBoolean("nearSchool")
+                if (containsKey("estateAgent")) property.estateAgent =
+                    getAsString("estateAgent")
+                if (containsKey("nearSchool")) property.nearSchool =
+                    getAsBoolean("nearSchool")
                 if (containsKey("nearTransport")) property.nearTransports =
                     getAsBoolean("nearTransport")
-                if (containsKey("nearShops")) property.nearShops = getAsBoolean("nearShops")
-                if (containsKey("nearParks")) property.nearParks = getAsBoolean("nearParks")
+                if (containsKey("nearShops")) property.nearShops =
+                    getAsBoolean("nearShops")
+                if (containsKey("nearParks")) property.nearParks =
+                    getAsBoolean("nearParks")
 
-                if (containsKey("lat")) property.lat = getAsDouble("lat")
-                if (containsKey("lng")) property.lng = getAsDouble("lng")
+                if (containsKey("lat")) property.lat =
+                    getAsDouble("lat")
+                if (containsKey("lng")) property.lng =
+                    getAsDouble("lng")
             }
             return property
         }
