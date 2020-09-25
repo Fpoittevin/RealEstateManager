@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">RealEstateManager</string>
 
+    // BASE
+    <string name="unknown_error_message">an unknown error occurred</string>
+
     // MAIN ACTIVITY TOOLBAR MENU
     <string name="main_activity_toolbar_menu_creation_button_title">add new property</string>
     <string name="main_activity_toolbar_menu_map_view_button_title">map view</string>
