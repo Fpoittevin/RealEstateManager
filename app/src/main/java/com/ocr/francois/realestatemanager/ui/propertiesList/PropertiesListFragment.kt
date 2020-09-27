@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ocr.francois.realestatemanager.R
@@ -39,11 +38,8 @@ class PropertiesListFragment : Fragment() {
 
         configureRecyclerView(view)
 
-        propertyViewModel.getAllProperties().observe(viewLifecycleOwner, Observer { properties ->
-            propertiesAdapter.updateProperties(properties)
-        })
-
         propertyViewModel.getPropertiesWithPhotos().observe(viewLifecycleOwner, {
+            propertiesAdapter.updateProperties(it)
             Log.e("prop with photos: ", it.toString())
         })
 
@@ -59,6 +55,11 @@ class PropertiesListFragment : Fragment() {
         val recyclerView = view.fragment_properties_list_recycler_view
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = propertiesAdapter
-        recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayoutManager.HORIZONTAL))
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL
+            )
+        )
     }
 }

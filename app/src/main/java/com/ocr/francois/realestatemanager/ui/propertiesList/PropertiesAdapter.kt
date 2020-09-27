@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ocr.francois.realestatemanager.R
-import com.ocr.francois.realestatemanager.models.Property
+import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 
 class PropertiesAdapter :
     RecyclerView.Adapter<PropertyViewHolder>() {
 
     private lateinit var propertyItemClickCallback: PropertyItemClickCallback
-    private var properties: List<Property> = ArrayList()
+    private var propertiesWithPhotos: List<PropertyWithPhotos> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropertyViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -20,21 +20,21 @@ class PropertiesAdapter :
     }
 
     override fun getItemCount(): Int {
-        return properties.size
+        return propertiesWithPhotos.size
     }
 
     override fun onBindViewHolder(holder: PropertyViewHolder, position: Int) {
-        val property = properties[position]
-        holder.updateUi(property)
+        val propertyWithPhotos = propertiesWithPhotos[position]
+        holder.updateUi(propertyWithPhotos)
         holder.itemView.setOnClickListener {
             propertyItemClickCallback.onPropertyItemClick(
-                property.id as Long
+                propertyWithPhotos.property.id as Long
             )
         }
     }
 
-    fun updateProperties(propertiesList: List<Property>) {
-        properties = propertiesList
+    fun updateProperties(propertiesWithPhotosList: List<PropertyWithPhotos>) {
+        propertiesWithPhotos = propertiesWithPhotosList
         notifyDataSetChanged()
     }
 

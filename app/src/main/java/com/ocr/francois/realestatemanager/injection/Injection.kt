@@ -19,6 +19,6 @@ class Injection {
         }
 
         fun provideViewModelFactory(context: Context) =
-            ViewModelFactory(providePropertyRepository(context), providePhotoRepository(context))
+            ViewModelFactory(providePropertyRepository(context))
     }
 }
