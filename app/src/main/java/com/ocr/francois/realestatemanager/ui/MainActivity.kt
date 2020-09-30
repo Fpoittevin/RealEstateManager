@@ -14,6 +14,7 @@ import com.ocr.francois.realestatemanager.ui.propertyCreation.PropertyCreationAc
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsActivity
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFragment
 import com.ocr.francois.realestatemanager.ui.propertyForm.PropertyFormFragment
+import com.ocr.francois.realestatemanager.ui.propertySearch.PropertySearchActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -36,6 +37,11 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
 
     override fun onPropertyItemClick(id: Long) {
         showPropertyDetails(id)
+    }
+
+    private fun startPropertySearch() {
+        val propertySearchIntent = Intent(this, PropertySearchActivity::class.java)
+        startActivity(propertySearchIntent)
     }
 
     private fun showPropertyDetails(id: Long) {
@@ -86,6 +92,7 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
         when (item.itemId) {
             R.id.main_activity_toolbar_menu_creation_button -> startPropertyCreationActivity()
             R.id.main_activity_toolbar_menu_map_view_button -> startMapViewActivity()
+            R.id.main_activity_toolbar_menu_filter_button -> startPropertySearch()
         }
         return super.onOptionsItemSelected(item)
     }

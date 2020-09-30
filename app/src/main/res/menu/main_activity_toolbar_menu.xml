@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/main_activity_toolbar_menu_filter_button"
+        android:icon="@drawable/ic_filter_alt_black_24"
+        android:title="@string/main_activity_toolbar_menu_map_view_button_title"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/main_activity_toolbar_menu_map_view_button"
         android:icon="@drawable/ic_baseline_map_24"
         android:title="@string/main_activity_toolbar_menu_map_view_button_title"

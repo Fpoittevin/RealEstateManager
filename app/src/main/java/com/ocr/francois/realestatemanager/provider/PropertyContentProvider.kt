@@ -41,18 +41,18 @@ class PropertyContentProvider : ContentProvider() {
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
-
         var returnUri: Uri? = null
+        context?.let {
 
-        val id = RealEstateManagerDatabase
-            .getInstance(context!!)
-            .propertyDao()
-            .insertProperty(Property.fromContentValues(values!!))
-        if (id != 0.toLong()) {
-            context!!.contentResolver.notifyChange(uri, null)
-            returnUri = ContentUris.withAppendedId(uri, id)
+            val id = RealEstateManagerDatabase
+                .getInstance(it)
+                .propertyDao()
+                .insertProperty(Property.fromContentValues(values!!))
+            if (id != 0.toLong()) {
+                it.contentResolver.notifyChange(uri, null)
+                returnUri = ContentUris.withAppendedId(uri, id)
+            }
         }
-
         return returnUri
     }
 

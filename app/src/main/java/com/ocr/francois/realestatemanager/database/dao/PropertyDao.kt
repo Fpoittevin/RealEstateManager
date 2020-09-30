@@ -3,6 +3,7 @@ package com.ocr.francois.realestatemanager.database.dao
 import android.database.Cursor
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.ocr.francois.realestatemanager.models.Photo
 import com.ocr.francois.realestatemanager.models.Property
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
@@ -61,6 +62,12 @@ interface PropertyDao {
     @Transaction
     @Query("SELECT * FROM Property WHERE id = :id")
     fun getPropertyWithPhotos(id: Long): LiveData<PropertyWithPhotos>
+
+    @Transaction
+    @RawQuery
+    fun getPropertiesBySearch(query: SupportSQLiteQuery) : LiveData<List<PropertyWithPhotos>>
+
+
 
     @Query("SELECT * FROM Property WHERE id = :id")
     fun getPropertyWithCursor(id: Long): Cursor
