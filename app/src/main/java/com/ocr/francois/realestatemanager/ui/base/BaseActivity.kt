@@ -30,7 +30,7 @@ open class BaseActivity : AppCompatActivity() {
 
     @Subscribe
     fun onFailureEvent(failureEvent: FailureEvent) {
-        Log.e("ERROR", "onFailure: " + failureEvent.failureMessage);
+        Log.e("ERROR", "onFailure: " + failureEvent.failureMessage)
         Toast.makeText(
             applicationContext,
             getString(R.string.unknown_error_message),

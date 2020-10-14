@@ -29,7 +29,7 @@ data class PropertySearch(
     var maxCreationTimestamp: Long? = null,
 
     //  Sale date
-    var isSale: Boolean? = null,
+    var isSold: Boolean? = null,
     var minSaleTimestamp: Long? = null,
     var maxSaleTimestamp: Long? = null,
 

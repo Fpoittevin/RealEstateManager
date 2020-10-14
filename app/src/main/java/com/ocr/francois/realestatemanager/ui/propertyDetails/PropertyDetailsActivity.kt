@@ -4,15 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import com.ocr.francois.realestatemanager.R
-import com.ocr.francois.realestatemanager.ui.MainActivity
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.ui.propertyModification.PropertyModificationActivity
 import kotlinx.android.synthetic.main.activity_property_details.*
 
-class PropertyDetailsActivity : BaseActivity(), PropertyDetailsFragment.PropertyModificationFabListener {
+class PropertyDetailsActivity : BaseActivity(),
+    PropertyDetailsFragment.PropertyModificationFabListener {
 
     companion object {
-        private const val PROPERTY_ID_KEY = "propertyId"
+        const val PROPERTY_ID_KEY = "propertyId"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,9 +40,10 @@ class PropertyDetailsActivity : BaseActivity(), PropertyDetailsFragment.Property
     }
 
     override fun onPropertyModificationClick(propertyId: Long) {
-        val propertyModificationIntent = Intent(this, PropertyModificationActivity::class.java).apply {
-            putExtra(MainActivity.PROPERTY_ID_KEY, propertyId)
-        }
+        val propertyModificationIntent =
+            Intent(this, PropertyModificationActivity::class.java).apply {
+                putExtra(PROPERTY_ID_KEY, propertyId)
+            }
         startActivity(propertyModificationIntent)
 
     }

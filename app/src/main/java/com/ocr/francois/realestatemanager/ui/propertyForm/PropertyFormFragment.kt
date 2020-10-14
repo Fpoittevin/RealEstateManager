@@ -248,17 +248,17 @@ class PropertyFormFragment : Fragment() {
                     }
                 }
             }
-                when (formTarget) {
-                    FormTarget.CREATION -> propertyViewModel.createPropertyWithPhotos(
-                        propertyWithPhotos
-                    )
-                    FormTarget.MODIFICATION -> propertyViewModel.updatePropertyWithPhotos(
-                        propertyWithPhotos
-                    )
-                }
-                activity?.finish()
-            } else {
-                errorInForm = false
+            when (formTarget) {
+                FormTarget.CREATION -> propertyViewModel.createPropertyWithPhotos(
+                    propertyWithPhotos
+                )
+                FormTarget.MODIFICATION -> propertyViewModel.updatePropertyWithPhotos(
+                    propertyWithPhotos
+                )
             }
+            activity?.finish()
+        } else {
+            errorInForm = false
         }
     }
+}

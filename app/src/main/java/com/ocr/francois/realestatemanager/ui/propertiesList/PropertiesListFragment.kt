@@ -2,7 +2,6 @@ package com.ocr.francois.realestatemanager.ui.propertiesList
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,12 +11,14 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.injection.Injection
+import com.ocr.francois.realestatemanager.models.PropertySearch
 import com.ocr.francois.realestatemanager.viewmodels.PropertyViewModel
 import kotlinx.android.synthetic.main.fragment_properties_list.view.*
 
 class PropertiesListFragment : Fragment() {
 
     private val propertiesAdapter = PropertiesAdapter()
+    var propertySearch: PropertySearch? = null
 
     private val propertyViewModel: PropertyViewModel by activityViewModels {
         Injection.provideViewModelFactory(
@@ -38,9 +39,8 @@ class PropertiesListFragment : Fragment() {
 
         configureRecyclerView(view)
 
-        propertyViewModel.getPropertiesWithPhotos().observe(viewLifecycleOwner, {
+        propertyViewModel.getPropertiesWithPhotos(propertySearch).observe(viewLifecycleOwner, {
             propertiesAdapter.updateProperties(it)
-            Log.e("prop with photos: ", it.toString())
         })
 
         return view

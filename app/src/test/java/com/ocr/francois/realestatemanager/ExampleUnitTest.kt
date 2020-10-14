@@ -14,6 +14,6 @@ class ExampleUnitTest {
     @Test
     fun dateFormat() {
         val today = "04/06/2020"
-        assertEquals(today, Utils.getTodayDate())
+        assertEquals(today, Utils.getTodayDateStringFormat())
     }
 }

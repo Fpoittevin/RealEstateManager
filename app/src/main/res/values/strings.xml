@@ -61,7 +61,12 @@
     <string name="estate_agent_hint_creation_fragment">estate agent</string>
     <string name="title_activity_maps">Map</string>
 
+    // SEARCH ACTIVITY
+    <string name="creation_after_text_button_search_activity">CREATED AFTER</string>
+    <string name="creation_before_text_button_search_activity">CREATED BEFORE</string>
+    <string name="sold_after_text_button_search_activity">SOLD AFTER</string>
+    <string name="sold_before_text_button_search_activity">SOLD BEFORE</string>
+
     <string name="request_camera_permission">RealEstateManager needs access to the camera</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

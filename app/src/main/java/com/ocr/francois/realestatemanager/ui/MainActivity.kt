@@ -2,10 +2,12 @@ package com.ocr.francois.realestatemanager.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityMainBinding
+import com.ocr.francois.realestatemanager.models.PropertySearch
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.ui.mapView.MapViewActivity
 import com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesAdapter
@@ -21,18 +23,20 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback,
     PropertyDetailsFragment.PropertyModificationFabListener {
 
+    private val propertiesListFragment = PropertiesListFragment.newInstance()
+
     companion object {
-        const val PROPERTY_ID_KEY = "propertyId"
+        private const val PROPERTY_ID_KEY = "propertyId"
+        const val REQUEST_SEARCH_CODE = 1234
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
         configureToolbar()
-        displayFragment(R.id.activity_main_frame_layout, PropertiesListFragment.newInstance())
+        displayFragment(R.id.activity_main_frame_layout, propertiesListFragment)
     }
 
     override fun onPropertyItemClick(id: Long) {
@@ -41,7 +45,7 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
 
     private fun startPropertySearch() {
         val propertySearchIntent = Intent(this, PropertySearchActivity::class.java)
-        startActivity(propertySearchIntent)
+        startActivityForResult(propertySearchIntent, REQUEST_SEARCH_CODE)
     }
 
     private fun showPropertyDetails(id: Long) {
@@ -99,5 +103,100 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
 
     override fun onPropertyModificationClick(propertyId: Long) {
         // TODO: launch modification fragment
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_SEARCH_CODE && resultCode == RESULT_OK && data != null) {
+
+            Log.e("search intent !! : ", data.toString())
+
+            propertiesListFragment.propertySearch = PropertySearch().apply {
+                with(data) {
+                    getIntExtra(PropertySearchFragment.MIN_PRICE_KEY, 0).also {
+                        if (it != 0) {
+                            minPrice = it
+                        }
+                    }
+                    getIntExtra(PropertySearchFragment.MAX_PRICE_KEY, 0).also {
+                        if (it != 0) {
+                            maxPrice = it
+                        }
+                    }
+                    getIntExtra(PropertySearchFragment.MIN_SURFACE_KEY, 0).also {
+                        if (it != 0) {
+                            minSurface = it
+                        }
+                    }
+                    getIntExtra(PropertySearchFragment.MAX_SURFACE_KEY, 0).also {
+                        if (it != 0) {
+                            maxSurface = it
+                        }
+                    }
+                    getIntExtra(PropertySearchFragment.MIN_NUMBER_OF_ROOMS_KEY, 0).also {
+                        if (it != 0) {
+                            minNumberOfRooms = it
+                        }
+                    }
+                    getIntExtra(PropertySearchFragment.MAX_NUMBER_OF_ROOMS_KEY, 0).also {
+                        if (it != 0) {
+                            maxNumberOfRooms = it
+                        }
+                    }
+                    getIntExtra(PropertySearchFragment.MIN_NUMBER_OF_BATHROOMS_KEY, 0).also {
+                        if (it != 0) {
+                            minNumberOfBathrooms = it
+                        }
+                    }
+                    getIntExtra(PropertySearchFragment.MAX_NUMBER_OF_BATHROOMS_KEY, 0).also {
+                        if (it != 0) {
+                            maxNumberOfBathrooms = it
+                        }
+                    }
+                    getIntExtra(PropertySearchFragment.MIN_NUMBER_OF_BEDROOMS_KEY, 0).also {
+                        if (it != 0) {
+                            minNumberOfBedrooms = it
+                        }
+                    }
+                    getIntExtra(PropertySearchFragment.MAX_NUMBER_OF_BEDROOMS_KEY, 0).also {
+                        if (it != 0) {
+                            maxNumberOfBedrooms = it
+                        }
+                    }
+                    nearSchool = getBooleanExtra(PropertySearchFragment.NEAR_SCHOOL_KEY, false)
+                    nearTransports =
+                        getBooleanExtra(PropertySearchFragment.NEAR_TRANSPORTS_KEY, false)
+                    nearShops = getBooleanExtra(PropertySearchFragment.NEAR_SHOPS_KEY, false)
+                    nearParks = getBooleanExtra(PropertySearchFragment.NEAR_PARKS_KEY, false)
+
+                    getLongExtra(PropertySearchFragment.MIN_CREATION_TIMESTAMP_KEY, 0).also {
+                        if (it != 0.toLong()) {
+                            minCreationTimestamp = it
+                        }
+                    }
+                    getLongExtra(PropertySearchFragment.MAX_CREATION_TIMESTAMP_KEY, 0).also {
+                        if (it != 0.toLong()) {
+                            maxCreationTimestamp = it
+                        }
+                    }
+                    getLongExtra(PropertySearchFragment.MIN_SALE_TIMESTAMP_KEY, 0).also {
+                        if (it != 0.toLong()) {
+                            minSaleTimestamp = it
+                        }
+                    }
+                    getLongExtra(PropertySearchFragment.MAX_SALE_TIMESTAMP_KEY, 0).also {
+                        if (it != 0.toLong()) {
+                            maxSaleTimestamp = it
+                        }
+                    }
+                    getIntExtra(PropertySearchFragment.MIN_NUMBER_OF_PHOTOS_KEY, 0).also {
+                        if (it != 0) {
+                            minNumberOfPhotos = it
+                        }
+                    }
+                }
+            }
+        }
     }
 }

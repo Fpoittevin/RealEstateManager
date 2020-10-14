@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="property_min_price">300000</integer>
+    <integer name="property_max_price">10000000</integer>
+
+    <integer name="property_min_surface">100</integer>
+    <integer name="property_max_surface">500</integer>
+
+    <integer name="property_min_number_of_rooms">1</integer>
+    <integer name="property_max_number_of_rooms">20</integer>
+
+    <integer name="property_min_number_of_bathrooms">1</integer>
+    <integer name="property_max_number_of_bathrooms">10</integer>
+
+    <integer name="property_min_number_of_bedrooms">1</integer>
+    <integer name="property_max_number_of_bedrooms">10</integer>
+
+    <integer name="property_min_number_of_photos">1</integer>
+    <integer name="property_max_number_of_photos">30</integer>
+</resources>

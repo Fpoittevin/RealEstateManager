@@ -21,7 +21,7 @@ class PropertyRepository(private val propertyDao: PropertyDao) {
             bounds.northeast.longitude
         )
 
-    fun getPropertiesWithPhotos(propertySearch: PropertySearch? = null): LiveData<List<PropertyWithPhotos>> {
+    fun getPropertiesWithPhotos(propertySearch: PropertySearch?): LiveData<List<PropertyWithPhotos>> {
         propertySearch?.let {
             return propertyDao.getPropertiesBySearch(generateSqlLiteQuerySearch(propertySearch))
         } ?: run {
@@ -115,11 +115,11 @@ class PropertyRepository(private val propertyDao: PropertyDao) {
             }
 
             //  Sale
-            propertySearch.isSale?.let {
+            propertySearch.isSold?.let {
                 if (it) append(" ") // ??
             }
             propertySearch.minSaleTimestamp?.let {
-                append( " AND saleTimestamp >= ?")
+                append(" AND saleTimestamp >= ?")
                 args.add(it)
             }
             propertySearch.maxSaleTimestamp?.let {
