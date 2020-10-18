@@ -1,7 +1,6 @@
 package com.ocr.francois.realestatemanager.viewmodels
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.google.android.gms.maps.model.LatLngBounds
 import com.ocr.francois.realestatemanager.models.PropertySearch
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
@@ -12,6 +11,10 @@ import kotlinx.coroutines.launch
 class PropertyViewModel(
     private val propertyRepository: PropertyRepository
 ) : ViewModel() {
+
+    var propertySearchLiveData = MutableLiveData<PropertySearch?>().apply {
+        postValue(null)
+    }
 
     fun getPropertiesInBounds(bounds: LatLngBounds) =
         propertyRepository.getPropertiesInBounds(bounds)
@@ -31,7 +34,10 @@ class PropertyViewModel(
         }
     }
 
-    fun getPropertiesWithPhotos(propertySearch: PropertySearch?) = propertyRepository.getPropertiesWithPhotos(propertySearch)
+    fun getPropertiesWithPhotos(): LiveData<List<PropertyWithPhotos>> =
+        Transformations.switchMap(propertySearchLiveData) {
+            propertyRepository.getPropertiesWithPhotos(it)
+        }
 
     fun getPropertyWithPhotos(id: Long) = propertyRepository.getPropertyWithPhotos(id)
 }

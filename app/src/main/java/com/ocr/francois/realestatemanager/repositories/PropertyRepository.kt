@@ -1,5 +1,6 @@
 package com.ocr.francois.realestatemanager.repositories
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
@@ -10,8 +11,6 @@ import com.ocr.francois.realestatemanager.models.PropertySearch
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 
 class PropertyRepository(private val propertyDao: PropertyDao) {
-
-    fun getAllProperties(): LiveData<List<Property>> = propertyDao.selectAllProperties()
 
     fun getPropertiesInBounds(bounds: LatLngBounds): LiveData<List<Property>> =
         propertyDao.selectPropertiesInBounds(
@@ -43,74 +42,72 @@ class PropertyRepository(private val propertyDao: PropertyDao) {
         val stringBuilder = StringBuilder()
         val args = ArrayList<Any>()
 
-        //TODO("delete first AND")
-
         stringBuilder.append("SELECT * FROM Property WHERE ").apply {
 
             //  Price
             propertySearch.minPrice?.let {
 
-                append(" AND price >= ?")
+                append("price >= ? AND ")
                 args.add(it)
             }
             propertySearch.maxPrice?.let {
-                append(" AND price <= ?")
+                append("price <= ? AND ")
                 args.add(it)
             }
 
             //  Surface
             propertySearch.minSurface?.let {
-                append(" AND surface >= ?")
+                append("surface >= ? AND ")
                 args.add(it)
             }
             propertySearch.maxSurface?.let {
-                append(" AND surface <= ?")
+                append("surface <= ? AND ")
                 args.add(it)
             }
 
             //  Rooms
             propertySearch.minNumberOfRooms?.let {
-                append(" AND numberOfRooms >= ?")
+                append("numberOfRooms >= ? AND ")
                 args.add(it)
             }
             propertySearch.maxNumberOfRooms?.let {
-                append(" AND numberOfRooms <= ?")
+                append("numberOfRooms <= ? AND ")
                 args.add(it)
             }
             propertySearch.minNumberOfBathrooms?.let {
-                append(" AND numberOfBathrooms >= ?")
+                append("numberOfBathrooms >= ? AND ")
                 args.add(it)
             }
             propertySearch.maxNumberOfBathrooms?.let {
-                append(" AND numberOfBathrooms <= ?")
+                append("numberOfBathrooms <= ? AND ")
                 args.add(it)
             }
             propertySearch.minNumberOfBedrooms?.let {
-                append(" AND numberOfBedrooms >= ?")
+                append("numberOfBedrooms >= ? AND ")
                 args.add(it)
             }
             propertySearch.maxNumberOfBedrooms?.let {
-                append(" AND numberOfBedrooms <= ?")
+                append("numberOfBedrooms <= ? AND ")
                 args.add(it)
             }
 
             //  Points of interest
             if (propertySearch.nearSchool)
-                append(" AND nearSchool = 1")
+                append("nearSchool = 1 AND ")
             if (propertySearch.nearTransports)
-                append(" AND nearTransports = 1")
+                append("nearTransports = 1 AND ")
             if (propertySearch.nearShops)
-                append(" AND nearShops = 1")
+                append("nearShops = 1 AND ")
             if (propertySearch.nearParks)
-                append(" AND nearParks = 1")
+                append("nearParks = 1 AND ")
 
             //  Creation
             propertySearch.minCreationTimestamp?.let {
-                append(" AND creationTimestamp >= ?")
+                append("creationTimestamp >= ? AND ")
                 args.add(it)
             }
             propertySearch.maxCreationTimestamp?.let {
-                append(" AND creationTimestamp <= ?")
+                append("creationTimestamp <= ? AND ")
                 args.add(it)
             }
 
@@ -119,19 +116,21 @@ class PropertyRepository(private val propertyDao: PropertyDao) {
                 if (it) append(" ") // ??
             }
             propertySearch.minSaleTimestamp?.let {
-                append(" AND saleTimestamp >= ?")
+                append("saleTimestamp >= ? AND ")
                 args.add(it)
             }
             propertySearch.maxSaleTimestamp?.let {
-                append(" AND saleTimestamp <= ?")
+                append("saleTimestamp <= ? AND ")
                 args.add(it)
             }
 
             //  Photos
             propertySearch.minNumberOfPhotos?.let {
-                append(" AND (SELECT COUNT() FROM Photo WHERE propertyId = id) > ?")
+                append("(SELECT COUNT() FROM Photo WHERE propertyId = id) > ? AND ")
                 args.add(it)
             }
+            setLength(length - 5)
+            Log.e("request", SimpleSQLiteQuery(stringBuilder.toString(), args.toArray()).toString())
         }
         return SimpleSQLiteQuery(stringBuilder.toString(), args.toArray())
     }

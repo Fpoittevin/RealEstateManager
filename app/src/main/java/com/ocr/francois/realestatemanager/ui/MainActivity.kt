@@ -2,12 +2,12 @@ package com.ocr.francois.realestatemanager.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityMainBinding
-import com.ocr.francois.realestatemanager.models.PropertySearch
+import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.ui.mapView.MapViewActivity
 import com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesAdapter
@@ -17,6 +17,7 @@ import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsActi
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFragment
 import com.ocr.francois.realestatemanager.ui.propertyForm.PropertyFormFragment
 import com.ocr.francois.realestatemanager.ui.propertySearch.PropertySearchActivity
+import com.ocr.francois.realestatemanager.viewmodels.PropertyViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -24,6 +25,9 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
     PropertyDetailsFragment.PropertyModificationFabListener {
 
     private val propertiesListFragment = PropertiesListFragment.newInstance()
+    private val propertyViewModel: PropertyViewModel by viewModels {
+        Injection.provideViewModelFactory(this)
+    }
 
     companion object {
         private const val PROPERTY_ID_KEY = "propertyId"
@@ -105,98 +109,13 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
         // TODO: launch modification fragment
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intent)
 
-        if (requestCode == REQUEST_SEARCH_CODE && resultCode == RESULT_OK && data != null) {
+        if (requestCode == REQUEST_SEARCH_CODE && resultCode == RESULT_OK && intent != null) {
+            propertyViewModel.propertySearchLiveData.value =
+                intent.extras?.getParcelable("PROPERTY_SEARCH")
 
-            Log.e("search intent !! : ", data.toString())
-
-            propertiesListFragment.propertySearch = PropertySearch().apply {
-                with(data) {
-                    getIntExtra(PropertySearchFragment.MIN_PRICE_KEY, 0).also {
-                        if (it != 0) {
-                            minPrice = it
-                        }
-                    }
-                    getIntExtra(PropertySearchFragment.MAX_PRICE_KEY, 0).also {
-                        if (it != 0) {
-                            maxPrice = it
-                        }
-                    }
-                    getIntExtra(PropertySearchFragment.MIN_SURFACE_KEY, 0).also {
-                        if (it != 0) {
-                            minSurface = it
-                        }
-                    }
-                    getIntExtra(PropertySearchFragment.MAX_SURFACE_KEY, 0).also {
-                        if (it != 0) {
-                            maxSurface = it
-                        }
-                    }
-                    getIntExtra(PropertySearchFragment.MIN_NUMBER_OF_ROOMS_KEY, 0).also {
-                        if (it != 0) {
-                            minNumberOfRooms = it
-                        }
-                    }
-                    getIntExtra(PropertySearchFragment.MAX_NUMBER_OF_ROOMS_KEY, 0).also {
-                        if (it != 0) {
-                            maxNumberOfRooms = it
-                        }
-                    }
-                    getIntExtra(PropertySearchFragment.MIN_NUMBER_OF_BATHROOMS_KEY, 0).also {
-                        if (it != 0) {
-                            minNumberOfBathrooms = it
-                        }
-                    }
-                    getIntExtra(PropertySearchFragment.MAX_NUMBER_OF_BATHROOMS_KEY, 0).also {
-                        if (it != 0) {
-                            maxNumberOfBathrooms = it
-                        }
-                    }
-                    getIntExtra(PropertySearchFragment.MIN_NUMBER_OF_BEDROOMS_KEY, 0).also {
-                        if (it != 0) {
-                            minNumberOfBedrooms = it
-                        }
-                    }
-                    getIntExtra(PropertySearchFragment.MAX_NUMBER_OF_BEDROOMS_KEY, 0).also {
-                        if (it != 0) {
-                            maxNumberOfBedrooms = it
-                        }
-                    }
-                    nearSchool = getBooleanExtra(PropertySearchFragment.NEAR_SCHOOL_KEY, false)
-                    nearTransports =
-                        getBooleanExtra(PropertySearchFragment.NEAR_TRANSPORTS_KEY, false)
-                    nearShops = getBooleanExtra(PropertySearchFragment.NEAR_SHOPS_KEY, false)
-                    nearParks = getBooleanExtra(PropertySearchFragment.NEAR_PARKS_KEY, false)
-
-                    getLongExtra(PropertySearchFragment.MIN_CREATION_TIMESTAMP_KEY, 0).also {
-                        if (it != 0.toLong()) {
-                            minCreationTimestamp = it
-                        }
-                    }
-                    getLongExtra(PropertySearchFragment.MAX_CREATION_TIMESTAMP_KEY, 0).also {
-                        if (it != 0.toLong()) {
-                            maxCreationTimestamp = it
-                        }
-                    }
-                    getLongExtra(PropertySearchFragment.MIN_SALE_TIMESTAMP_KEY, 0).also {
-                        if (it != 0.toLong()) {
-                            minSaleTimestamp = it
-                        }
-                    }
-                    getLongExtra(PropertySearchFragment.MAX_SALE_TIMESTAMP_KEY, 0).also {
-                        if (it != 0.toLong()) {
-                            maxSaleTimestamp = it
-                        }
-                    }
-                    getIntExtra(PropertySearchFragment.MIN_NUMBER_OF_PHOTOS_KEY, 0).also {
-                        if (it != 0) {
-                            minNumberOfPhotos = it
-                        }
-                    }
-                }
-            }
         }
     }
 }

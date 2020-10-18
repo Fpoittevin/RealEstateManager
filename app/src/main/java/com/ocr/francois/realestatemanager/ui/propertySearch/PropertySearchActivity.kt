@@ -2,6 +2,7 @@ package com.ocr.francois.realestatemanager.ui.propertySearch
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.DatePicker
@@ -22,32 +23,7 @@ class PropertySearchActivity : BaseActivity(),
     private lateinit var binding: ActivityPropertySearchBinding
     private lateinit var datePickerDialog: DatePickerDialog
     private lateinit var datePickerType: DatePickerType
-
-
     private val propertySearch = PropertySearch()
-
-    companion object {
-        const val MIN_PRICE_KEY = "minPrice"
-        const val MAX_PRICE_KEY = "maxPrice"
-        const val MIN_SURFACE_KEY = "minSurface"
-        const val MAX_SURFACE_KEY = "maxSurface"
-        const val MIN_NUMBER_OF_ROOMS_KEY = "minNumberOfRooms"
-        const val MAX_NUMBER_OF_ROOMS_KEY = "maxNumberOfRooms"
-        const val MIN_NUMBER_OF_BATHROOMS_KEY = "minNumberOfBathrooms"
-        const val MAX_NUMBER_OF_BATHROOMS_KEY = "maxNumberOfBathrooms"
-        const val MIN_NUMBER_OF_BEDROOMS_KEY = "minNumberOfBedrooms"
-        const val MAX_NUMBER_OF_BEDROOMS_KEY = "maxNumberOfBedrooms"
-        const val NEAR_SCHOOL_KEY = "nearSchool"
-        const val NEAR_TRANSPORTS_KEY = "nearTransports"
-        const val NEAR_SHOPS_KEY = "nearShops"
-        const val NEAR_PARKS_KEY = "nearParks"
-        const val MIN_CREATION_TIMESTAMP_KEY = "minCreationTimestamp"
-        const val MAX_CREATION_TIMESTAMP_KEY = "maxCreationTimestamp"
-        //const val IS_SOLD_KEY = "isSold"
-        const val MIN_SALE_TIMESTAMP_KEY = "minSaleTimestamp"
-        const val MAX_SALE_TIMESTAMP_KEY = "maxSaleTimestamp"
-        const val MIN_NUMBER_OF_PHOTOS_KEY = "minNumberOfPhotosKey"
-    }
 
     enum class DatePickerType {
         CREATION_START,
@@ -511,27 +487,11 @@ class PropertySearchActivity : BaseActivity(),
                 configureAndDisplayDatePicker()
             }
             R.id.activity_property_search_fab -> {
-                intent.apply {
-                    putExtra(MIN_PRICE_KEY, propertySearch.minPrice)
-                    putExtra(MAX_PRICE_KEY, propertySearch.maxPrice)
-                    putExtra(MIN_SURFACE_KEY, propertySearch.minSurface)
-                    putExtra(MAX_SURFACE_KEY, propertySearch.maxSurface)
-                    putExtra(MIN_NUMBER_OF_ROOMS_KEY, propertySearch.minNumberOfRooms)
-                    putExtra(MAX_NUMBER_OF_ROOMS_KEY, propertySearch.maxNumberOfRooms)
-                    putExtra(MIN_NUMBER_OF_BATHROOMS_KEY, propertySearch.minNumberOfBathrooms)
-                    putExtra(MAX_NUMBER_OF_BATHROOMS_KEY, propertySearch.maxNumberOfBathrooms)
-                    putExtra(MIN_NUMBER_OF_BEDROOMS_KEY, propertySearch.minNumberOfBedrooms)
-                    putExtra(MAX_NUMBER_OF_BEDROOMS_KEY, propertySearch.maxNumberOfBedrooms)
-                    putExtra(NEAR_SCHOOL_KEY, propertySearch.nearSchool)
-                    putExtra(NEAR_TRANSPORTS_KEY, propertySearch.nearTransports)
-                    putExtra(NEAR_SHOPS_KEY, propertySearch.nearShops)
-                    putExtra(NEAR_PARKS_KEY, propertySearch.nearParks)
-                    putExtra(MIN_CREATION_TIMESTAMP_KEY, propertySearch.minCreationTimestamp)
-                    putExtra(MAX_CREATION_TIMESTAMP_KEY, propertySearch.maxCreationTimestamp)
-                    putExtra(MIN_SALE_TIMESTAMP_KEY, propertySearch.minSaleTimestamp)
-                    putExtra(MAX_SALE_TIMESTAMP_KEY, propertySearch.maxSaleTimestamp)
-                    putExtra(MIN_NUMBER_OF_PHOTOS_KEY, propertySearch.minNumberOfPhotos)
-                }
+
+                Log.e("search intent !! : ", propertySearch.toString())
+
+                intent.putExtra("PROPERTY_SEARCH",propertySearch)
+
                 setResult(RESULT_OK, intent)
                 finish()
             }
