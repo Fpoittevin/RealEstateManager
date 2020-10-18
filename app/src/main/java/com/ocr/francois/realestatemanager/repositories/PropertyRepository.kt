@@ -42,7 +42,7 @@ class PropertyRepository(private val propertyDao: PropertyDao) {
         val stringBuilder = StringBuilder()
         val args = ArrayList<Any>()
 
-        stringBuilder.append("SELECT * FROM Property WHERE ").apply {
+        stringBuilder.append("SELECT * FROM Property AS Pr WHERE ").apply {
 
             //  Price
             propertySearch.minPrice?.let {
@@ -126,7 +126,7 @@ class PropertyRepository(private val propertyDao: PropertyDao) {
 
             //  Photos
             propertySearch.minNumberOfPhotos?.let {
-                append("(SELECT COUNT() FROM Photo WHERE propertyId = id) > ? AND ")
+                append("(SELECT COUNT() FROM Photo WHERE propertyId = Pr.id) > ? AND ")
                 args.add(it)
             }
             setLength(length - 5)
