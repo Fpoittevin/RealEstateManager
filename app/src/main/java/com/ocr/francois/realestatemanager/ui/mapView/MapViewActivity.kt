@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -17,7 +16,6 @@ import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsActivity
 import com.ocr.francois.realestatemanager.utils.LocationTracker
-import com.ocr.francois.realestatemanager.viewmodels.PropertyViewModel
 import kotlinx.android.synthetic.main.activity_map_view.*
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -27,7 +25,7 @@ class MapViewActivity : AppCompatActivity(),
     GoogleMap.OnMarkerClickListener,
     EasyPermissions.PermissionCallbacks {
 
-    private val propertyViewModel: PropertyViewModel by viewModels {
+    private val mapViewModel: MapViewModel by viewModels {
         Injection.provideViewModelFactory(this)
     }
     private lateinit var map: GoogleMap
@@ -94,8 +92,8 @@ class MapViewActivity : AppCompatActivity(),
     }
 
     private fun getAndShowPropertiesInMapBounds() {
-        propertyViewModel.getPropertiesInBounds(map.projection.visibleRegion.latLngBounds)
-            .observe(this, Observer { properties ->
+        mapViewModel.getPropertiesInBounds(map.projection.visibleRegion.latLngBounds)
+            .observe(this, { properties ->
                 for (property in properties) {
                     addMarker(property.id!!, property.lat!!, property.lng!!)
                 }
@@ -110,7 +108,7 @@ class MapViewActivity : AppCompatActivity(),
     }
 
     private fun getUserLocation() {
-        locationTracker.getLocation().observe(this, Observer {
+        locationTracker.getLocation().observe(this, {
             val userLocation = LatLng(it.latitude, it.longitude)
             map.moveCamera(CameraUpdateFactory.newLatLng(userLocation))
             map.moveCamera(CameraUpdateFactory.zoomTo(15F))

@@ -12,12 +12,12 @@ import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.ui.mapView.MapViewActivity
 import com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesAdapter
 import com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesListFragment
+import com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesListViewModel
 import com.ocr.francois.realestatemanager.ui.propertyCreation.PropertyCreationActivity
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsActivity
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFragment
 import com.ocr.francois.realestatemanager.ui.propertyForm.PropertyFormFragment
 import com.ocr.francois.realestatemanager.ui.propertySearch.PropertySearchActivity
-import com.ocr.francois.realestatemanager.viewmodels.PropertyViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -25,7 +25,7 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
     PropertyDetailsFragment.PropertyModificationFabListener {
 
     private val propertiesListFragment = PropertiesListFragment.newInstance()
-    private val propertyViewModel: PropertyViewModel by viewModels {
+    private val propertiesListViewModel: PropertiesListViewModel by viewModels {
         Injection.provideViewModelFactory(this)
     }
 
@@ -113,7 +113,7 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
         super.onActivityResult(requestCode, resultCode, intent)
 
         if (requestCode == REQUEST_SEARCH_CODE && resultCode == RESULT_OK && intent != null) {
-            propertyViewModel.propertySearchLiveData.value =
+            propertiesListViewModel.propertySearchLiveData.value =
                 intent.extras?.getParcelable("PROPERTY_SEARCH")
 
         }

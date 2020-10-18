@@ -19,7 +19,6 @@ import com.ocr.francois.realestatemanager.models.Property
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 import com.ocr.francois.realestatemanager.ui.photosGallery.PhotosGalleryFragment
 import com.ocr.francois.realestatemanager.utils.LocationTool
-import com.ocr.francois.realestatemanager.viewmodels.PropertyViewModel
 import kotlinx.android.synthetic.main.fragment_property_details.*
 
 class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
@@ -30,7 +29,7 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var propertyModificationFabListener: PropertyModificationFabListener
     private val photosGalleryFragment = PhotosGalleryFragment.newInstance(false)
 
-    private val propertyViewModel: PropertyViewModel by activityViewModels {
+    private val propertyDetailsViewModel: PropertyDetailsViewModel by activityViewModels {
         Injection.provideViewModelFactory(
             requireContext()
         )
@@ -50,7 +49,7 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
         arguments?.let {
             val propertyId = it.getLong(PROPERTY_ID_KEY)
 
-            propertyViewModel.getPropertyWithPhotos(propertyId)
+            propertyDetailsViewModel.getPropertyWithPhotos(propertyId)
                 .observe(viewLifecycleOwner, { propertyWithPhotos ->
                     this.propertyWithPhotos = propertyWithPhotos
                     updateUi()

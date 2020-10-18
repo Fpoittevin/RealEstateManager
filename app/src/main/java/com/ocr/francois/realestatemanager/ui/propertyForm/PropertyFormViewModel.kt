@@ -1,23 +1,15 @@
-package com.ocr.francois.realestatemanager.viewmodels
+package com.ocr.francois.realestatemanager.ui.propertyForm
 
-import androidx.lifecycle.*
-import com.google.android.gms.maps.model.LatLngBounds
-import com.ocr.francois.realestatemanager.models.PropertySearch
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 import com.ocr.francois.realestatemanager.repositories.PropertyRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class PropertyViewModel(
+class PropertyFormViewModel(
     private val propertyRepository: PropertyRepository
 ) : ViewModel() {
-
-    var propertySearchLiveData = MutableLiveData<PropertySearch?>().apply {
-        postValue(null)
-    }
-
-    fun getPropertiesInBounds(bounds: LatLngBounds) =
-        propertyRepository.getPropertiesInBounds(bounds)
 
     fun createPropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -33,11 +25,6 @@ class PropertyViewModel(
             propertyRepository.updatePropertyWithPhotos(propertyWithPhotos)
         }
     }
-
-    fun getPropertiesWithPhotos(): LiveData<List<PropertyWithPhotos>> =
-        Transformations.switchMap(propertySearchLiveData) {
-            propertyRepository.getPropertiesWithPhotos(it)
-        }
 
     fun getPropertyWithPhotos(id: Long) = propertyRepository.getPropertyWithPhotos(id)
 }

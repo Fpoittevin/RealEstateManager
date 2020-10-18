@@ -14,7 +14,6 @@ import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 import com.ocr.francois.realestatemanager.ui.photosGallery.PhotosGalleryFragment
 import com.ocr.francois.realestatemanager.utils.ImageUtil
-import com.ocr.francois.realestatemanager.viewmodels.PropertyViewModel
 
 class PropertyFormFragment : Fragment() {
 
@@ -24,7 +23,7 @@ class PropertyFormFragment : Fragment() {
     private lateinit var formTarget: FormTarget
     private var errorInForm = false
 
-    private val propertyViewModel: PropertyViewModel by activityViewModels {
+    private val propertyFormViewModel: PropertyFormViewModel by activityViewModels {
         Injection.provideViewModelFactory(
             requireContext()
         )
@@ -61,7 +60,7 @@ class PropertyFormFragment : Fragment() {
         arguments?.let {
             it.getLong(PROPERTY_ID_KEY).let { propertyId ->
 
-                propertyViewModel.getPropertyWithPhotos(propertyId)
+                propertyFormViewModel.getPropertyWithPhotos(propertyId)
                     .observe(viewLifecycleOwner, { propertyWithPhotos ->
                         this.propertyWithPhotos = propertyWithPhotos
                         formTarget = FormTarget.MODIFICATION
@@ -249,10 +248,10 @@ class PropertyFormFragment : Fragment() {
                 }
             }
             when (formTarget) {
-                FormTarget.CREATION -> propertyViewModel.createPropertyWithPhotos(
+                FormTarget.CREATION -> propertyFormViewModel.createPropertyWithPhotos(
                     propertyWithPhotos
                 )
-                FormTarget.MODIFICATION -> propertyViewModel.updatePropertyWithPhotos(
+                FormTarget.MODIFICATION -> propertyFormViewModel.updatePropertyWithPhotos(
                     propertyWithPhotos
                 )
             }
