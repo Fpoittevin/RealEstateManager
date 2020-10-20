@@ -5,7 +5,6 @@ import android.content.Context
 import android.location.Location
 import android.os.Looper
 import androidx.lifecycle.MutableLiveData
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -19,23 +18,21 @@ class LocationTracker(private val context: Context) {
         .setInterval(LOCATION_REQUEST_INTERVAL.toLong())
         .setSmallestDisplacement(LOCATION_REQUEST_SMALLEST_DISPLACEMENT.toFloat())
         .setFastestInterval(LOCATION_REQUEST_FASTEST_DISPLACEMENT.toLong())
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private val fusedLocationProviderClient =
+        LocationServices.getFusedLocationProviderClient(context)
+    private val locationCallback: LocationCallback
 
-    private lateinit var locationCallback: LocationCallback
-
-    @SuppressLint("MissingPermission")
-    fun getLocation(): MutableLiveData<Location> {
-
-        // TODO: ADD LOCATION UPDATES
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
-
+    init {
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: com.google.android.gms.location.LocationResult?) {
                 locationResult ?: return
                 setLocation(locationResult.lastLocation!!)
             }
         }
+    }
+
+    @SuppressLint("MissingPermission")
+    fun getLocation(): MutableLiveData<Location> {
 
         if (hasLocationPermissions()) {
             fusedLocationProviderClient.lastLocation.addOnSuccessListener { result ->

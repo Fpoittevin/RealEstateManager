@@ -40,11 +40,17 @@ class PropertyDetailsActivity : BaseActivity(),
     }
 
     override fun onPropertyModificationClick(propertyId: Long) {
+        startPropertyModificationActivity(propertyId)
+    }
+
+    private fun startPropertyModificationActivity(propertyId: Long) {
         val propertyModificationIntent =
-            Intent(this, PropertyModificationActivity::class.java).apply {
+            Intent(
+                this,
+                PropertyModificationActivity::class.java
+            ).apply {
                 putExtra(PROPERTY_ID_KEY, propertyId)
             }
         startActivity(propertyModificationIntent)
-
     }
 }

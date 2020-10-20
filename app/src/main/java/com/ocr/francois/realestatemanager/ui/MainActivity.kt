@@ -17,14 +17,18 @@ import com.ocr.francois.realestatemanager.ui.propertyCreation.PropertyCreationAc
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsActivity
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFragment
 import com.ocr.francois.realestatemanager.ui.propertyForm.PropertyFormFragment
+import com.ocr.francois.realestatemanager.ui.propertyModification.PropertyModificationActivity
 import com.ocr.francois.realestatemanager.ui.propertySearch.PropertySearchActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback,
+class MainActivity : BaseActivity(),
+    PropertiesAdapter.PropertyItemClickCallback,
     PropertyDetailsFragment.PropertyModificationFabListener {
 
+    private lateinit var binding: ActivityMainBinding
     private val propertiesListFragment = PropertiesListFragment.newInstance()
+
     private val propertiesListViewModel: PropertiesListViewModel by viewModels {
         Injection.provideViewModelFactory(this)
     }
@@ -37,54 +41,96 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         configureToolbar()
-        displayFragment(R.id.activity_main_frame_layout, propertiesListFragment)
+
+        displayFragment(
+            R.id.activity_main_frame_layout,
+            propertiesListFragment
+        )
     }
 
-    override fun onPropertyItemClick(id: Long) {
-        showPropertyDetails(id)
+    override fun onPropertyItemClick(propertyId: Long) {
+        showPropertyDetailsFragment(propertyId)
     }
 
-    private fun startPropertySearch() {
-        val propertySearchIntent = Intent(this, PropertySearchActivity::class.java)
+    private fun startPropertySearchActivity() {
+        val propertySearchIntent = Intent(
+            this,
+            PropertySearchActivity::class.java
+        )
         startActivityForResult(propertySearchIntent, REQUEST_SEARCH_CODE)
     }
 
-    private fun showPropertyDetails(id: Long) {
-        startPropertyDetailsActivity(id)
+    private fun startMapViewActivity() {
+        val mapViewIntent = Intent(
+            this,
+            MapViewActivity::class.java
+        )
+        startActivity(mapViewIntent)
     }
 
-    private fun startPropertyDetailsActivity(id: Long) {
-        activity_main_frame_layout_second?.let {
-            displayFragment(
-                R.id.activity_main_frame_layout_second,
-                PropertyDetailsFragment.newInstance(id, this)
-            )
-        } ?: kotlin.run {
-            val propertyDetailsIntent = Intent(this, PropertyDetailsActivity::class.java).apply {
-                putExtra(PROPERTY_ID_KEY, id)
-            }
-            startActivity(propertyDetailsIntent)
+    private fun startPropertyDetailsActivity(propertyId: Long) {
+        val propertyDetailsIntent = Intent(
+            this,
+            PropertyDetailsActivity::class.java
+        ).apply {
+            putExtra(PROPERTY_ID_KEY, propertyId)
         }
+        startActivity(propertyDetailsIntent)
     }
 
     private fun startPropertyCreationActivity() {
-        activity_main_frame_layout_second?.let {
+        val propertyCreationIntent = Intent(
+            this,
+            PropertyCreationActivity::class.java
+        )
+        startActivity(propertyCreationIntent)
+    }
+
+    private fun startPropertyModificationActivity(propertyId: Long) {
+        val propertyModificationIntent =
+            Intent(
+                this,
+                PropertyModificationActivity::class.java
+            ).apply {
+                putExtra(PROPERTY_ID_KEY, propertyId)
+            }
+        startActivity(propertyModificationIntent)
+    }
+
+    private fun showPropertyDetailsFragment(propertyId: Long) {
+        binding.activityMainFrameLayoutSecond?.let {
+            displayFragment(
+                R.id.activity_main_frame_layout_second,
+                PropertyDetailsFragment.newInstance(propertyId, this)
+            )
+        } ?: run {
+            startPropertyDetailsActivity(propertyId)
+        }
+    }
+
+    private fun showPropertyCreationFragment() {
+        binding.activityMainFrameLayoutSecond?.let {
             displayFragment(
                 R.id.activity_main_frame_layout_second,
                 PropertyFormFragment.newInstance()
             )
         } ?: kotlin.run {
-            val propertyCreationIntent = Intent(this, PropertyCreationActivity::class.java)
-            startActivity(propertyCreationIntent)
+            startPropertyCreationActivity()
         }
     }
 
-    private fun startMapViewActivity() {
-        val mapViewIntent = Intent(this, MapViewActivity::class.java)
-        startActivity(mapViewIntent)
+    private fun showPropertyModificationFragment(propertyId: Long) {
+        binding.activityMainFrameLayoutSecond?.let {
+            displayFragment(
+                R.id.activity_main_frame_layout_second,
+                PropertyFormFragment.newInstance(propertyId)
+            )
+        } ?: kotlin.run {
+            startPropertyModificationActivity(propertyId)
+        }
     }
 
     private fun configureToolbar() {
@@ -98,15 +144,15 @@ class MainActivity : BaseActivity(), PropertiesAdapter.PropertyItemClickCallback
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.main_activity_toolbar_menu_creation_button -> startPropertyCreationActivity()
+            R.id.main_activity_toolbar_menu_creation_button -> showPropertyCreationFragment()
             R.id.main_activity_toolbar_menu_map_view_button -> startMapViewActivity()
-            R.id.main_activity_toolbar_menu_filter_button -> startPropertySearch()
+            R.id.main_activity_toolbar_menu_filter_button -> startPropertySearchActivity()
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onPropertyModificationClick(propertyId: Long) {
-        // TODO: launch modification fragment
+        showPropertyModificationFragment(propertyId)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {

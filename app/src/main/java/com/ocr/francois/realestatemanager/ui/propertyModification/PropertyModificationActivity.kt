@@ -18,12 +18,12 @@ class PropertyModificationActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityPropertyModificationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        configureToolbar()
 
         val propertyId = intent.getLongExtra(PROPERTY_ID_KEY, 1)
-
-        configureToolbar()
 
         displayFragment(
             R.id.activity_property_modification_frame_layout,

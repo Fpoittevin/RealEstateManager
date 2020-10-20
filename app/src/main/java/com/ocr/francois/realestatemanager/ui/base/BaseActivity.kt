@@ -2,10 +2,13 @@ package com.ocr.francois.realestatemanager.ui.base
 
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.events.FailureEvent
+import com.ocr.francois.realestatemanager.utils.IsInternetAvailableLiveData
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
@@ -36,5 +39,22 @@ open class BaseActivity : AppCompatActivity() {
             getString(R.string.unknown_error_message),
             Toast.LENGTH_LONG
         ).show()
+    }
+
+    fun observeConnexion() {
+        IsInternetAvailableLiveData(this).observe(this, {
+            if (!it) {
+                MaterialAlertDialogBuilder(this).apply {
+                    setPositiveButton(R.string.ok) { _, _ ->
+                        finish()
+                    }
+                    setTitle(R.string.network_dialog_title)
+                    setMessage(R.string.network_required)
+                    create().also {
+                        show()
+                    }
+                }
+            }
+        })
     }
 }

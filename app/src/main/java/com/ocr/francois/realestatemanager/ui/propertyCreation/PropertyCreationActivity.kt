@@ -14,9 +14,9 @@ class PropertyCreationActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityPropertyCreationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         configureToolbar()
 
         displayFragment(

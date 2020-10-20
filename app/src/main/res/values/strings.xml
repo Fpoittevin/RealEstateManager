@@ -3,6 +3,13 @@
 
     // BASE
     <string name="unknown_error_message">an unknown error occurred</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="network_dialog_title">Network</string>
+    <string name="network_required">this section requires internet</string>
+    <string name="location_dialog_title">Location</string>
+    <string name="location_required">this section requires location</string>
 
     // MAIN ACTIVITY TOOLBAR MENU
     <string name="main_activity_toolbar_menu_creation_button_title">add new property</string>

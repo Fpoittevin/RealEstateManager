@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.fragment_properties_list.view.*
 class PropertiesListFragment : Fragment() {
 
     private val propertiesAdapter = PropertiesAdapter()
-
     private val propertiesListViewModel: PropertiesListViewModel by activityViewModels {
         Injection.provideViewModelFactory(
             requireContext()

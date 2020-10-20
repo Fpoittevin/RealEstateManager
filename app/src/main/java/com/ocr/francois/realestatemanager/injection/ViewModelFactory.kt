@@ -13,15 +13,20 @@ class ViewModelFactory(
 ) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(PropertiesListViewModel::class.java)) {
-            return PropertiesListViewModel(propertyRepository) as T
-        } else if (modelClass.isAssignableFrom(MapViewModel::class.java)) {
-            return MapViewModel(propertyRepository) as T
-        } else if (modelClass.isAssignableFrom(PropertyDetailsViewModel::class.java)) {
-            return PropertyDetailsViewModel(propertyRepository) as T
-        } else if (modelClass.isAssignableFrom(PropertyFormViewModel::class.java)) {
-            return PropertyFormViewModel(propertyRepository) as T
+        return when {
+            modelClass.isAssignableFrom(PropertiesListViewModel::class.java) -> {
+                PropertiesListViewModel(propertyRepository) as T
+            }
+            modelClass.isAssignableFrom(MapViewModel::class.java) -> {
+                MapViewModel(propertyRepository) as T
+            }
+            modelClass.isAssignableFrom(PropertyDetailsViewModel::class.java) -> {
+                PropertyDetailsViewModel(propertyRepository) as T
+            }
+            modelClass.isAssignableFrom(PropertyFormViewModel::class.java) -> {
+                PropertyFormViewModel(propertyRepository) as T
+            }
+            else -> throw IllegalArgumentException("Unknown ViewModel class")
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

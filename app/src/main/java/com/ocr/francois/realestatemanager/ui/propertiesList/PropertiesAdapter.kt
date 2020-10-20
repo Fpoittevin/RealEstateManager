@@ -43,6 +43,6 @@ class PropertiesAdapter :
     }
 
     interface PropertyItemClickCallback {
-        fun onPropertyItemClick(id: Long)
+        fun onPropertyItemClick(propertyId: Long)
     }
 }
