@@ -10,7 +10,7 @@ data class Property(
     var id: Long? = null,
     var type: String? = null,
     var price: Int? = null,
-    var surface: Float? = null,
+    var surface: Int? = null,
     var numberOfRooms: Int? = null,
     var numberOfBathrooms: Int? = null,
     var numberOfBedrooms: Int? = null,
@@ -33,6 +33,7 @@ data class Property(
     var lat: Double? = null,
     var lng: Double? = null
 ) {
+
     companion object {
         fun fromContentValues(values: ContentValues): Property {
             val property = Property()
@@ -42,7 +43,7 @@ data class Property(
                 if (containsKey("price")) property.price =
                     getAsInteger("price")
                 if (containsKey("surface")) property.surface =
-                    getAsFloat("surface")
+                    getAsInteger("surface")
                 if (containsKey("numberOfRooms")) property.numberOfRooms =
                     getAsInteger("numberOfRooms")
                 if (containsKey("numberOfBathrooms")) property.numberOfBathrooms =

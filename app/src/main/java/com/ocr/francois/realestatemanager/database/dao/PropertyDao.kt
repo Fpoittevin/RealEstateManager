@@ -1,6 +1,7 @@
 package com.ocr.francois.realestatemanager.database.dao
 
 import android.database.Cursor
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteQuery

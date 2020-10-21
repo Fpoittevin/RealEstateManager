@@ -11,6 +11,8 @@
     <string name="location_dialog_title">Location</string>
     <string name="location_required">this section requires location</string>
 
+    <string name="property_photo_content_description">Property photo</string>
+
     // MAIN ACTIVITY TOOLBAR MENU
     <string name="main_activity_toolbar_menu_creation_button_title">add new property</string>
     <string name="main_activity_toolbar_menu_map_view_button_title">map view</string>

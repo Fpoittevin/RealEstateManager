@@ -2,6 +2,7 @@ package com.ocr.francois.realestatemanager.ui.propertyForm
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.FragmentPropertyFormBinding
 import com.ocr.francois.realestatemanager.injection.Injection
+import com.ocr.francois.realestatemanager.models.Property
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 import com.ocr.francois.realestatemanager.ui.photosGallery.PhotosGalleryFragment
 import com.ocr.francois.realestatemanager.utils.ImageUtil
@@ -51,25 +53,31 @@ class PropertyFormFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = FragmentPropertyFormBinding.inflate(inflater, container, false).also {
-            it.fragmentPropertyFormSaveFab.setOnClickListener { saveProperty() }
+        binding = FragmentPropertyFormBinding.inflate(inflater, container, false).apply {
+            fragmentPropertyFormSaveFab.setOnClickListener { saveProperty() }
         }
 
         configurePhotosGallery()
 
         arguments?.let {
             it.getLong(PROPERTY_ID_KEY).let { propertyId ->
-
+                formTarget = FormTarget.MODIFICATION
+                Log.e("PROP ID", propertyId.toString())
                 propertyFormViewModel.getPropertyWithPhotos(propertyId)
                     .observe(viewLifecycleOwner, { propertyWithPhotos ->
                         this.propertyWithPhotos = propertyWithPhotos
-                        formTarget = FormTarget.MODIFICATION
+
                         updateUi()
                     })
             }
         } ?: run {
+            this.propertyWithPhotos = PropertyWithPhotos(
+                Property(),
+                mutableListOf()
+            )
             formTarget = FormTarget.CREATION
         }
+        Log.e("FORM TYPE", formTarget.toString())
 
         return binding.root
     }
@@ -163,7 +171,7 @@ class PropertyFormFragment : Fragment() {
 
             //  SURFACE
             checkTextInputValue(binding.fragmentPropertyFormSurfaceTextInput)?.let {
-                surface = it.toFloat()
+                surface = it.toInt()
             } ?: run {
                 binding.fragmentPropertyFormSurfaceTextInputLayout.error =
                     getString(R.string.required_field)
@@ -242,9 +250,9 @@ class PropertyFormFragment : Fragment() {
                         if (!photosGalleryFragment.getPhotosList().contains(it)) {
                             ImageUtil.deleteFileFromUri(Uri.parse(it.uri), requireContext())
                         }
-                        clear()
-                        addAll(photosGalleryFragment.getPhotosList())
                     }
+                    clear()
+                    addAll(photosGalleryFragment.getPhotosList())
                 }
             }
             when (formTarget) {
