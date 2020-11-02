@@ -10,5 +10,6 @@ data class Photo(
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null,
     var uri: String? = null,
+    var description: String? = null,
     var propertyId: Long? = null
 )

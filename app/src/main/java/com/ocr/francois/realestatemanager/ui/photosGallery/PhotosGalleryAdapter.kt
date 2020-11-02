@@ -1,5 +1,7 @@
 package com.ocr.francois.realestatemanager.ui.photosGallery
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,8 +33,29 @@ class PhotosGalleryAdapter(private val isEditable: Boolean) :
             holder.binding.photosGalleryItemDeleteButton.setOnClickListener {
                 this.removePhotoFromList(photo)
             }
+            holder.binding.photosGalleryItemDescriptionTextView.visibility = View.GONE
+            holder.binding.photosGalleryItemDescriptionTextInput.addTextChangedListener(object :
+                TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+                override fun afterTextChanged(s: Editable?) {
+                    photo.description = s.toString()
+                }
+
+            }
+
+            )
         } else {
             holder.binding.photosGalleryItemDeleteButton.visibility = View.GONE
+            holder.binding.photosGalleryItemDescriptionTextInputLayout.visibility = View.GONE
         }
 
     }
@@ -66,10 +89,14 @@ class PhotosGalleryAdapter(private val isEditable: Boolean) :
                 Glide
                     .with(itemView)
                     .load(photo.uri)
-                    .fitCenter()
+                    .centerCrop()
                     .into(photosGalleryItemImageView)
+
+                photo.description?.let {
+                    photosGalleryItemDescriptionTextInput.setText(it)
+                    photosGalleryItemDescriptionTextView.text = it
+                }
             }
-            //binding.photosGalleryItemImageView.setImageURI(Uri.parse(photo.uri))
         }
     }
 }

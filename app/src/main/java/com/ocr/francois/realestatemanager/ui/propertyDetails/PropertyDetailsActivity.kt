@@ -10,7 +10,6 @@ import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.ui.propertyModification.PropertyModificationActivity
 import kotlinx.android.synthetic.main.activity_property_details.*
-import kotlin.properties.Delegates
 
 class PropertyDetailsActivity : BaseActivity(),
     PropertyDetailsFragment.PropertyModificationFabListener {
@@ -45,7 +44,7 @@ class PropertyDetailsActivity : BaseActivity(),
         setSupportActionBar(activity_property_details_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        propertyId?.let{ propertyId ->
+        propertyId?.let { propertyId ->
             propertyDetailsViewModel.getProperty(propertyId).observe(this, { property ->
                 property.type?.let {
                     binding.activityPropertyDetailsToolbar.title = it

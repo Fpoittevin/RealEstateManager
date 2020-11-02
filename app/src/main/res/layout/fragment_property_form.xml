@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_margin"
                     android:hint="@string/type_hint_form_fragment"
-                    app:helperText="@string/required_info_form_fragment"
+                    app:helperText="@string/required_info"
                     app:helperTextEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_margin"
                     android:hint="@string/price_hint_form_fragment"
-                    app:helperText="@string/required_info_form_fragment"
+                    app:helperText="@string/required_info"
                     app:helperTextEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_margin"
                     android:hint="@string/surface_hint_form_fragment"
-                    app:helperText="@string/required_info_form_fragment"
+                    app:helperText="@string/required_info"
                     app:helperTextEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText

@@ -35,12 +35,13 @@
     <string name="location_title_details_fragment">$addressFirst$s\n$addressSecond$s\n%district$s\n%zip$s n%city$s</string>
 
     // FORM FRAGMENT
-    <string name="required_info_form_fragment">* required</string>
+    <string name="required_info">* required</string>
     <string name="type_hint_form_fragment">type*</string>
     <string name="price_hint_form_fragment">price*</string>
     <string name="surface_hint_form_fragment">surface*</string>
     <string name="estate_agent_hint_form_fragment">estate agent</string>
     <string name="description_hint_form_fragment">description</string>
+    <string name="description_required_hint_form">description*</string>
     <string name="number_of_rooms_hint_form_fragment">number of rooms</string>
     <string name="number_of_bathrooms_hint_form_fragment">number of bathrooms</string>
     <string name="number_of_bedrooms_hint_form_fragment">number of bedrooms</string>
