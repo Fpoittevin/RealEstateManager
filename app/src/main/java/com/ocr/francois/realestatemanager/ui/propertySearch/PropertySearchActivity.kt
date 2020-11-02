@@ -13,7 +13,6 @@ import com.ocr.francois.realestatemanager.databinding.ActivityPropertySearchBind
 import com.ocr.francois.realestatemanager.models.PropertySearch
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.utils.Utils
-import kotlinx.android.synthetic.main.activity_property_details.*
 import kotlinx.android.synthetic.main.activity_property_search.*
 import org.joda.time.LocalDate
 

@@ -1,11 +1,13 @@
 package com.ocr.francois.realestatemanager.ui.propertyForm
 
+import android.app.DatePickerDialog
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.textfield.TextInputEditText
@@ -16,6 +18,8 @@ import com.ocr.francois.realestatemanager.models.Property
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 import com.ocr.francois.realestatemanager.ui.photosGallery.PhotosGalleryFragment
 import com.ocr.francois.realestatemanager.utils.ImageUtil
+import com.ocr.francois.realestatemanager.utils.Utils
+import org.joda.time.LocalDate
 
 class PropertyFormFragment : Fragment() {
 
@@ -58,6 +62,7 @@ class PropertyFormFragment : Fragment() {
         }
 
         configurePhotosGallery()
+        configureSoldSwitch()
 
         arguments?.let {
             it.getLong(PROPERTY_ID_KEY).let { propertyId ->
@@ -77,15 +82,45 @@ class PropertyFormFragment : Fragment() {
             )
             formTarget = FormTarget.CREATION
         }
-        Log.e("FORM TYPE", formTarget.toString())
 
         return binding.root
+    }
+
+    private fun configureSoldSwitch() {
+
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, year: Int, month: Int, dayOfMonth: Int ->
+                val saleTimeStamp = Utils.getTimestampFromDatePicker(year, month, dayOfMonth)
+                propertyWithPhotos.property.saleTimestamp = saleTimeStamp
+                binding.fragmentPropertyFormSoldTextView.text =
+                    Utils.formatDate(LocalDate(saleTimeStamp))
+            },
+            LocalDate.now().year,
+            (LocalDate.now().monthOfYear - 1),
+            LocalDate.now().dayOfMonth
+        ).also {
+            it.datePicker.maxDate = Utils.getTodayTimestamp()
+        }
+
+        binding.fragmentPropertyFormSoldSwitch.setOnCheckedChangeListener { _, value: Boolean ->
+            if (value && propertyWithPhotos.property.saleTimestamp == null) {
+                datePickerDialog.show()
+            } else {
+                propertyWithPhotos.property.saleTimestamp = null
+                binding.fragmentPropertyFormSoldTextView.text = ""
+            }
+        }
     }
 
     private fun updateUi() {
 
         binding.run {
             propertyWithPhotos.property.run {
+                saleTimestamp?.let {
+                    fragmentPropertyFormSoldSwitch.isChecked = true
+                    fragmentPropertyFormSoldTextView.text = Utils.formatDate(LocalDate(it))
+                }
                 type?.let {
                     fragmentPropertyFormTypeTextInput.setText(it)
                 }
@@ -233,8 +268,16 @@ class PropertyFormFragment : Fragment() {
             nearParks = binding.fragmentPropertyFormNearParksSwitch.isChecked
 
             //  PHOTOS
-            if (photosGalleryFragment.getPhotosList().isEmpty()) {
+            val photosList = photosGalleryFragment.getPhotosList()
+            if (photosList.isEmpty()) {
                 errorInForm = true
+            } else {
+                for (photo in photosList) {
+                    if (photo.description.isNullOrEmpty()) {
+                        errorInForm = true
+                        Toast.makeText(requireContext(), "need desc", Toast.LENGTH_LONG).show()
+                    }
+                }
             }
         }
     }
@@ -256,9 +299,12 @@ class PropertyFormFragment : Fragment() {
                 }
             }
             when (formTarget) {
-                FormTarget.CREATION -> propertyFormViewModel.createPropertyWithPhotos(
-                    propertyWithPhotos
-                )
+                FormTarget.CREATION -> {
+                    propertyWithPhotos.property.creationTimestamp = Utils.getTodayTimestamp()
+                    propertyFormViewModel.createPropertyWithPhotos(
+                        propertyWithPhotos
+                    )
+                }
                 FormTarget.MODIFICATION -> propertyFormViewModel.updatePropertyWithPhotos(
                     propertyWithPhotos
                 )

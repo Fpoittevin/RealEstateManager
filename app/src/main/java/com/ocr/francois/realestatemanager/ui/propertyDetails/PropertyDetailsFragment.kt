@@ -20,6 +20,7 @@ import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 import com.ocr.francois.realestatemanager.ui.photosGallery.PhotosGalleryFragment
 import com.ocr.francois.realestatemanager.utils.LocationTool
 import com.ocr.francois.realestatemanager.utils.Utils
+import org.joda.time.LocalDate
 
 class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
 

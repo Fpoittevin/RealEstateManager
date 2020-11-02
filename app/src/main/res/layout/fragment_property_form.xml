@@ -5,14 +5,25 @@
     android:layout_height="match_parent">
 
     <ScrollView
+        android:id="@+id/fragment_property_form_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fragment_property_form_scroll_view">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/fragment_property_form_sold_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="is sold" />
+
+            <TextView
+                android:id="@+id/fragment_property_form_sold_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <!-- GENERAL -->
             <LinearLayout
@@ -44,43 +55,52 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Price -->
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_property_form_price_text_input_layout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_margin"
-                    android:hint="@string/price_hint_form_fragment"
-                    app:helperText="@string/required_info"
-                    app:helperTextEnabled="true">
+                    android:orientation="horizontal">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_property_form_price_text_input"
-                        android:layout_width="match_parent"
+                    <!-- Price -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/fragment_property_form_price_text_input_layout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:inputType="number" />
+                        android:layout_margin="@dimen/default_margin"
+                        android:layout_weight="50"
+                        android:hint="@string/price_hint_form_fragment"
+                        app:helperText="@string/required_info"
+                        app:helperTextEnabled="true">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/fragment_property_form_price_text_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number" />
 
-                <!-- Surface -->
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_property_form_surface_text_input_layout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_margin"
-                    android:hint="@string/surface_hint_form_fragment"
-                    app:helperText="@string/required_info"
-                    app:helperTextEnabled="true">
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_property_form_surface_text_input"
-                        android:layout_width="match_parent"
+                    <!-- Surface -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/fragment_property_form_surface_text_input_layout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:inputType="numberDecimal" />
+                        android:layout_margin="@dimen/default_margin"
+                        android:layout_weight="50"
+                        android:hint="@string/surface_hint_form_fragment"
+                        app:helperText="@string/required_info"
+                        app:helperTextEnabled="true">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/fragment_property_form_surface_text_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="numberDecimal" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
 
                 <!-- Estate Agent -->
                 <com.google.android.material.textfield.TextInputLayout
@@ -129,53 +149,63 @@
                     android:layout_height="wrap_content"
                     android:text="@string/info_title_rooms" />
 
-                <!-- Rooms -->
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_margin"
-                    android:hint="@string/number_of_rooms_hint_form_fragment">
+                    android:orientation="horizontal">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_property_form_number_of_rooms_text_input"
-                        android:layout_width="match_parent"
+                    <!-- Rooms -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:inputType="number" />
+                        android:layout_margin="@dimen/default_margin"
+                        android:layout_weight="33"
+                        android:hint="@string/number_of_rooms_hint_form_fragment">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/fragment_property_form_number_of_rooms_text_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number" />
 
-                <!-- Bathrooms -->
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_margin"
-                    android:hint="@string/number_of_bathrooms_hint_form_fragment">
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_property_form_number_of_bathrooms_text_input"
-                        android:layout_width="match_parent"
+                    <!-- Bathrooms -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:inputType="number" />
+                        android:layout_margin="@dimen/default_margin"
+                        android:layout_weight="33"
+                        android:hint="@string/number_of_bathrooms_hint_form_fragment">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/fragment_property_form_number_of_bathrooms_text_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number" />
 
-                <!-- Bedrooms -->
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_margin"
-                    android:hint="@string/number_of_bedrooms_hint_form_fragment">
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_property_form_number_of_bedrooms_text_input"
-                        android:layout_width="match_parent"
+                    <!-- Bedrooms -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:inputType="number" />
+                        android:layout_margin="@dimen/default_margin"
+                        android:layout_weight="33"
+                        android:hint="@string/number_of_bedrooms_hint_form_fragment">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/fragment_property_form_number_of_bedrooms_text_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -227,43 +257,52 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- City -->
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_property_form_city_text_input_layout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_margin"
-                    android:hint="@string/city_hint_form_fragment"
-                    app:helperText="* required"
-                    app:helperTextEnabled="true">
+                    android:orientation="horizontal">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_property_form_city_text_input"
-                        android:layout_width="match_parent"
+                    <!-- Zip Code -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/fragment_property_form_zip_code_text_input_layout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:inputType="text" />
+                        android:layout_margin="@dimen/default_margin"
+                        android:layout_weight="30"
+                        android:hint="@string/zip_code_hint_form_fragment"
+                        app:helperText="* required"
+                        app:helperTextEnabled="true">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/fragment_property_form_zip_code_text_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text" />
 
-                <!-- Zip Code -->
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_property_form_zip_code_text_input_layout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_margin"
-                    android:hint="@string/zip_code_hint_form_fragment"
-                    app:helperText="* required"
-                    app:helperTextEnabled="true">
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_property_form_zip_code_text_input"
-                        android:layout_width="match_parent"
+                    <!-- City -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/fragment_property_form_city_text_input_layout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:inputType="text" />
+                        android:layout_margin="@dimen/default_margin"
+                        android:layout_weight="70"
+                        android:hint="@string/city_hint_form_fragment"
+                        app:helperText="* required"
+                        app:helperTextEnabled="true">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/fragment_property_form_city_text_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -340,10 +379,10 @@
         android:id="@+id/fragment_property_form_save_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_save_24"
         android:layout_margin="@dimen/default_big_margin"
-        app:elevation="6dp"
+        android:src="@drawable/ic_baseline_save_24"
         app:backgroundTint="@color/colorAccent"
+        app:elevation="6dp"
         app:layout_anchor="@+id/fragment_property_form_scroll_view"
         app:layout_anchorGravity="bottom|right|end" />
 

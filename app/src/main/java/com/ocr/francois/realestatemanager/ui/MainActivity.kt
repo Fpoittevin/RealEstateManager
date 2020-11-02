@@ -138,7 +138,6 @@ class MainActivity : BaseActivity(),
         if (requestCode == REQUEST_SEARCH_CODE && resultCode == RESULT_OK && intent != null) {
             propertiesListViewModel.propertySearchLiveData.value =
                 intent.extras?.getParcelable("PROPERTY_SEARCH")
-
         }
     }
 }

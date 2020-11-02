@@ -33,7 +33,7 @@ class Utils {
         }
 
         fun getTodayTimestamp(): Long {
-            return LocalDate.now().toDate().time
+            return Date().time
         }
 
         fun getTimestampFromDatePicker(year: Int, month: Int, day: Int): Long {
