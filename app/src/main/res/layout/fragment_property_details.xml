@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fragment_property_details_modification_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_edit_24" />
-
     <ScrollView
+        android:id="@+id/fragment_property_details_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -19,165 +15,150 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
+            <FrameLayout
+                android:id="@+id/fragment_property_details_gallery_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin">
+                android:baselineAligned="false"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="50"
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/CardViewTitleStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/info_title_description" />
-
-                    <TextView
-                        android:id="@+id/fragment_property_details_description_text_view"
-                        style="@style/cardViewTextStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/CardViewTitleStyle"
+                        style="@style/Title6Style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/info_title_general" />
 
                     <TextView
                         android:id="@+id/fragment_property_details_surface_text_view"
-                        style="@style/cardViewTextStyle"
+                        style="@style/BodyTextWithIconStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_baseline_surface_24" />
+                        app:drawableStartCompat="@drawable/ic_baseline_surface_24" />
 
                     <TextView
                         android:id="@+id/fragment_property_details_price_text_view"
-                        style="@style/cardViewTextStyle"
+                        style="@style/BodyTextWithIconStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_baseline_monetization_24" />
+                        app:drawableStartCompat="@drawable/ic_baseline_monetization_24" />
+
+                    <TextView
+                        android:id="@+id/fragment_property_details_estate_agent_text_view"
+                        style="@style/BodyTextWithIconStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:drawableStartCompat="@drawable/ic_baseline_person_24" />
 
                 </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="50"
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/CardViewTitleStyle"
+                        style="@style/Title6Style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/info_title_rooms" />
 
                     <TextView
                         android:id="@+id/fragment_property_details_number_of_rooms_text_view"
-                        style="@style/cardViewTextStyle"
+                        style="@style/BodyTextWithIconStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_baseline_rooms_24" />
+                        app:drawableStartCompat="@drawable/ic_baseline_rooms_24" />
 
                     <TextView
                         android:id="@+id/fragment_property_details_number_of_bathrooms_text_view"
-                        style="@style/cardViewTextStyle"
+                        style="@style/BodyTextWithIconStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_baseline_bathrooms_24" />
+                        app:drawableStartCompat="@drawable/ic_baseline_bathrooms_24" />
 
                     <TextView
                         android:id="@+id/fragment_property_details_number_of_bedrooms_text_view"
-                        style="@style/cardViewTextStyle"
+                        style="@style/BodyTextWithIconStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_baseline_bedrooms_24" />
+                        app:drawableStartCompat="@drawable/ic_baseline_bedrooms_24" />
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </LinearLayout>
 
-            <androidx.cardview.widget.CardView
+            <View style="@style/divider" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin">
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    style="@style/Title6Style"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:text="@string/info_title_description" />
 
-                    <TextView
-                        style="@style/CardViewTitleStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/info_title_location" />
+                <TextView
+                    android:id="@+id/fragment_property_details_description_text_view"
+                    style="@style/BodyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:id="@+id/fragment_property_details_address_text_view"
-                        style="@style/cardViewTextStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_baseline_location_24" />
+            </LinearLayout>
 
-                    <androidx.fragment.app.FragmentContainerView
-                        android:id="@+id/fragment_property_details_map_container"
-                        android:name="com.google.android.gms.maps.SupportMapFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        map:liteMode="true" />
-                </LinearLayout>
+            <View style="@style/divider" />
 
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin">
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    style="@style/Title6Style"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:text="@string/info_title_location" />
 
-                    <TextView
-                        style="@style/CardViewTitleStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/info_title_photo" />
+                <TextView
+                    android:id="@+id/fragment_property_details_address_text_view"
+                    style="@style/BodyTextWithIconStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:drawableStartCompat="@drawable/ic_baseline_location_24" />
 
-                    <FrameLayout
-                        android:id="@+id/fragment_property_details_gallery_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/fragment_property_details_map_container"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="@dimen/default_small_margin"
+                    map:liteMode="true" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fragment_property_details_modification_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_big_margin"
+        android:src="@drawable/ic_baseline_edit_24"
+        app:elevation="6dp"
+        app:backgroundTint="@color/colorAccent"
+        app:layout_anchor="@+id/fragment_property_details_scroll_view"
+        app:layout_anchorGravity="bottom|right|end" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

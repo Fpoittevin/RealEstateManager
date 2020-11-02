@@ -16,7 +16,6 @@ import com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesListViewMo
 import com.ocr.francois.realestatemanager.ui.propertyCreation.PropertyCreationActivity
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsActivity
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFragment
-import com.ocr.francois.realestatemanager.ui.propertyForm.PropertyFormFragment
 import com.ocr.francois.realestatemanager.ui.propertyModification.PropertyModificationActivity
 import com.ocr.francois.realestatemanager.ui.propertySearch.PropertySearchActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -52,7 +51,7 @@ class MainActivity : BaseActivity(),
     }
 
     override fun onPropertyItemClick(propertyId: Long) {
-        showPropertyDetailsFragment(propertyId)
+        showPropertyDetails(propertyId)
     }
 
     private fun startPropertySearchActivity() {
@@ -100,7 +99,7 @@ class MainActivity : BaseActivity(),
         startActivity(propertyModificationIntent)
     }
 
-    private fun showPropertyDetailsFragment(propertyId: Long) {
+    private fun showPropertyDetails(propertyId: Long) {
         binding.activityMainFrameLayoutSecond?.let {
             displayFragment(
                 R.id.activity_main_frame_layout_second,
@@ -108,28 +107,6 @@ class MainActivity : BaseActivity(),
             )
         } ?: run {
             startPropertyDetailsActivity(propertyId)
-        }
-    }
-
-    private fun showPropertyCreationFragment() {
-        binding.activityMainFrameLayoutSecond?.let {
-            displayFragment(
-                R.id.activity_main_frame_layout_second,
-                PropertyFormFragment.newInstance()
-            )
-        } ?: kotlin.run {
-            startPropertyCreationActivity()
-        }
-    }
-
-    private fun showPropertyModificationFragment(propertyId: Long) {
-        binding.activityMainFrameLayoutSecond?.let {
-            displayFragment(
-                R.id.activity_main_frame_layout_second,
-                PropertyFormFragment.newInstance(propertyId)
-            )
-        } ?: kotlin.run {
-            startPropertyModificationActivity(propertyId)
         }
     }
 
@@ -144,7 +121,7 @@ class MainActivity : BaseActivity(),
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.main_activity_toolbar_menu_creation_button -> showPropertyCreationFragment()
+            R.id.main_activity_toolbar_menu_creation_button -> startPropertyCreationActivity()
             R.id.main_activity_toolbar_menu_map_view_button -> startMapViewActivity()
             R.id.main_activity_toolbar_menu_filter_button -> startPropertySearchActivity()
         }
@@ -152,7 +129,7 @@ class MainActivity : BaseActivity(),
     }
 
     override fun onPropertyModificationClick(propertyId: Long) {
-        showPropertyModificationFragment(propertyId)
+        startPropertyModificationActivity(propertyId)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {

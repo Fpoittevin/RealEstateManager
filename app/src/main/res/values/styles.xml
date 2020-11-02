@@ -2,30 +2,54 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorAccent">@color/secondaryColor</item>
     </style>
 
     <style name="CardViewStyle" parent="Widget.MaterialComponents.CardView">
-        <item name="android:layout_margin">@dimen/default_margin</item>
+        <item name="android:layout_margin">@dimen/default_big_margin</item>
     </style>
 
-    <style name="CardViewTitleStyle" parent="AppTheme">
-        <item name="android:textSize">15sp</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:layout_margin">@dimen/default_margin</item>
+    <style name="Title6Style" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:layout_margin">@dimen/default_big_margin</item>
     </style>
 
-    <style name="cardViewTextStyle" parent="AppTheme">
-        <item name="android:layout_margin">@dimen/default_margin</item>
-        <item name="android:drawablePadding">5dp</item>
+    <style name="BodyTextStyle" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:layout_marginStart">@dimen/default_big_margin</item>
+        <item name="android:layout_marginEnd">@dimen/default_big_margin</item>
+        <item name="android:layout_marginBottom">@dimen/default_small_margin</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="BodyTextWithIconStyle" parent="BodyTextStyle">
+        <item name="android:drawablePadding">@dimen/default_small_margin</item>
     </style>
 
     <style name="divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">?android:attr/listDivider</item>
+        <item name="android:layout_margin">@dimen/default_big_margin</item>
+    </style>
+
+    <style name="SliderStyle">
+        <item name="android:layout_marginStart">@dimen/default_big_margin</item>
+        <item name="android:layout_marginEnd">@dimen/default_big_margin</item>
+    </style>
+    <style name="SliderTextInfoStyle">
+        <item name="android:layout_marginStart">@dimen/default_big_margin</item>
+        <item name="android:layout_marginEnd">@dimen/default_big_margin</item>
+    </style>
+
+    <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:layout_margin">@dimen/default_big_margin</item>
+    </style>
+
+    <style name="TitleToolbarStyle" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/roboto_thin</item>
     </style>
 
 </resources>

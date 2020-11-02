@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Environment
-import android.util.Log
 import android.widget.Toast
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -61,9 +60,12 @@ class ImageUtil {
             )
         }
 
-        fun deleteFileFromUri(uri: Uri, context: Context) {
-            val contentResolver = context.contentResolver
-            contentResolver.delete(uri, null, null)
+        fun deleteFileFromUri(uri: Uri) {
+
+            val file = File(uri.path!!)
+            if (file.exists()) {
+                file.delete()
+            }
         }
     }
 }

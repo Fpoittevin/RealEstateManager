@@ -7,25 +7,37 @@
     android:orientation="vertical"
     tools:context=".ui.photosGallery.PhotosGalleryFragment">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/fragment_photos_gallery_view_pager"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="300dp">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/fragment_photos_gallery_tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        app:tabBackground="@drawable/gallery_tab_selector"
-        app:tabGravity="center"
-        app:tabIndicatorHeight="0dp" />
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/fragment_photos_gallery_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <Button
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/fragment_photos_gallery_tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            app:tabBackground="@drawable/gallery_tab_selector"
+            app:tabGravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:tabIndicatorHeight="0dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/fragment_photos_gallery_add_photo_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_baseline_add_24"
-        app:drawableTint="@android:color/white" />
+        android:text="add picture"
+        app:icon="@drawable/ic_baseline_add_24"
+        />
 
 </LinearLayout>

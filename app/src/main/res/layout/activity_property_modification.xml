@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.propertyModification.PropertyModificationActivity">
 
@@ -13,6 +14,7 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/activity_property_modification_toolbar"
             android:layout_width="match_parent"
+            app:titleTextAppearance="@style/TitleToolbarStyle"
             android:layout_height="wrap_content" />
 
     </com.google.android.material.appbar.AppBarLayout>

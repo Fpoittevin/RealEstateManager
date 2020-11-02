@@ -248,7 +248,7 @@ class PropertyFormFragment : Fragment() {
                 photosList.apply {
                     forEach {
                         if (!photosGalleryFragment.getPhotosList().contains(it)) {
-                            ImageUtil.deleteFileFromUri(Uri.parse(it.uri), requireContext())
+                            ImageUtil.deleteFileFromUri(Uri.parse(it.uri))
                         }
                     }
                     clear()

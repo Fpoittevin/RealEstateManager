@@ -3,6 +3,7 @@ package com.ocr.francois.realestatemanager.ui.propertySearch
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.DatePicker
@@ -12,6 +13,8 @@ import com.ocr.francois.realestatemanager.databinding.ActivityPropertySearchBind
 import com.ocr.francois.realestatemanager.models.PropertySearch
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.utils.Utils
+import kotlinx.android.synthetic.main.activity_property_details.*
+import kotlinx.android.synthetic.main.activity_property_search.*
 import org.joda.time.LocalDate
 
 class PropertySearchActivity : BaseActivity(),
@@ -37,6 +40,7 @@ class PropertySearchActivity : BaseActivity(),
         binding = ActivityPropertySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        configureToolbar()
         configurePriceRangeSlider()
         configureSurfaceRangeSlider()
         configureRoomsRangeSlider()
@@ -50,6 +54,18 @@ class PropertySearchActivity : BaseActivity(),
         configureSaleDateStartButton()
         configureSaleDateStopButton()
         configureFab()
+    }
+
+    private fun configureToolbar() {
+        setSupportActionBar(activity_property_search_toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     // PRICE

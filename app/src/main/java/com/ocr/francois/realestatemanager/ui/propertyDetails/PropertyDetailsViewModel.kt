@@ -7,5 +7,7 @@ class PropertyDetailsViewModel(
     private val propertyRepository: PropertyRepository
 ) : ViewModel() {
 
+    fun getProperty(id: Long) = propertyRepository.getProperty(id)
+
     fun getPropertyWithPhotos(id: Long) = propertyRepository.getPropertyWithPhotos(id)
 }

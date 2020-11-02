@@ -1,7 +1,6 @@
 package com.ocr.francois.realestatemanager.ui.propertyDetails
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +19,7 @@ import com.ocr.francois.realestatemanager.models.Property
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 import com.ocr.francois.realestatemanager.ui.photosGallery.PhotosGalleryFragment
 import com.ocr.francois.realestatemanager.utils.LocationTool
-import kotlinx.android.synthetic.main.fragment_property_details.*
+import com.ocr.francois.realestatemanager.utils.Utils
 
 class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
 
@@ -41,8 +40,6 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
 
-        //TODO: change findViewById with ViewBinding
-
         binding = FragmentPropertyDetailsBinding.inflate(inflater, container, false)
 
         configurePhotosGallery()
@@ -53,7 +50,6 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
             propertyDetailsViewModel.getPropertyWithPhotos(propertyId)
                 .observe(viewLifecycleOwner, { propertyWithPhotos ->
                     this.propertyWithPhotos = propertyWithPhotos
-                    Log.e("PROPERTY: ", propertyWithPhotos.toString())
                     updateUi()
                 })
             binding.fragmentPropertyDetailsModificationFab.setOnClickListener {
@@ -88,25 +84,35 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
     private fun updateUi() {
         this.property = propertyWithPhotos.property
 
-        property.description?.let { fragment_property_details_description_text_view.text = it }
+        property.description?.let {
+            binding.fragmentPropertyDetailsDescriptionTextView.text = it
+        }
 
         property.surface?.let {
-            fragment_property_details_surface_text_view.text = StringBuilder()
+            binding.fragmentPropertyDetailsSurfaceTextView.text = StringBuilder()
                 .append(it.toString())
                 .append(" m²")
                 .toString()
         }
-        property.price?.let { fragment_property_details_price_text_view.text = it.toString() }
+        property.price?.let {
+            binding.fragmentPropertyDetailsPriceTextView.text =
+                StringBuilder()
+                    .append("$ ")
+                    .append(Utils.formatNumber(it))
+                    .toString()
+        }
+        property.estateAgent?.let {
+            binding.fragmentPropertyDetailsEstateAgentTextView.text = it
+        }
 
-        fragment_property_details_number_of_rooms_text_view.text =
-
+        binding.fragmentPropertyDetailsNumberOfRoomsTextView.text =
             getString(R.string.rooms_title_details_fragment, property.numberOfRooms)
-        fragment_property_details_number_of_bathrooms_text_view.text =
+        binding.fragmentPropertyDetailsNumberOfBathroomsTextView.text =
             getString(R.string.bathrooms_title_details_fragment, property.numberOfBathrooms)
-        fragment_property_details_number_of_bedrooms_text_view.text =
+        binding.fragmentPropertyDetailsNumberOfBedroomsTextView.text =
             getString(R.string.bedrooms_title_details_fragment, property.numberOfBedrooms)
 
-        fragment_property_details_address_text_view.text =
+        binding.fragmentPropertyDetailsAddressTextView.text =
             LocationTool.addressConcatenation(property, true)
 
         photosGalleryFragment.updateList(propertyWithPhotos.photosList)
@@ -120,7 +126,8 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
         if (property.lat != null && property.lng != null) {
             mapFragment.getMapAsync(this)
         } else {
-            mapFragment.view?.visibility = View.INVISIBLE
+            val viewGroup = binding.fragmentPropertyDetailsMapContainer.parent as ViewGroup
+            viewGroup.removeView(binding.fragmentPropertyDetailsMapContainer)
         }
     }
 

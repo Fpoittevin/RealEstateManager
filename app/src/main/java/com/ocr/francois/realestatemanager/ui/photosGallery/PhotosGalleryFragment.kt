@@ -5,12 +5,12 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ocr.francois.realestatemanager.R
@@ -70,7 +70,7 @@ class PhotosGalleryFragment : Fragment(),
     }
 
     fun updateList(photosList: List<Photo>) {
-            photosGalleryAdapter.updateList(photosList)
+        photosGalleryAdapter.updateList(photosList)
     }
 
     private fun configurePhotosGalleryViewPager() {

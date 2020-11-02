@@ -16,6 +16,7 @@
             android:id="@+id/activity_map_view_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:titleTextAppearance="@style/TitleToolbarStyle"
             app:backgroundTint="@color/colorPrimary" />
 
     </com.google.android.material.appbar.AppBarLayout>

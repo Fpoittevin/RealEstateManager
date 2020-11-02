@@ -1,10 +1,10 @@
 package com.ocr.francois.realestatemanager.ui.photosGallery
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.PhotosGalleryItemBinding
 import com.ocr.francois.realestatemanager.models.Photo
@@ -59,10 +59,17 @@ class PhotosGalleryAdapter(private val isEditable: Boolean) :
 
     class PhotosGalleryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        internal var binding: PhotosGalleryItemBinding = PhotosGalleryItemBinding.bind(itemView)
+        internal var binding = PhotosGalleryItemBinding.bind(itemView)
 
         fun updateUi(photo: Photo) {
-            binding.photosGalleryItemImageView.setImageURI(Uri.parse(photo.uri))
+            binding.apply {
+                Glide
+                    .with(itemView)
+                    .load(photo.uri)
+                    .fitCenter()
+                    .into(photosGalleryItemImageView)
+            }
+            //binding.photosGalleryItemImageView.setImageURI(Uri.parse(photo.uri))
         }
     }
 }

@@ -4,15 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fragment_property_form_save_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_save_24" />
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_property_form_scroll_view">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,7 +21,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/CardViewTitleStyle"
+                    style="@style/Title6Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/info_title_general" />
@@ -129,7 +124,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/CardViewTitleStyle"
+                    style="@style/Title6Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/info_title_rooms" />
@@ -192,7 +187,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/CardViewTitleStyle"
+                    style="@style/Title6Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/info_title_location" />
@@ -280,35 +275,39 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/CardViewTitleStyle"
+                    style="@style/Title6Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/info_title_points_of_interests" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/fragment_property_form_near_school_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_big_margin"
                     android:text="@string/near_school_hint_form_fragment" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
 
                     android:id="@+id/fragment_property_form_near_transports_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_big_margin"
                     android:text="@string/near_transports_hint_form_fragment" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
 
                     android:id="@+id/fragment_property_form_near_shops_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_big_margin"
                     android:text="@string/near_shops_hint_form_fragment" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/fragment_property_form_near_parks_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_big_margin"
                     android:text="@string/near_parks_hint_form_fragment" />
 
             </LinearLayout>
@@ -321,7 +320,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/CardViewTitleStyle"
+                    style="@style/Title6Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/info_title_photo" />
@@ -336,4 +335,16 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fragment_property_form_save_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_save_24"
+        android:layout_margin="@dimen/default_big_margin"
+        app:elevation="6dp"
+        app:backgroundTint="@color/colorAccent"
+        app:layout_anchor="@+id/fragment_property_form_scroll_view"
+        app:layout_anchorGravity="bottom|right|end" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
