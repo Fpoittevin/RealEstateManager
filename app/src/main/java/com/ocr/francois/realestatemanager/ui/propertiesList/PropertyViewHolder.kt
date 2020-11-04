@@ -17,6 +17,12 @@ class PropertyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         binding.apply {
             recyclerViewPropertyItemTypeTextView.text = propertyWithPhotos.property.type
 
+            propertyWithPhotos.property.saleTimestamp?.let {
+                recyclerViewPropertyItemSoldTextView.text = "sold"
+            } ?: run {
+                recyclerViewPropertyItemSoldTextView.text = ""
+            }
+
             propertyWithPhotos.property.price?.let {
                 val price = "$ " + Utils.formatNumber(it)
                 recyclerViewPropertyItemPriceTextView.text = price

@@ -16,6 +16,7 @@ import com.ocr.francois.realestatemanager.databinding.FragmentPropertyFormBindin
 import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.models.Property
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
+import com.ocr.francois.realestatemanager.notification.NotificationSender
 import com.ocr.francois.realestatemanager.ui.photosGallery.PhotosGalleryFragment
 import com.ocr.francois.realestatemanager.utils.ImageUtil
 import com.ocr.francois.realestatemanager.utils.Utils
@@ -304,6 +305,7 @@ class PropertyFormFragment : Fragment() {
                     propertyFormViewModel.createPropertyWithPhotos(
                         propertyWithPhotos
                     )
+                    NotificationSender().sendNotification(requireContext())
                 }
                 FormTarget.MODIFICATION -> propertyFormViewModel.updatePropertyWithPhotos(
                     propertyWithPhotos

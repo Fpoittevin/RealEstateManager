@@ -5,6 +5,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityMainBinding
 import com.ocr.francois.realestatemanager.injection.Injection
@@ -22,6 +26,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : BaseActivity(),
+    NavigationView.OnNavigationItemSelectedListener,
     PropertiesAdapter.PropertyItemClickCallback,
     PropertyDetailsFragment.PropertyModificationFabListener {
 
@@ -42,7 +47,10 @@ class MainActivity : BaseActivity(),
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         configureToolbar()
+        configureDrawerLayout()
+        configureNavigationView()
 
         displayFragment(
             R.id.activity_main_frame_layout,
@@ -68,6 +76,14 @@ class MainActivity : BaseActivity(),
             MapViewActivity::class.java
         )
         startActivity(mapViewIntent)
+    }
+
+    private fun startLoanActivity() {
+
+    }
+
+    private fun startSettingsActivity() {
+
     }
 
     private fun startPropertyDetailsActivity(propertyId: Long) {
@@ -114,18 +130,33 @@ class MainActivity : BaseActivity(),
         setSupportActionBar(activity_main_toolbar)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_activity_toolbar_menu, menu)
-        return true
+    private fun configureDrawerLayout() {
+        ActionBarDrawerToggle(
+            this,
+            binding.activityMainDrawerLayout as DrawerLayout,
+            binding.activityMainToolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        ).apply {
+            syncState()
+        }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.main_activity_toolbar_menu_creation_button -> startPropertyCreationActivity()
-            R.id.main_activity_toolbar_menu_map_view_button -> startMapViewActivity()
-            R.id.main_activity_toolbar_menu_filter_button -> startPropertySearchActivity()
+    private fun configureNavigationView() {
+        binding.activityMainNavigationView.setNavigationItemSelectedListener(this)
+    }
+
+    override fun onBackPressed() {
+        if (binding.activityMainDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.activityMainDrawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
         }
-        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.activity_main_toolbar_menu, menu)
+        return true
     }
 
     override fun onPropertyModificationClick(propertyId: Long) {
@@ -139,5 +170,22 @@ class MainActivity : BaseActivity(),
             propertiesListViewModel.propertySearchLiveData.value =
                 intent.extras?.getParcelable("PROPERTY_SEARCH")
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.main_activity_toolbar_menu_creation_button -> startPropertyCreationActivity()
+            R.id.main_activity_toolbar_menu_filter_button -> startPropertySearchActivity()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.activity_main_drawer_map -> startMapViewActivity()
+            R.id.activity_main_drawer_loan -> startLoanActivity()
+            R.id.activity_main_drawer_settings -> startSettingsActivity()
+        }
+        return true
     }
 }

@@ -3,20 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/CardViewStyle"
     android:layout_width="match_parent"
-    app:cardElevation="5dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:cardElevation="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/recycler_view_property_item_photo_image_view"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:contentDescription="@string/property_photo_content_description"
-                android:src="@drawable/ic_baseline_photo_24" />
+                android:src="@drawable/ic_baseline_photo_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/recycler_view_property_item_sold_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Title6Style"
+                app:elevation="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/recycler_view_property_item_photo_image_view"
+                app:layout_constraintTop_toTopOf="@+id/recycler_view_property_item_photo_image_view" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"

@@ -78,6 +78,14 @@
     <string name="sold_before_text_button_search_activity">SOLD BEFORE</string>
 
     <string name="request_camera_permission">RealEstateManager needs access to the camera</string>
+
+    // NOTIFICATION
+    <string name="notification_title">Real Estate Manager</string>
+    <string name="notification_text">A new property has been added</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
