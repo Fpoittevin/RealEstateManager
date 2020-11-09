@@ -95,12 +95,9 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
                 .append(" m²")
                 .toString()
         }
-        property.price?.let {
+        property.formattedPrice?.let {
             binding.fragmentPropertyDetailsPriceTextView.text =
-                StringBuilder()
-                    .append("$ ")
-                    .append(Utils.formatNumber(it))
-                    .toString()
+                it
         }
         property.estateAgent?.let {
             binding.fragmentPropertyDetailsEstateAgentTextView.text = it

@@ -86,6 +86,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="preference_file_key">rem_preference</string>
+
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

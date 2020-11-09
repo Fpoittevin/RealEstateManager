@@ -1,15 +1,18 @@
 package com.ocr.francois.realestatemanager.ui.propertyForm
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.viewModelScope
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
+import com.ocr.francois.realestatemanager.repositories.CurrencyRepository
 import com.ocr.francois.realestatemanager.repositories.PropertyRepository
+import com.ocr.francois.realestatemanager.ui.base.BaseCurrencyViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PropertyFormViewModel(
-    private val propertyRepository: PropertyRepository
-) : ViewModel() {
+    private val propertyRepository: PropertyRepository,
+    private val currencyRepository: CurrencyRepository
+) : BaseCurrencyViewModel(currencyRepository) {
 
     fun createPropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -26,5 +29,26 @@ class PropertyFormViewModel(
         }
     }
 
-    fun getPropertyWithPhotos(id: Long) = propertyRepository.getPropertyWithPhotos(id)
+    fun getPropertyWithPhotos(id: Long) = MediatorLiveData<PropertyWithPhotos>().apply {
+        addSource(propertyRepository.getPropertyWithPhotos(id)) { propertyWithPhotos ->
+            propertyWithPhotos.property.apply {
+                price?.let {
+                    formattedPrice =
+                        convertPriceInCurrentCurrency(it).toString()
+                }
+            }
+            value = propertyWithPhotos
+        }
+        addSource(currencyRepository.getCurrencyLiveData()) {
+            currency = it
+            value?.let { propertyWithPhotos ->
+                propertyWithPhotos.property.apply {
+                    price?.let {
+                        formattedPrice =
+                            convertPriceInCurrentCurrency(it).toString()
+                    }
+                }
+            }
+        }
+    }
 }

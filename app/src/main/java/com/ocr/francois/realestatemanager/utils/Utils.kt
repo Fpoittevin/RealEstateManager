@@ -46,5 +46,17 @@ class Utils {
             date.set(Calendar.SECOND, 59)
             return date.timeInMillis
         }
+
+        fun getFormattedPriceWithCurrency(currency: Currency, price: Int): String {
+
+            return when (currency) {
+                Currency.DOLLAR -> {
+                        "$ ${formatNumber(price)}"
+                }
+                Currency.EURO -> {
+                        "${formatNumber(price)} €"
+                }
+            }
+        }
     }
 }

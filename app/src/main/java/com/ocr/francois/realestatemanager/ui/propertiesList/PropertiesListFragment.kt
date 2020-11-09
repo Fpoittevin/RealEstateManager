@@ -35,11 +35,14 @@ class PropertiesListFragment : Fragment() {
 
         configureRecyclerView(view)
 
+        return view
+    }
+
+    override fun onStart() {
+        super.onStart()
         propertiesListViewModel.getPropertiesWithPhotos().observe(viewLifecycleOwner, {
             propertiesAdapter.updateProperties(it)
         })
-
-        return view
     }
 
     override fun onAttach(context: Context) {

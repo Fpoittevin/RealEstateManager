@@ -1,8 +1,11 @@
 package com.ocr.francois.realestatemanager.ui.propertyForm
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +21,8 @@ import com.ocr.francois.realestatemanager.models.Property
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 import com.ocr.francois.realestatemanager.notification.NotificationSender
 import com.ocr.francois.realestatemanager.ui.photosGallery.PhotosGalleryFragment
+import com.ocr.francois.realestatemanager.utils.Currency
+import com.ocr.francois.realestatemanager.utils.CurrencyLiveData
 import com.ocr.francois.realestatemanager.utils.ImageUtil
 import com.ocr.francois.realestatemanager.utils.Utils
 import org.joda.time.LocalDate
@@ -114,6 +119,7 @@ class PropertyFormFragment : Fragment() {
         }
     }
 
+
     private fun updateUi() {
 
         binding.run {
@@ -125,8 +131,8 @@ class PropertyFormFragment : Fragment() {
                 type?.let {
                     fragmentPropertyFormTypeTextInput.setText(it)
                 }
-                price?.let {
-                    fragmentPropertyFormPriceTextInput.setText(it.toString())
+                formattedPrice?.let {
+                    fragmentPropertyFormPriceTextInput.setText(it)
                 }
                 surface?.let {
                     fragmentPropertyFormSurfaceTextInput.setText(it.toString())
@@ -299,6 +305,26 @@ class PropertyFormFragment : Fragment() {
                     addAll(photosGalleryFragment.getPhotosList())
                 }
             }
+
+            val sharedPreferences = requireContext().getSharedPreferences(
+                getString(R.string.preference_file_key),
+                Context.MODE_PRIVATE
+            )
+
+            sharedPreferences.getString(CurrencyLiveData.CURRENCY_KEY, Currency.DOLLAR.name)?.let {
+                Currency.valueOf(
+                    it
+                )
+            }?.let {
+                if (it == Currency.EURO) {
+                    propertyWithPhotos.property.price?.let { price ->
+                        price.apply {
+                            Utils.convertEuroToDollar(price)
+                        }
+                    }
+                }
+            }
+
             when (formTarget) {
                 FormTarget.CREATION -> {
                     propertyWithPhotos.property.creationTimestamp = Utils.getTodayTimestamp()

@@ -60,8 +60,7 @@ data class PropertySearch(
         parcel.readValue(Long::class.java.classLoader) as? Long,
         parcel.readValue(Long::class.java.classLoader) as? Long,
         parcel.readValue(Int::class.java.classLoader) as? Int
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(minPrice)

@@ -2,7 +2,9 @@ package com.ocr.francois.realestatemanager.models
 
 import android.content.ContentValues
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity
 data class Property(
@@ -31,7 +33,10 @@ data class Property(
 
 
     var lat: Double? = null,
-    var lng: Double? = null
+    var lng: Double? = null,
+
+    @Ignore
+    var formattedPrice: String? = null
 ) {
 
     companion object {

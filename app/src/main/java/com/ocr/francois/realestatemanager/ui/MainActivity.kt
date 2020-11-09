@@ -1,13 +1,14 @@
 package com.ocr.francois.realestatemanager.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityMainBinding
@@ -22,6 +23,8 @@ import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsActi
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFragment
 import com.ocr.francois.realestatemanager.ui.propertyModification.PropertyModificationActivity
 import com.ocr.francois.realestatemanager.ui.propertySearch.PropertySearchActivity
+import com.ocr.francois.realestatemanager.ui.settings.SettingsActivity
+import com.ocr.francois.realestatemanager.utils.CurrencyLiveData
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -58,8 +61,25 @@ class MainActivity : BaseActivity(),
         )
     }
 
-    override fun onPropertyItemClick(propertyId: Long) {
-        showPropertyDetails(propertyId)
+    private fun configureToolbar() {
+        setSupportActionBar(activity_main_toolbar)
+    }
+
+    private fun configureDrawerLayout() {
+        ActionBarDrawerToggle(
+            this,
+            binding.activityMainDrawerLayout,
+            binding.activityMainToolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        ).apply {
+            binding.activityMainDrawerLayout.addDrawerListener(this)
+            syncState()
+        }
+    }
+
+    private fun configureNavigationView() {
+        binding.activityMainNavigationView.setNavigationItemSelectedListener(this)
     }
 
     private fun startPropertySearchActivity() {
@@ -83,7 +103,11 @@ class MainActivity : BaseActivity(),
     }
 
     private fun startSettingsActivity() {
-
+        val settingsIntent = Intent(
+            this,
+            SettingsActivity::class.java
+        )
+        startActivity(settingsIntent)
     }
 
     private fun startPropertyDetailsActivity(propertyId: Long) {
@@ -126,34 +150,6 @@ class MainActivity : BaseActivity(),
         }
     }
 
-    private fun configureToolbar() {
-        setSupportActionBar(activity_main_toolbar)
-    }
-
-    private fun configureDrawerLayout() {
-        ActionBarDrawerToggle(
-            this,
-            binding.activityMainDrawerLayout as DrawerLayout,
-            binding.activityMainToolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
-        ).apply {
-            syncState()
-        }
-    }
-
-    private fun configureNavigationView() {
-        binding.activityMainNavigationView.setNavigationItemSelectedListener(this)
-    }
-
-    override fun onBackPressed() {
-        if (binding.activityMainDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            binding.activityMainDrawerLayout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.activity_main_toolbar_menu, menu)
         return true
@@ -187,5 +183,17 @@ class MainActivity : BaseActivity(),
             R.id.activity_main_drawer_settings -> startSettingsActivity()
         }
         return true
+    }
+
+    override fun onBackPressed() {
+        if (binding.activityMainDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.activityMainDrawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    override fun onPropertyItemClick(propertyId: Long) {
+        showPropertyDetails(propertyId)
     }
 }

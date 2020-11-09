@@ -23,9 +23,8 @@ class PropertyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 recyclerViewPropertyItemSoldTextView.text = ""
             }
 
-            propertyWithPhotos.property.price?.let {
-                val price = "$ " + Utils.formatNumber(it)
-                recyclerViewPropertyItemPriceTextView.text = price
+            propertyWithPhotos.property.formattedPrice?.let {
+                recyclerViewPropertyItemPriceTextView.text = it
             }
 
             propertyWithPhotos.property.surface?.let {
@@ -38,7 +37,6 @@ class PropertyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             }
 
             if (propertyWithPhotos.photosList.isNotEmpty()) {
-                //binding.photosGalleryItemImageView.setImageURI(Uri.parse(photo.uri))
 
                 val uri = Uri.parse(propertyWithPhotos.photosList[0].uri)
 
