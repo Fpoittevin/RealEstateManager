@@ -4,13 +4,10 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
@@ -68,9 +65,6 @@ class PropertyFormFragment : Fragment() {
             fragmentPropertyFormSaveFab.setOnClickListener { saveProperty() }
         }
 
-        configurePhotosGallery()
-        configureSoldSwitch()
-
         arguments?.let {
             it.getLong(PROPERTY_ID_KEY).let { propertyId ->
                 formTarget = FormTarget.MODIFICATION
@@ -90,33 +84,40 @@ class PropertyFormFragment : Fragment() {
             formTarget = FormTarget.CREATION
         }
 
+        configurePhotosGallery()
+        configureSoldSwitch()
+
         return binding.root
     }
 
     private fun configureSoldSwitch() {
 
-        val datePickerDialog = DatePickerDialog(
-            requireContext(),
-            { _, year: Int, month: Int, dayOfMonth: Int ->
-                val saleTimeStamp = Utils.getTimestampFromDatePicker(year, month, dayOfMonth)
-                propertyWithPhotos.property.saleTimestamp = saleTimeStamp
-                binding.fragmentPropertyFormSoldTextView.text =
-                    Utils.formatDate(LocalDate(saleTimeStamp))
-            },
-            LocalDate.now().year,
-            (LocalDate.now().monthOfYear - 1),
-            LocalDate.now().dayOfMonth
-        ).also {
-            it.datePicker.maxDate = Utils.getTodayTimestamp()
-        }
-
-        binding.fragmentPropertyFormSoldSwitch.setOnCheckedChangeListener { _, value: Boolean ->
-            if (value && propertyWithPhotos.property.saleTimestamp == null) {
-                datePickerDialog.show()
-            } else {
-                propertyWithPhotos.property.saleTimestamp = null
-                binding.fragmentPropertyFormSoldTextView.text = ""
+        if (formTarget == FormTarget.MODIFICATION) {
+            val datePickerDialog = DatePickerDialog(
+                requireContext(),
+                { _, year: Int, month: Int, dayOfMonth: Int ->
+                    val saleTimeStamp = Utils.getTimestampFromDatePicker(year, month, dayOfMonth)
+                    propertyWithPhotos.property.saleTimestamp = saleTimeStamp
+                    binding.fragmentPropertyFormSoldTextView.text =
+                        Utils.formatDate(LocalDate(saleTimeStamp))
+                },
+                LocalDate.now().year,
+                (LocalDate.now().monthOfYear - 1),
+                LocalDate.now().dayOfMonth
+            ).also {
+                it.datePicker.maxDate = Utils.getTodayTimestamp()
             }
+
+            binding.fragmentPropertyFormSoldSwitch.setOnCheckedChangeListener { _, value: Boolean ->
+                if (value && propertyWithPhotos.property.saleTimestamp == null) {
+                    datePickerDialog.show()
+                } else {
+                    propertyWithPhotos.property.saleTimestamp = null
+                    binding.fragmentPropertyFormSoldTextView.text = ""
+                }
+            }
+        } else {
+            binding.fragmentPropertyFormSoldDateContainer.visibility = View.GONE
         }
     }
 

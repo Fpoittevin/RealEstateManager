@@ -2,7 +2,6 @@ package com.ocr.francois.realestatemanager.ui.settings
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.activity.viewModels
 import com.ocr.francois.realestatemanager.R
@@ -10,8 +9,6 @@ import com.ocr.francois.realestatemanager.databinding.ActivitySettingsBinding
 import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.utils.Currency
-import kotlinx.android.synthetic.main.activity_property_details.*
-import kotlinx.android.synthetic.main.activity_property_details.activity_property_details_toolbar
 import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : BaseActivity() {

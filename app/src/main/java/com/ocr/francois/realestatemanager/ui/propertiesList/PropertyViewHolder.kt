@@ -20,7 +20,8 @@ class PropertyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             propertyWithPhotos.property.saleTimestamp?.let {
                 recyclerViewPropertyItemSoldTextView.text = "sold"
             } ?: run {
-                recyclerViewPropertyItemSoldTextView.text = ""
+                recyclerViewPropertyItemSoldTextView.visibility = View.GONE
+                recyclerViewPropertyItemSoldFilterView.visibility = View.GONE
             }
 
             propertyWithPhotos.property.formattedPrice?.let {
