@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.FragmentPropertyFormBinding
@@ -282,7 +283,6 @@ class PropertyFormFragment : Fragment() {
                 for (photo in photosList) {
                     if (photo.description.isNullOrEmpty()) {
                         errorInForm = true
-                        Toast.makeText(requireContext(), "need desc", Toast.LENGTH_LONG).show()
                     }
                 }
             }
@@ -339,6 +339,7 @@ class PropertyFormFragment : Fragment() {
             }
             activity?.finish()
         } else {
+            Snackbar.make(binding.root, "an error occurred", Snackbar.LENGTH_SHORT).show()
             errorInForm = false
         }
     }

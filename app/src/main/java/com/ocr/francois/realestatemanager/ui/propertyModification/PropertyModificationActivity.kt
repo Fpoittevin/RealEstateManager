@@ -33,7 +33,10 @@ class PropertyModificationActivity : BaseActivity() {
 
     private fun configureToolbar() {
         setSupportActionBar(activity_property_modification_toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.let{
+            it.setDisplayHomeAsUpEnabled(true)
+            it.setTitle(R.string.modification_title)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

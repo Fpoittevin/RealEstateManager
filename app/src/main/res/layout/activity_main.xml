@@ -22,9 +22,8 @@
                 android:id="@+id/activity_main_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:backgroundTint="@color/colorPrimary"
                 app:titleTextAppearance="@style/TitleToolbarStyle"
-                app:titleTextColor="@android:color/white" />
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
         </com.google.android.material.appbar.AppBarLayout>
 

@@ -37,17 +37,22 @@ class PhotosGalleryAdapter(private val isEditable: Boolean) :
             holder.binding.photosGalleryItemDescriptionTextInput.addTextChangedListener(object :
                 TextWatcher {
                 override fun beforeTextChanged(
-                    s: CharSequence?,
+                    description: CharSequence?,
                     start: Int,
                     count: Int,
                     after: Int
-                ) {
-                }
+                ) {}
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
-                override fun afterTextChanged(s: Editable?) {
-                    photo.description = s.toString()
+                override fun afterTextChanged(description: Editable?) {
+                    if(description.isNullOrEmpty()){
+                        holder.binding.photosGalleryItemDescriptionTextInputLayout.error =
+                            "all photo need a description"
+                    } else {
+                        holder.binding.photosGalleryItemDescriptionTextInputLayout.isErrorEnabled = false
+                        photo.description = description.toString()
+                    }
                 }
 
             }

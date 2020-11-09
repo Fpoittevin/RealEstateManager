@@ -153,7 +153,10 @@ class MapViewActivity : BaseActivity(),
 
     private fun configureToolbar() {
         setSupportActionBar(activity_map_view_toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.let{
+            it.setDisplayHomeAsUpEnabled(true)
+            it.setTitle(R.string.map_title)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

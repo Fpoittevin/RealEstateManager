@@ -27,7 +27,10 @@ class PropertyCreationActivity : BaseActivity() {
 
     private fun configureToolbar() {
         setSupportActionBar(activity_property_creation_toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.let{
+            it.setDisplayHomeAsUpEnabled(true)
+            it.setTitle(R.string.creation_title)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

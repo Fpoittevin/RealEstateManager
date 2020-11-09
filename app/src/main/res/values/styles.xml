@@ -48,6 +48,10 @@
         <item name="android:layout_margin">@dimen/default_big_margin</item>
     </style>
 
+    <style name="ToolbarStyle" parent="Widget.MaterialComponents.ActionBar.Primary">
+        <item name="colorControlNormal">@android:color/white</item>
+    </style>
+
     <style name="TitleToolbarStyle" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="fontFamily">@font/roboto_thin</item>
     </style>

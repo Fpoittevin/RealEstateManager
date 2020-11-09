@@ -27,6 +27,7 @@ class PropertiesAdapter :
         val propertyWithPhotos = propertiesWithPhotos[position]
         holder.updateUi(propertyWithPhotos)
         holder.itemView.setOnClickListener {
+
             propertyItemClickCallback.onPropertyItemClick(
                 propertyWithPhotos.property.id as Long
             )

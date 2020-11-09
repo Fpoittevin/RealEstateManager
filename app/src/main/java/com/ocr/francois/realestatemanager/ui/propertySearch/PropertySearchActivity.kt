@@ -57,7 +57,10 @@ class PropertySearchActivity : BaseActivity(),
 
     private fun configureToolbar() {
         setSupportActionBar(activity_property_search_toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.let {
+            it.setDisplayHomeAsUpEnabled(true)
+            it.setTitle(R.string.search_title)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -315,7 +318,7 @@ class PropertySearchActivity : BaseActivity(),
     private fun configureAndDisplayDatePicker() {
         var dateToDisplay = LocalDate.now()
 
-        when(datePickerType) {
+        when (datePickerType) {
             DatePickerType.CREATION_START -> {
                 propertySearch.minCreationTimestamp?.let {
                     dateToDisplay = LocalDate(it)
@@ -378,7 +381,8 @@ class PropertySearchActivity : BaseActivity(),
             propertySearch.maxCreationTimestamp?.let {
                 this.text = Utils.formatDate(LocalDate(it))
             } ?: run {
-                this.text = resources.getString(R.string.creation_before_text_button_search_activity)
+                this.text =
+                    resources.getString(R.string.creation_before_text_button_search_activity)
             }
         }
         binding.activityPropertySearchSaleDateStartButton.apply {
@@ -442,7 +446,7 @@ class PropertySearchActivity : BaseActivity(),
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        when(datePickerType) {
+        when (datePickerType) {
             DatePickerType.CREATION_START -> {
                 propertySearch.minCreationTimestamp =
                     Utils.getTimestampFromDatePicker(year, month, dayOfMonth)
@@ -505,7 +509,7 @@ class PropertySearchActivity : BaseActivity(),
 
                 Log.e("search intent !! : ", propertySearch.toString())
 
-                intent.putExtra("PROPERTY_SEARCH",propertySearch)
+                intent.putExtra("PROPERTY_SEARCH", propertySearch)
 
                 setResult(RESULT_OK, intent)
                 finish()

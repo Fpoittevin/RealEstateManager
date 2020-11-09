@@ -88,6 +88,12 @@
 
     <string name="preference_file_key">rem_preference</string>
 
+    <string name="settings_title">Settings</string>
+    <string name="search_title">Search</string>
+    <string name="creation_title">Creation</string>
+    <string name="modification_title">Modification</string>
+    <string name="map_title">Map</string>
+
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
