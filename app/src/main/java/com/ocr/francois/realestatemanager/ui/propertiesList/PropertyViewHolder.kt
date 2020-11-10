@@ -15,13 +15,16 @@ class PropertyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun updateUi(propertyWithPhotos: PropertyWithPhotos) {
 
         binding.apply {
+
             recyclerViewPropertyItemTypeTextView.text = propertyWithPhotos.property.type
 
             propertyWithPhotos.property.saleTimestamp?.let {
                 recyclerViewPropertyItemSoldTextView.text = "sold"
+                recyclerViewPropertyItemSoldTextView.visibility = View.VISIBLE
+                recyclerViewPropertyItemSoldFilterView.visibility = View.VISIBLE
             } ?: run {
-                recyclerViewPropertyItemSoldTextView.visibility = View.GONE
-                recyclerViewPropertyItemSoldFilterView.visibility = View.GONE
+                recyclerViewPropertyItemSoldTextView.visibility = View.INVISIBLE
+                recyclerViewPropertyItemSoldFilterView.visibility = View.INVISIBLE
             }
 
             propertyWithPhotos.property.formattedPrice?.let {

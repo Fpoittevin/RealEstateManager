@@ -15,41 +15,51 @@
             android:layout_width="match_parent"
             android:layout_height="200dp">
 
-            <RelativeLayout
+            <ImageView
+                android:id="@+id/recycler_view_property_item_photo_image_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:contentDescription="@string/property_photo_content_description"
+                android:src="@drawable/ic_baseline_photo_24"
+                app:elevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/recycler_view_property_item_photo_image_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/property_photo_content_description"
-                    android:src="@drawable/ic_baseline_photo_24" />
-
-                <View
-                    android:id="@+id/recycler_view_property_item_sold_filter_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/blackOpacity" />
-
-            </RelativeLayout>
+            <View
+                android:id="@+id/recycler_view_property_item_sold_filter_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/blackOpacity"
+                app:elevation="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/recycler_view_property_item_sold_text_view"
                 style="@style/Title6Style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:elevation="8dp"
+                app:elevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/default_margin">
+
+            <TextView
+                android:id="@+id/issold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/recycler_view_property_item_price_text_view"

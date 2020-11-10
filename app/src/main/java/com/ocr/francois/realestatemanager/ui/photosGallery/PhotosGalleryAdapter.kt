@@ -33,6 +33,7 @@ class PhotosGalleryAdapter(private val isEditable: Boolean) :
             holder.binding.photosGalleryItemDeleteButton.setOnClickListener {
                 this.removePhotoFromList(photo)
             }
+            holder.binding.photosGalleryItemDescriptionTextInputLayout.error = "ERROR"
             holder.binding.photosGalleryItemDescriptionTextView.visibility = View.GONE
             holder.binding.photosGalleryItemDescriptionTextInput.addTextChangedListener(object :
                 TextWatcher {

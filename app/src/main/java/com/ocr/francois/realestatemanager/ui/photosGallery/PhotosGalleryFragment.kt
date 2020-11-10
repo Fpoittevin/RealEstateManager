@@ -29,7 +29,7 @@ class PhotosGalleryFragment : Fragment(),
     private lateinit var binding: FragmentPhotosGalleryBinding
 
     private var newPhotoURI: Uri? = null
-    private lateinit var photosGalleryAdapter: PhotosGalleryAdapter
+    lateinit var photosGalleryAdapter: PhotosGalleryAdapter
 
     private val photoSourceChoiceDialogFragment = PhotoSourceChoiceDialogFragment.newInstance(this)
 

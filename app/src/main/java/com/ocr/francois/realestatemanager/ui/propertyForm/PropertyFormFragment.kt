@@ -283,6 +283,7 @@ class PropertyFormFragment : Fragment() {
             } else {
                 for (photo in photosList) {
                     if (photo.description.isNullOrEmpty()) {
+                        photosGalleryFragment.photosGalleryAdapter.notifyDataSetChanged()
                         errorInForm = true
                     }
                 }

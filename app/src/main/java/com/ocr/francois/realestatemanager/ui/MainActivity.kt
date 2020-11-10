@@ -1,9 +1,7 @@
 package com.ocr.francois.realestatemanager.ui
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -14,6 +12,7 @@ import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityMainBinding
 import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
+import com.ocr.francois.realestatemanager.ui.loanSimulator.LoanSimulatorActivity
 import com.ocr.francois.realestatemanager.ui.mapView.MapViewActivity
 import com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesAdapter
 import com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesListFragment
@@ -24,7 +23,6 @@ import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFrag
 import com.ocr.francois.realestatemanager.ui.propertyModification.PropertyModificationActivity
 import com.ocr.francois.realestatemanager.ui.propertySearch.PropertySearchActivity
 import com.ocr.francois.realestatemanager.ui.settings.SettingsActivity
-import com.ocr.francois.realestatemanager.utils.CurrencyLiveData
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -98,8 +96,12 @@ class MainActivity : BaseActivity(),
         startActivity(mapViewIntent)
     }
 
-    private fun startLoanActivity() {
-
+    private fun startLoanSimulatorActivity() {
+        val loanSimulatorIntent = Intent(
+            this,
+            LoanSimulatorActivity::class.java
+        )
+        startActivity(loanSimulatorIntent)
     }
 
     private fun startSettingsActivity() {
@@ -179,7 +181,7 @@ class MainActivity : BaseActivity(),
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.activity_main_drawer_map -> startMapViewActivity()
-            R.id.activity_main_drawer_loan -> startLoanActivity()
+            R.id.activity_main_drawer_loan -> startLoanSimulatorActivity()
             R.id.activity_main_drawer_settings -> startSettingsActivity()
         }
         return true
