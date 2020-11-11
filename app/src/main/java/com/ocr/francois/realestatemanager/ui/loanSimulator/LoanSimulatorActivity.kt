@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityLoanSimulatorBinding
 import kotlin.math.pow
+import kotlin.math.round
 
 class LoanSimulatorActivity : AppCompatActivity() {
 
@@ -27,59 +28,57 @@ class LoanSimulatorActivity : AppCompatActivity() {
         configureCalculateButton()
     }
 
-        private fun configureCalculateButton() {
-            binding.activityLoanSimulatorCalculateButton.setOnClickListener {
-                if (formIsCompleted()) {
-                    calculateMonthlyPaymentAndLoanPrice()
-                }
+    private fun configureCalculateButton() {
+        binding.activityLoanSimulatorCalculateButton.setOnClickListener {
+            if (formIsCompleted()) {
+                calculateMonthlyPaymentAndLoanPrice()
             }
         }
+    }
 
-        private fun formIsCompleted(): Boolean {
-            var isCompleted = true
+    private fun formIsCompleted(): Boolean {
+        var isCompleted = true
 
-            if (binding.activityLoanSimulatorPriceTextInput.text.isNullOrEmpty()) {
-                isCompleted = false
-                binding.activityLoanSimulatorPriceLayout.error =
-                    getString(R.string.required_field)
-            } else {
-                price = binding.activityLoanSimulatorPriceTextInput.text.toString().toDouble()
-            }
-
-            if (binding.activityLoanSimulatorContributionTextInput.text.isNullOrEmpty()) {
-                isCompleted = false
-                binding.activityLoanSimulatorContributionLayout.error =
-                    getString(R.string.required_field)
-            } else {
-                contribution =
-                    binding.activityLoanSimulatorContributionTextInput.text.toString().toDouble()
-            }
-
-            if (binding.activityLoanSimulatorDurationTextInput.text.isNullOrEmpty()) {
-                isCompleted = false
-                binding.activityLoanSimulatorDurationLayout.error =
-                    getString(R.string.required_field)
-            } else {
-                durationInYears =
-                    binding.activityLoanSimulatorDurationTextInput.text.toString().toDouble()
-            }
-
-            if (binding.activityLoanSimulatorRateTextInput.text.isNullOrEmpty()) {
-                isCompleted = false
-                binding.activityLoanSimulatorRateLayout.error =
-                    getString(R.string.required_field)
-            } else {
-                rate = binding.activityLoanSimulatorRateTextInput.text.toString().toDouble().div(100)
-            }
-
-            return isCompleted
+        if (binding.activityLoanSimulatorPriceTextInput.text.isNullOrEmpty()) {
+            isCompleted = false
+            binding.activityLoanSimulatorPriceLayout.error =
+                getString(R.string.required_field)
+        } else {
+            price = binding.activityLoanSimulatorPriceTextInput.text.toString().toDouble()
         }
+
+        if (binding.activityLoanSimulatorContributionTextInput.text.isNullOrEmpty()) {
+            isCompleted = false
+            binding.activityLoanSimulatorContributionLayout.error =
+                getString(R.string.required_field)
+        } else {
+            contribution =
+                binding.activityLoanSimulatorContributionTextInput.text.toString().toDouble()
+        }
+
+        if (binding.activityLoanSimulatorDurationTextInput.text.isNullOrEmpty()) {
+            isCompleted = false
+            binding.activityLoanSimulatorDurationLayout.error =
+                getString(R.string.required_field)
+        } else {
+            durationInYears =
+                binding.activityLoanSimulatorDurationTextInput.text.toString().toDouble()
+        }
+
+        if (binding.activityLoanSimulatorRateTextInput.text.isNullOrEmpty()) {
+            isCompleted = false
+            binding.activityLoanSimulatorRateLayout.error =
+                getString(R.string.required_field)
+        } else {
+            rate = binding.activityLoanSimulatorRateTextInput.text.toString().toDouble().div(100)
+        }
+
+        return isCompleted
+    }
 
     private fun calculateMonthlyPaymentAndLoanPrice() {
 
         loanAmount = price - contribution
-
-       // monthlyPayment = (loanAmount * (rate / 12)) / (1 - (1 + (rate / 12)).pow((-12 * durationInYears)))
 
         monthlyPayment = loanAmount.times(
             rate.div(12)
@@ -95,16 +94,9 @@ class LoanSimulatorActivity : AppCompatActivity() {
             durationInYears
         ).times(monthlyPayment).minus(loanAmount)
 
-        Log.e("price", price.toString())
-        Log.e("contribution", contribution.toString())
-        Log.e("duration", durationInYears.toString())
-        Log.e("rate", rate.toString())
-        Log.e("loan", loanAmount.toString())
-        Log.e("per month", monthlyPayment.toString())
-
         binding.apply {
-            activityLoanSimulatorLoanPriceTextView.text = loanPrice.toString()
-            activityLoanSimulatorMonthlyPaymentTextView.text = monthlyPayment.toString()
+            activityLoanSimulatorLoanPriceTextView.text = String.format("%.2f", loanPrice)
+            activityLoanSimulatorMonthlyPaymentTextView.text = String.format("%.2f", monthlyPayment)
         }
     }
 }
