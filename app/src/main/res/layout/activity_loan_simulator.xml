@@ -7,6 +7,20 @@
     android:orientation="vertical"
     tools:context=".ui.loanSimulator.LoanSimulatorActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.ActionBar.Primary">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/activity_loan_simulator_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleTextAppearance="@style/TitleToolbarStyle"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     // Property price
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/activity_loan_simulator_price_layout"

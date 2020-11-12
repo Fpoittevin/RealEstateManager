@@ -8,7 +8,7 @@ import com.ocr.francois.realestatemanager.repositories.PropertyRepository
 class Injection {
 
     companion object {
-        private fun providePropertyRepository(context: Context): PropertyRepository {
+        fun providePropertyRepository(context: Context): PropertyRepository {
             val db = RealEstateManagerDatabase.getInstance(context)
             return PropertyRepository(db.propertyDao(), context)
         }

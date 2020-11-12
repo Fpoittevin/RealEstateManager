@@ -55,6 +55,9 @@ interface PropertyDao {
         insertPhotos(propertyWithPhotos.photosList)
     }
 
+    @Query("UPDATE property SET lat = :lat, lng = :lng WHERE id = :propertyId")
+    suspend fun insertLocationOfProperty(propertyId: Long, lat: Double, lng: Double)
+
     @Transaction
     @Query("SELECT * FROM Property")
     fun getPropertiesWithPhotos(): LiveData<List<PropertyWithPhotos>>

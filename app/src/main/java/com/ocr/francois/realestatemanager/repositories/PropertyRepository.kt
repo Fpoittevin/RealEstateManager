@@ -1,27 +1,19 @@
 package com.ocr.francois.realestatemanager.repositories
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
+import androidx.work.*
 import com.google.android.gms.maps.model.LatLngBounds
-import com.ocr.francois.realestatemanager.api.GeocoderService
 import com.ocr.francois.realestatemanager.database.dao.PropertyDao
-import com.ocr.francois.realestatemanager.models.GeocodeResponse
 import com.ocr.francois.realestatemanager.models.Property
 import com.ocr.francois.realestatemanager.models.PropertySearch
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 import com.ocr.francois.realestatemanager.utils.LocationTool
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.ocr.francois.realestatemanager.workers.GetAndSaveLocationWorker
 
 class PropertyRepository(private val propertyDao: PropertyDao, private val context: Context) {
-
-    private var geocodeService: GeocoderService = GeocoderService
-        .retrofit
-        .create(GeocoderService::class.java)
 
     fun getPropertiesInBounds(bounds: LatLngBounds): LiveData<List<Property>> =
         propertyDao.selectPropertiesInBounds(
@@ -33,12 +25,10 @@ class PropertyRepository(private val propertyDao: PropertyDao, private val conte
 
     fun getPropertiesWithPhotos(propertySearch: PropertySearch?): LiveData<List<PropertyWithPhotos>> {
         propertySearch?.let {
-            Log.e("search ?", "yes")
             return propertyDao.getPropertiesBySearch(
                 generateSqlLiteQuerySearch(propertySearch)
             )
         } ?: run {
-            Log.e("search ?", "no")
             return propertyDao.getPropertiesWithPhotos()
         }
     }
@@ -51,11 +41,35 @@ class PropertyRepository(private val propertyDao: PropertyDao, private val conte
 
     suspend fun insertPropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos) {
         propertyDao.insertPropertyWithPhotos(propertyWithPhotos)
-        getLocation(propertyWithPhotos.property)
+
+        propertyWithPhotos.property.id?.let {
+            getAndSaveLocation(
+                it,
+                LocationTool.addressConcatenation(
+                    propertyWithPhotos.property,
+                    false
+                )
+            )
+        }
     }
 
-    suspend fun updatePropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos) =
+    suspend fun saveLocation(propertyId: Long, lat: Double, lng: Double) {
+        propertyDao.insertLocationOfProperty(propertyId, lat, lng)
+    }
+
+    suspend fun updatePropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos, isAddressChanged: Boolean) {
         propertyDao.updatePropertyWithPhotos(propertyWithPhotos)
+        if(isAddressChanged) {
+            getAndSaveLocation(
+                propertyWithPhotos.property.id!!,
+                LocationTool.addressConcatenation(
+                    propertyWithPhotos.property,
+                    false
+                )
+            )
+        }
+    }
+
 
     private fun generateSqlLiteQuerySearch(propertySearch: PropertySearch): SupportSQLiteQuery {
 
@@ -63,9 +77,9 @@ class PropertyRepository(private val propertyDao: PropertyDao, private val conte
         val args = ArrayList<Any>()
 
         fun java.lang.StringBuilder.addWhereOrAnd() {
-            if(contains("WHERE")){
+            if (contains("WHERE")) {
                 append(" AND ")
-            }else {
+            } else {
                 append(" WHERE ")
             }
         }
@@ -193,31 +207,23 @@ class PropertyRepository(private val propertyDao: PropertyDao, private val conte
 
     }
 
-    private fun getLocation(property: Property) {
+    private fun getAndSaveLocation(propertyId: Long, address: String) {
 
-        val stringAddress = LocationTool.addressConcatenation(property, false)
+        val networkConstraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
 
-        GeocoderService
-            .retrofit
-            .create(
-                GeocoderService::class.java
-            ).getLocation(stringAddress)
-            .enqueue(object : Callback<GeocodeResponse> {
+        val data = Data.Builder().apply {
+            putLong(GetAndSaveLocationWorker.PROPERTY_ID_KEY, propertyId)
+            putString(GetAndSaveLocationWorker.PROPERTY_ADDRESS_KEY, address)
+        }
 
-                override fun onResponse(
-                    call: Call<GeocodeResponse>,
-                    response: Response<GeocodeResponse>
-                ) {
-                    for (result in response.body()!!.results!!) {
-                        Log.e("google response: ", result.geometry!!.location!!.lat!!.toString())
-                    }
+        val networkWorkRequest = OneTimeWorkRequest
+            .Builder(GetAndSaveLocationWorker::class.java)
+            .setInputData(data.build())
+            .setConstraints(networkConstraints)
+            .build()
 
-                }
-
-                override fun onFailure(call: Call<GeocodeResponse>, t: Throwable) {
-
-                }
-
-            })
+        WorkManager.getInstance(context).enqueue(networkWorkRequest)
     }
 }

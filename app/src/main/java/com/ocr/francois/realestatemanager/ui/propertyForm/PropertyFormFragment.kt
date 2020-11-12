@@ -4,6 +4,8 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -25,13 +27,14 @@ import com.ocr.francois.realestatemanager.utils.ImageUtil
 import com.ocr.francois.realestatemanager.utils.Utils
 import org.joda.time.LocalDate
 
-class PropertyFormFragment : Fragment() {
+class PropertyFormFragment : Fragment(), TextWatcher {
 
     private lateinit var binding: FragmentPropertyFormBinding
     private lateinit var propertyWithPhotos: PropertyWithPhotos
     private val photosGalleryFragment = PhotosGalleryFragment.newInstance(true)
     private lateinit var formTarget: FormTarget
     private var errorInForm = false
+    private var isAddressChanged = false
 
     private val propertyFormViewModel: PropertyFormViewModel by activityViewModels {
         Injection.provideViewModelFactory(
@@ -86,8 +89,16 @@ class PropertyFormFragment : Fragment() {
 
         configurePhotosGallery()
         configureSoldSwitch()
+        configureAddressTextInputs()
 
         return binding.root
+    }
+
+    private fun configureAddressTextInputs() {
+        binding.fragmentPropertyFormAddressFirstTextInput.addTextChangedListener(this)
+        binding.fragmentPropertyFormAddressSecondTextInput.addTextChangedListener(this)
+        binding.fragmentPropertyFormZipCodeTextInput.addTextChangedListener(this)
+        binding.fragmentPropertyFormCityTextInput.addTextChangedListener(this)
     }
 
     private fun configureSoldSwitch() {
@@ -120,7 +131,6 @@ class PropertyFormFragment : Fragment() {
             binding.fragmentPropertyFormSoldDateContainer.visibility = View.GONE
         }
     }
-
 
     private fun updateUi() {
 
@@ -336,7 +346,8 @@ class PropertyFormFragment : Fragment() {
                     NotificationSender().sendNotification(requireContext())
                 }
                 FormTarget.MODIFICATION -> propertyFormViewModel.updatePropertyWithPhotos(
-                    propertyWithPhotos
+                    propertyWithPhotos,
+                    isAddressChanged
                 )
             }
             activity?.finish()
@@ -344,5 +355,13 @@ class PropertyFormFragment : Fragment() {
             Snackbar.make(binding.root, "an error occurred", Snackbar.LENGTH_SHORT).show()
             errorInForm = false
         }
+    }
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+    override fun afterTextChanged(s: Editable?) {
+        isAddressChanged = true
     }
 }

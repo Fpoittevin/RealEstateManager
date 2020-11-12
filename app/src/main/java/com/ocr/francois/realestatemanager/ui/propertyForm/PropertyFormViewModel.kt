@@ -20,12 +20,15 @@ class PropertyFormViewModel(
         }
     }
 
-    fun updatePropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos) {
+    fun updatePropertyWithPhotos(
+        propertyWithPhotos: PropertyWithPhotos,
+        isAddressChanged: Boolean
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             propertyWithPhotos.photosList.forEach {
                 it.propertyId = propertyWithPhotos.property.id
             }
-            propertyRepository.updatePropertyWithPhotos(propertyWithPhotos)
+            propertyRepository.updatePropertyWithPhotos(propertyWithPhotos, isAddressChanged)
         }
     }
 

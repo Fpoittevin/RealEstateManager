@@ -1,12 +1,12 @@
 package com.ocr.francois.realestatemanager.ui.loanSimulator
 
 import android.os.Bundle
-import android.util.Log
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityLoanSimulatorBinding
+import kotlinx.android.synthetic.main.activity_loan_simulator.*
 import kotlin.math.pow
-import kotlin.math.round
 
 class LoanSimulatorActivity : AppCompatActivity() {
 
@@ -25,7 +25,20 @@ class LoanSimulatorActivity : AppCompatActivity() {
 
         binding = ActivityLoanSimulatorBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        configureToolbar()
         configureCalculateButton()
+    }
+
+    private fun configureToolbar() {
+        setSupportActionBar(activity_loan_simulator_toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun configureCalculateButton() {
