@@ -165,8 +165,12 @@ class MainActivity : BaseActivity(),
         super.onActivityResult(requestCode, resultCode, intent)
 
         if (requestCode == REQUEST_SEARCH_CODE && resultCode == RESULT_OK && intent != null) {
-            propertiesListViewModel.propertySearchLiveData.value =
-                intent.extras?.getParcelable("PROPERTY_SEARCH")
+            intent.extras?.let {
+                if (it.containsKey("PROPERTY_SEARCH")) {
+                    propertiesListViewModel.propertySearchLiveData.value =
+                        it.getParcelable("PROPERTY_SEARCH")
+                }
+            }
         }
     }
 

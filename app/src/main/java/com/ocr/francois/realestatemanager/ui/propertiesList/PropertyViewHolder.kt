@@ -12,10 +12,15 @@ class PropertyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val binding = RecyclerViewPropertyItemBinding.bind(itemView)
 
+    fun setIsSelected() {
+       binding.recyclerViewPropertyItemCardView.cardElevation = 2.0F
+    }
+
     fun updateUi(propertyWithPhotos: PropertyWithPhotos) {
 
         binding.apply {
 
+            recyclerViewPropertyItemCardView.cardElevation = 5.0F
             recyclerViewPropertyItemTypeTextView.text = propertyWithPhotos.property.type
 
             propertyWithPhotos.property.saleTimestamp?.let {

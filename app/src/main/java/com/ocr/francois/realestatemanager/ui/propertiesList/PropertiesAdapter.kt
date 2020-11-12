@@ -12,6 +12,8 @@ class PropertiesAdapter :
     private lateinit var propertyItemClickCallback: PropertyItemClickCallback
     private var propertiesWithPhotos: List<PropertyWithPhotos> = ArrayList()
 
+    private var itemSelectedPosition: Int? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropertyViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.recycler_view_property_item, parent, false)
@@ -25,12 +27,19 @@ class PropertiesAdapter :
 
     override fun onBindViewHolder(holder: PropertyViewHolder, position: Int) {
         val propertyWithPhotos = propertiesWithPhotos[position]
-        holder.updateUi(propertyWithPhotos)
-        holder.itemView.setOnClickListener {
 
+        holder.updateUi(propertyWithPhotos)
+
+        if (position == itemSelectedPosition) {
+            holder.setIsSelected()
+        }
+
+        holder.itemView.setOnClickListener {
             propertyItemClickCallback.onPropertyItemClick(
                 propertyWithPhotos.property.id as Long
             )
+            itemSelectedPosition = position
+            notifyDataSetChanged()
         }
     }
 

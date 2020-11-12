@@ -10,7 +10,7 @@ class Injection {
     companion object {
         private fun providePropertyRepository(context: Context): PropertyRepository {
             val db = RealEstateManagerDatabase.getInstance(context)
-            return PropertyRepository(db.propertyDao())
+            return PropertyRepository(db.propertyDao(), context)
         }
 
         private fun provideCurrencyRepository(context: Context) =

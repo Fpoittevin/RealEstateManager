@@ -37,7 +37,11 @@ data class PropertySearch(
     var maxSaleTimestamp: Long? = null,
 
     //  Min Number of Photo
-    var minNumberOfPhotos: Int? = null
+    var minNumberOfPhotos: Int? = null,
+
+    //  City
+    var city: String? = null
+
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readValue(Int::class.java.classLoader) as? Int,
@@ -59,7 +63,8 @@ data class PropertySearch(
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
         parcel.readValue(Long::class.java.classLoader) as? Long,
         parcel.readValue(Long::class.java.classLoader) as? Long,
-        parcel.readValue(Int::class.java.classLoader) as? Int
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(String::class.java.classLoader) as? String
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -83,6 +88,7 @@ data class PropertySearch(
         parcel.writeValue(minSaleTimestamp)
         parcel.writeValue(maxSaleTimestamp)
         parcel.writeValue(minNumberOfPhotos)
+        parcel.writeValue(city)
     }
 
     override fun describeContents(): Int {

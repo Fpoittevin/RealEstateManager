@@ -2,6 +2,8 @@ package com.ocr.francois.realestatemanager.ui.propertySearch
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -25,7 +27,7 @@ class PropertySearchActivity : BaseActivity(),
     private lateinit var binding: ActivityPropertySearchBinding
     private lateinit var datePickerDialog: DatePickerDialog
     private lateinit var datePickerType: DatePickerType
-    private val propertySearch = PropertySearch()
+    private var propertySearch: PropertySearch? = null
 
     enum class DatePickerType {
         CREATION_START,
@@ -50,9 +52,21 @@ class PropertySearchActivity : BaseActivity(),
         configureDatePicker()
         configureCreationDateStartButton()
         configureCreationDateStopButton()
+        configureSoldSwitch()
         configureSaleDateStartButton()
         configureSaleDateStopButton()
+        configureLocationTextInput()
+
         configureFab()
+    }
+
+    private fun getPropertySearch(): PropertySearch {
+        propertySearch?.let {
+            return it
+        } ?: run {
+            propertySearch = PropertySearch()
+            return propertySearch as PropertySearch
+        }
     }
 
     private fun configureToolbar() {
@@ -79,7 +93,7 @@ class PropertySearchActivity : BaseActivity(),
 
     private fun displayPriceValues() {
         binding.activityPropertySearchMinPriceTextView.apply {
-            propertySearch.minPrice?.let {
+            getPropertySearch().minPrice?.let {
                 this.text =
                     Utils.formatNumber(it)
             } ?: run {
@@ -87,7 +101,7 @@ class PropertySearchActivity : BaseActivity(),
                     Utils.formatNumber(resources.getIntArray(R.array.initial_price_slider_values)[0])
             }
             binding.activityPropertySearchMaxPriceTextView.apply {
-                propertySearch.maxPrice?.let {
+                getPropertySearch().maxPrice?.let {
                     this.text =
                         Utils.formatNumber(it)
                 } ?: run {
@@ -99,7 +113,7 @@ class PropertySearchActivity : BaseActivity(),
     }
 
     private fun setPriceValues(minValue: Int, maxValue: Int) {
-        propertySearch.apply {
+        getPropertySearch().apply {
             minPrice = if (minValue == resources.getInteger(R.integer.property_min_price)) {
                 null
             } else {
@@ -123,7 +137,7 @@ class PropertySearchActivity : BaseActivity(),
 
     private fun displaySurfaceValues() {
         binding.activityPropertySearchMinSurfaceTextView.apply {
-            propertySearch.minSurface?.let {
+            getPropertySearch().minSurface?.let {
                 this.text = it.toString()
             } ?: run {
                 this.text =
@@ -131,7 +145,7 @@ class PropertySearchActivity : BaseActivity(),
             }
         }
         binding.activityPropertySearchMaxSurfaceTextView.apply {
-            propertySearch.maxSurface?.let {
+            getPropertySearch().maxSurface?.let {
                 this.text = it.toString()
             } ?: run {
                 this.text =
@@ -141,7 +155,7 @@ class PropertySearchActivity : BaseActivity(),
     }
 
     private fun setSurfaceValues(minValue: Int, maxValue: Int) {
-        propertySearch.apply {
+        getPropertySearch().apply {
             minSurface =
                 if (minValue == resources.getInteger(R.integer.property_min_surface))
                     null else minValue
@@ -161,14 +175,14 @@ class PropertySearchActivity : BaseActivity(),
 
     private fun displayNumberOfRoomsValues() {
         binding.activityPropertySearchMinNumberOfRoomsTextView.apply {
-            propertySearch.minNumberOfRooms?.let {
+            getPropertySearch().minNumberOfRooms?.let {
                 this.text = it.toString()
             } ?: run {
                 this.text = resources.getIntArray(R.array.initial_rooms_slider_values)[0].toString()
             }
         }
         binding.activityPropertySearchMaxNumberOfRoomsTextView.apply {
-            propertySearch.maxNumberOfRooms?.let {
+            getPropertySearch().maxNumberOfRooms?.let {
                 this.text = it.toString()
             } ?: run {
                 this.text = resources.getIntArray(R.array.initial_rooms_slider_values)[1].toString()
@@ -177,7 +191,7 @@ class PropertySearchActivity : BaseActivity(),
     }
 
     private fun setNumberOfRoomsValues(minValue: Int, maxValue: Int) {
-        propertySearch.apply {
+        getPropertySearch().apply {
             minNumberOfRooms =
                 if (minValue == resources.getInteger(R.integer.property_min_number_of_rooms))
                     null else minValue
@@ -197,7 +211,7 @@ class PropertySearchActivity : BaseActivity(),
 
     private fun displayNumberOfBathroomsValues() {
         binding.activityPropertySearchMinNumberOfBathroomsTextView.apply {
-            propertySearch.minNumberOfBathrooms?.let {
+            getPropertySearch().minNumberOfBathrooms?.let {
                 this.text = it.toString()
             } ?: run {
                 this.text =
@@ -205,7 +219,7 @@ class PropertySearchActivity : BaseActivity(),
             }
         }
         binding.activityPropertySearchMaxNumberOfBathroomsTextView.apply {
-            propertySearch.maxNumberOfBathrooms?.let {
+            getPropertySearch().maxNumberOfBathrooms?.let {
                 this.text = it.toString()
             } ?: run {
                 this.text =
@@ -215,7 +229,7 @@ class PropertySearchActivity : BaseActivity(),
     }
 
     private fun setNumberOfBathroomsValues(minValue: Int, maxValue: Int) {
-        propertySearch.apply {
+        getPropertySearch().apply {
             minNumberOfBathrooms =
                 if (minValue == resources.getInteger(R.integer.property_min_number_of_bathrooms))
                     null else minValue
@@ -235,7 +249,7 @@ class PropertySearchActivity : BaseActivity(),
 
     private fun displayNumberOfBedroomsValues() {
         binding.activityPropertySearchMinNumberOfBedroomsTextView.apply {
-            propertySearch.minNumberOfBedrooms?.let {
+            getPropertySearch().minNumberOfBedrooms?.let {
                 this.text = it.toString()
             } ?: run {
                 this.text =
@@ -243,7 +257,7 @@ class PropertySearchActivity : BaseActivity(),
             }
         }
         binding.activityPropertySearchMaxNumberOfBedroomsTextView.apply {
-            propertySearch.maxNumberOfBedrooms?.let {
+            getPropertySearch().maxNumberOfBedrooms?.let {
                 this.text = it.toString()
             } ?: run {
                 this.text =
@@ -253,7 +267,7 @@ class PropertySearchActivity : BaseActivity(),
     }
 
     private fun setNumberOfBedroomsValues(minValue: Int, maxValue: Int) {
-        propertySearch.apply {
+        getPropertySearch().apply {
             minNumberOfBedrooms =
                 if (minValue == resources.getInteger(R.integer.property_min_number_of_bedrooms))
                     null else minValue
@@ -275,7 +289,7 @@ class PropertySearchActivity : BaseActivity(),
 
     private fun displayMinNumberOfPhotosValue() {
         binding.activityPropertySearchMinNumberOfPhotosTextView.apply {
-            propertySearch.minNumberOfPhotos?.let {
+            getPropertySearch().minNumberOfPhotos?.let {
                 this.text = it.toString()
             } ?: run {
                 this.text = resources.getInteger(R.integer.property_min_number_of_photos).toString()
@@ -284,7 +298,7 @@ class PropertySearchActivity : BaseActivity(),
     }
 
     private fun setNumberOfPhotosValue(value: Int) {
-        propertySearch.minNumberOfPhotos =
+        getPropertySearch().minNumberOfPhotos =
             if (value == resources.getInteger(R.integer.property_min_number_of_photos))
                 null else value
         displayMinNumberOfPhotosValue()
@@ -320,22 +334,22 @@ class PropertySearchActivity : BaseActivity(),
 
         when (datePickerType) {
             DatePickerType.CREATION_START -> {
-                propertySearch.minCreationTimestamp?.let {
+                getPropertySearch().minCreationTimestamp?.let {
                     dateToDisplay = LocalDate(it)
                 }
             }
             DatePickerType.CREATION_STOP -> {
-                propertySearch.maxCreationTimestamp?.let {
+                getPropertySearch().maxCreationTimestamp?.let {
                     dateToDisplay = LocalDate(it)
                 }
             }
             DatePickerType.SALE_START -> {
-                propertySearch.minSaleTimestamp?.let {
+                getPropertySearch().minSaleTimestamp?.let {
                     dateToDisplay = LocalDate(it)
                 }
             }
             DatePickerType.SALE_STOP -> {
-                propertySearch.maxSaleTimestamp?.let {
+                getPropertySearch().maxSaleTimestamp?.let {
                     dateToDisplay = LocalDate(it)
                 }
             }
@@ -361,24 +375,48 @@ class PropertySearchActivity : BaseActivity(),
         binding.activityPropertySearchCreationDateStopButton.setOnClickListener(this)
     }
 
+    private fun configureSoldSwitch() {
+        binding.activityPropertySearchSoldSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                getPropertySearch().isSold = true
+                binding.activityPropertySearchSaleDateStartButton.isEnabled = true
+                binding.activityPropertySearchSaleDateStopButton.isEnabled = true
+            } else {
+                getPropertySearch().apply {
+                    isSold = null
+                    minSaleTimestamp = null
+                    maxSaleTimestamp = null
+                }
+                binding.activityPropertySearchSaleDateStartButton.isEnabled = false
+                binding.activityPropertySearchSaleDateStopButton.isEnabled = false
+            }
+        }
+    }
+
     private fun configureSaleDateStartButton() {
-        binding.activityPropertySearchSaleDateStartButton.setOnClickListener(this)
+        binding.activityPropertySearchSaleDateStartButton.apply {
+            isEnabled = false
+            setOnClickListener(this@PropertySearchActivity)
+        }
     }
 
     private fun configureSaleDateStopButton() {
-        binding.activityPropertySearchSaleDateStopButton.setOnClickListener(this)
+        binding.activityPropertySearchSaleDateStopButton.apply {
+            isEnabled = false
+            setOnClickListener(this@PropertySearchActivity)
+        }
     }
 
     private fun displayDatesValues() {
         binding.activityPropertySearchCreationDateStartButton.apply {
-            propertySearch.minCreationTimestamp?.let {
+            getPropertySearch().minCreationTimestamp?.let {
                 this.text = Utils.formatDate(LocalDate(it))
             } ?: run {
                 this.text = resources.getString(R.string.creation_after_text_button_search_activity)
             }
         }
         binding.activityPropertySearchCreationDateStopButton.apply {
-            propertySearch.maxCreationTimestamp?.let {
+            getPropertySearch().maxCreationTimestamp?.let {
                 this.text = Utils.formatDate(LocalDate(it))
             } ?: run {
                 this.text =
@@ -386,19 +424,35 @@ class PropertySearchActivity : BaseActivity(),
             }
         }
         binding.activityPropertySearchSaleDateStartButton.apply {
-            propertySearch.minSaleTimestamp?.let {
+            getPropertySearch().minSaleTimestamp?.let {
                 this.text = Utils.formatDate(LocalDate(it))
             } ?: run {
                 this.text = resources.getString(R.string.sold_after_text_button_search_activity)
             }
         }
         binding.activityPropertySearchSaleDateStopButton.apply {
-            propertySearch.maxSaleTimestamp?.let {
+            getPropertySearch().maxSaleTimestamp?.let {
                 this.text = Utils.formatDate(LocalDate(it))
             } ?: run {
                 this.text = resources.getString(R.string.sold_before_text_button_search_activity)
             }
         }
+    }
+
+    private fun configureLocationTextInput() {
+        binding.activityPropertySearchCityTextInput.addTextChangedListener(object :
+            TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(value: Editable?) {
+                getPropertySearch().city = value.toString()
+            }
+
+        })
     }
 
     private fun configureFab() {
@@ -431,16 +485,16 @@ class PropertySearchActivity : BaseActivity(),
     override fun onCheckedChanged(button: CompoundButton, isChecked: Boolean) {
         when (button.id) {
             R.id.activity_property_search_near_school_chip -> {
-                propertySearch.nearSchool = isChecked
+                getPropertySearch().nearSchool = isChecked
             }
             R.id.activity_property_search_near_transports_chip -> {
-                propertySearch.nearTransports = isChecked
+                getPropertySearch().nearTransports = isChecked
             }
             R.id.activity_property_search_near_shops_chip -> {
-                propertySearch.nearShops = isChecked
+                getPropertySearch().nearShops = isChecked
             }
             R.id.activity_property_search_near_parks_chip -> {
-                propertySearch.nearParks = isChecked
+                getPropertySearch().nearParks = isChecked
             }
         }
     }
@@ -448,38 +502,38 @@ class PropertySearchActivity : BaseActivity(),
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         when (datePickerType) {
             DatePickerType.CREATION_START -> {
-                propertySearch.minCreationTimestamp =
+                getPropertySearch().minCreationTimestamp =
                     Utils.getTimestampFromDatePicker(year, month, dayOfMonth)
-                propertySearch.maxCreationTimestamp?.let {
-                    if (LocalDate(propertySearch.minCreationTimestamp).isAfter(LocalDate(it))) {
-                        propertySearch.maxCreationTimestamp = null
+                getPropertySearch().maxCreationTimestamp?.let {
+                    if (LocalDate(getPropertySearch().minCreationTimestamp).isAfter(LocalDate(it))) {
+                        getPropertySearch().maxCreationTimestamp = null
                     }
                 }
             }
             DatePickerType.CREATION_STOP -> {
-                propertySearch.maxCreationTimestamp =
+                getPropertySearch().maxCreationTimestamp =
                     Utils.getTimestampFromDatePicker(year, month, dayOfMonth)
-                propertySearch.minCreationTimestamp?.let {
-                    if (LocalDate(propertySearch.maxCreationTimestamp).isBefore(LocalDate(it))) {
-                        propertySearch.minCreationTimestamp = null
+                getPropertySearch().minCreationTimestamp?.let {
+                    if (LocalDate(getPropertySearch().maxCreationTimestamp).isBefore(LocalDate(it))) {
+                        getPropertySearch().minCreationTimestamp = null
                     }
                 }
             }
             DatePickerType.SALE_START -> {
-                propertySearch.minSaleTimestamp =
+                getPropertySearch().minSaleTimestamp =
                     Utils.getTimestampFromDatePicker(year, month, dayOfMonth)
-                propertySearch.maxSaleTimestamp?.let {
-                    if (LocalDate(propertySearch.minSaleTimestamp).isAfter(LocalDate(it))) {
-                        propertySearch.maxSaleTimestamp = null
+                getPropertySearch().maxSaleTimestamp?.let {
+                    if (LocalDate(getPropertySearch().minSaleTimestamp).isAfter(LocalDate(it))) {
+                        getPropertySearch().maxSaleTimestamp = null
                     }
                 }
             }
             DatePickerType.SALE_STOP -> {
-                propertySearch.maxSaleTimestamp =
+                getPropertySearch().maxSaleTimestamp =
                     Utils.getTimestampFromDatePicker(year, month, dayOfMonth)
-                propertySearch.minSaleTimestamp?.let {
-                    if (LocalDate(propertySearch.maxSaleTimestamp).isBefore(LocalDate(it))) {
-                        propertySearch.minSaleTimestamp = null
+                getPropertySearch().minSaleTimestamp?.let {
+                    if (LocalDate(getPropertySearch().maxSaleTimestamp).isBefore(LocalDate(it))) {
+                        getPropertySearch().minSaleTimestamp = null
                     }
                 }
             }
@@ -507,11 +561,13 @@ class PropertySearchActivity : BaseActivity(),
             }
             R.id.activity_property_search_fab -> {
 
-                Log.e("search intent !! : ", propertySearch.toString())
-
-                intent.putExtra("PROPERTY_SEARCH", propertySearch)
-
-                setResult(RESULT_OK, intent)
+                propertySearch?.let {
+                    Log.e("property search:", propertySearch.toString())
+                    intent.putExtra("PROPERTY_SEARCH", propertySearch)
+                    setResult(RESULT_OK, intent)
+                } ?: run {
+                    setResult(RESULT_CANCELED, intent)
+                }
                 finish()
             }
         }

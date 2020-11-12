@@ -14,7 +14,7 @@ interface GeocoderService {
     fun getLocation(@Query("address") address: String): Call<GeocodeResponse>
 
     companion object {
-        val retrofit = Retrofit.Builder()
+        val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://maps.google.com/maps/api/geocode/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()

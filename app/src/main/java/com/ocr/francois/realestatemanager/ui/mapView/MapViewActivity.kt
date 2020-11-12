@@ -117,6 +117,7 @@ class MapViewActivity : BaseActivity(),
             setOnCameraMoveListener(this@MapViewActivity)
             setOnMarkerClickListener(this@MapViewActivity)
             isMyLocationEnabled = true
+            uiSettings.isZoomControlsEnabled = true
         }
         zoomToUserLocation()
     }

@@ -85,6 +85,19 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
     private fun updateUi() {
         this.property = propertyWithPhotos.property
 
+
+        binding.apply {
+            property.saleTimestamp?.let {
+                fragmentPropertyFormDetailsIsSoldTextView.text = "SOLD"
+                fragmentPropertyFormDetailsSoldDateTextView.text = Utils.formatDate(LocalDate(it))
+            } ?: run {
+                binding.apply {
+                    fragmentPropertyFormDetailsIsSoldTextView.visibility = View.GONE
+                    fragmentPropertyFormDetailsSoldDateTextView.visibility = View.GONE
+                }
+            }
+        }
+
         property.description?.let {
             binding.fragmentPropertyDetailsDescriptionTextView.text = it
         }

@@ -1,16 +1,27 @@
 package com.ocr.francois.realestatemanager.repositories
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.google.android.gms.maps.model.LatLngBounds
+import com.ocr.francois.realestatemanager.api.GeocoderService
 import com.ocr.francois.realestatemanager.database.dao.PropertyDao
+import com.ocr.francois.realestatemanager.models.GeocodeResponse
 import com.ocr.francois.realestatemanager.models.Property
 import com.ocr.francois.realestatemanager.models.PropertySearch
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
+import com.ocr.francois.realestatemanager.utils.LocationTool
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class PropertyRepository(private val propertyDao: PropertyDao) {
+class PropertyRepository(private val propertyDao: PropertyDao, private val context: Context) {
+
+    private var geocodeService: GeocoderService = GeocoderService
+        .retrofit
+        .create(GeocoderService::class.java)
 
     fun getPropertiesInBounds(bounds: LatLngBounds): LiveData<List<Property>> =
         propertyDao.selectPropertiesInBounds(
@@ -22,8 +33,12 @@ class PropertyRepository(private val propertyDao: PropertyDao) {
 
     fun getPropertiesWithPhotos(propertySearch: PropertySearch?): LiveData<List<PropertyWithPhotos>> {
         propertySearch?.let {
-            return propertyDao.getPropertiesBySearch(generateSqlLiteQuerySearch(propertySearch))
+            Log.e("search ?", "yes")
+            return propertyDao.getPropertiesBySearch(
+                generateSqlLiteQuerySearch(propertySearch)
+            )
         } ?: run {
+            Log.e("search ?", "no")
             return propertyDao.getPropertiesWithPhotos()
         }
     }
@@ -34,8 +49,10 @@ class PropertyRepository(private val propertyDao: PropertyDao) {
     fun getPropertyWithPhotos(id: Long): LiveData<PropertyWithPhotos> =
         propertyDao.getPropertyWithPhotos(id)
 
-    suspend fun insertPropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos) =
+    suspend fun insertPropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos) {
         propertyDao.insertPropertyWithPhotos(propertyWithPhotos)
+        getLocation(propertyWithPhotos.property)
+    }
 
     suspend fun updatePropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos) =
         propertyDao.updatePropertyWithPhotos(propertyWithPhotos)
@@ -45,96 +62,162 @@ class PropertyRepository(private val propertyDao: PropertyDao) {
         val stringBuilder = StringBuilder()
         val args = ArrayList<Any>()
 
-        stringBuilder.append("SELECT * FROM Property AS Pr WHERE ").apply {
+        fun java.lang.StringBuilder.addWhereOrAnd() {
+            if(contains("WHERE")){
+                append(" AND ")
+            }else {
+                append(" WHERE ")
+            }
+        }
+
+        stringBuilder.append("SELECT * FROM Property AS Pr").apply {
 
             //  Price
             propertySearch.minPrice?.let {
-
-                append("price >= ? AND ")
+                addWhereOrAnd()
+                append("price >= ?")
                 args.add(it)
             }
             propertySearch.maxPrice?.let {
-                append("price <= ? AND ")
+                addWhereOrAnd()
+                append("price <= ?")
                 args.add(it)
             }
 
             //  Surface
             propertySearch.minSurface?.let {
-                append("surface >= ? AND ")
+                addWhereOrAnd()
+                append("surface >= ?")
                 args.add(it)
             }
             propertySearch.maxSurface?.let {
-                append("surface <= ? AND ")
+                addWhereOrAnd()
+                append("surface <= ?")
                 args.add(it)
             }
 
             //  Rooms
             propertySearch.minNumberOfRooms?.let {
-                append("numberOfRooms >= ? AND ")
+                addWhereOrAnd()
+                append("numberOfRooms >= ?")
                 args.add(it)
             }
             propertySearch.maxNumberOfRooms?.let {
-                append("numberOfRooms <= ? AND ")
+                addWhereOrAnd()
+                append("numberOfRooms <= ?")
                 args.add(it)
             }
             propertySearch.minNumberOfBathrooms?.let {
-                append("numberOfBathrooms >= ? AND ")
+                addWhereOrAnd()
+                append("numberOfBathrooms >= ?")
                 args.add(it)
             }
             propertySearch.maxNumberOfBathrooms?.let {
-                append("numberOfBathrooms <= ? AND ")
+                addWhereOrAnd()
+                append("numberOfBathrooms <= ?")
                 args.add(it)
             }
             propertySearch.minNumberOfBedrooms?.let {
-                append("numberOfBedrooms >= ? AND ")
+                addWhereOrAnd()
+                append("numberOfBedrooms >= ?")
                 args.add(it)
             }
             propertySearch.maxNumberOfBedrooms?.let {
-                append("numberOfBedrooms <= ? AND ")
+                addWhereOrAnd()
+                append("numberOfBedrooms <= ?")
                 args.add(it)
             }
 
             //  Points of interest
-            if (propertySearch.nearSchool)
-                append("nearSchool = 1 AND ")
-            if (propertySearch.nearTransports)
-                append("nearTransports = 1 AND ")
-            if (propertySearch.nearShops)
-                append("nearShops = 1 AND ")
-            if (propertySearch.nearParks)
-                append("nearParks = 1 AND ")
+            if (propertySearch.nearSchool) {
+                addWhereOrAnd()
+                append("nearSchool = 1")
+            }
+            if (propertySearch.nearTransports) {
+                addWhereOrAnd()
+                append("nearTransports = 1")
+            }
+            if (propertySearch.nearShops) {
+                addWhereOrAnd()
+                append("nearShops = 1")
+            }
+            if (propertySearch.nearParks) {
+                addWhereOrAnd()
+                append("nearParks = 1")
+            }
 
             //  Creation
             propertySearch.minCreationTimestamp?.let {
-                append("creationTimestamp >= ? AND ")
+                addWhereOrAnd()
+                append("creationTimestamp >= ?")
                 args.add(it)
             }
             propertySearch.maxCreationTimestamp?.let {
-                append("creationTimestamp <= ? AND ")
+                addWhereOrAnd()
+                append("creationTimestamp <= ?")
                 args.add(it)
             }
 
             //  Sale
             propertySearch.isSold?.let {
-                if (it) append(" ") // ??
+                addWhereOrAnd()
+                if (it) append("saleTimestamp IS NOT NULL") // ??
             }
             propertySearch.minSaleTimestamp?.let {
-                append("saleTimestamp >= ? AND ")
+                addWhereOrAnd()
+                append("saleTimestamp >= ?")
                 args.add(it)
             }
             propertySearch.maxSaleTimestamp?.let {
-                append("saleTimestamp <= ? AND ")
+                addWhereOrAnd()
+                append("saleTimestamp <= ?")
                 args.add(it)
             }
 
             //  Photos
             propertySearch.minNumberOfPhotos?.let {
-                append("(SELECT COUNT() FROM Photo WHERE propertyId = Pr.id) > ? AND ")
+                addWhereOrAnd()
+                append("(SELECT COUNT() FROM Photo WHERE propertyId = Pr.id) > ?")
                 args.add(it)
             }
-            setLength(length - 5)
-            Log.e("request", SimpleSQLiteQuery(stringBuilder.toString(), args.toArray()).toString())
+
+            //  Location
+            propertySearch.city?.let {
+                addWhereOrAnd()
+                append("city LIKE ?")
+                val string = "%$it%"
+                args.add(string)
+            }
         }
         return SimpleSQLiteQuery(stringBuilder.toString(), args.toArray())
+
+    }
+
+    private fun getLocation(property: Property) {
+
+        val stringAddress = LocationTool.addressConcatenation(property, false)
+
+        GeocoderService
+            .retrofit
+            .create(
+                GeocoderService::class.java
+            ).getLocation(stringAddress)
+            .enqueue(object : Callback<GeocodeResponse> {
+
+                override fun onResponse(
+                    call: Call<GeocodeResponse>,
+                    response: Response<GeocodeResponse>
+                ) {
+                    for (result in response.body()!!.results!!) {
+                        Log.e("google response: ", result.geometry!!.location!!.lat!!.toString())
+                    }
+
+                }
+
+                override fun onFailure(call: Call<GeocodeResponse>, t: Throwable) {
+
+                }
+
+            })
     }
 }

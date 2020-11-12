@@ -13,8 +13,8 @@
             android:id="@+id/activity_property_search_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:titleTextAppearance="@style/TitleToolbarStyle"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:titleTextAppearance="@style/TitleToolbarStyle" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -30,7 +30,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/default_big_margin">
 
                 <TextView
                     style="@style/Title6Style"
@@ -302,38 +303,103 @@
 
                 <View style="@style/divider" />
 
-                <!--    Date  -->
                 <TextView
                     style="@style/Title6Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Date" />
+                    android:text="Creation" />
 
                 <!--    Creation date   -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/activity_property_search_creation_date_start_button"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/creation_after_text_button_search_activity" />
+                    android:orientation="horizontal">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/activity_property_search_creation_date_stop_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/creation_before_text_button_search_activity" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/activity_property_search_creation_date_start_button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="30"
+                        android:textSize="12sp"
+                        android:layout_marginStart="@dimen/default_big_margin"
+                        android:layout_marginEnd="@dimen/default_big_margin"
+                        android:layout_marginTop="@dimen/default_small_margin"
+                        android:layout_marginBottom="@dimen/default_small_margin"
+                        android:text="@string/creation_after_text_button_search_activity" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/activity_property_search_creation_date_stop_button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="30"
+                        android:textSize="12sp"
+                        android:layout_marginStart="@dimen/default_big_margin"
+                        android:layout_marginEnd="@dimen/default_big_margin"
+                        android:layout_marginTop="@dimen/default_small_margin"
+                        android:layout_marginBottom="@dimen/default_small_margin"
+                        android:text="@string/creation_before_text_button_search_activity" />
+
+                </LinearLayout>
+
+                <View style="@style/divider" />
 
                 <!--    Sale    -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/activity_property_search_sale_date_start_button"
+                <TextView
+                    style="@style/Title6Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/sold_after_text_button_search_activity" />
+                    android:text="Sold" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/activity_property_search_sale_date_stop_button"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/activity_property_search_sold_date_container"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/sold_before_text_button_search_activity" />
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/default_big_margin">
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/activity_property_search_sold_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="is sold" />
+
+                    <TextView
+                        android:id="@+id/fragment_property_form_sold_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/activity_property_search_sale_date_start_button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="30"
+                        android:textSize="12sp"
+                        android:layout_marginStart="@dimen/default_big_margin"
+                        android:layout_marginEnd="@dimen/default_big_margin"
+                        android:layout_marginTop="@dimen/default_small_margin"
+                        android:layout_marginBottom="@dimen/default_small_margin"
+                        android:text="@string/sold_after_text_button_search_activity" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/activity_property_search_sale_date_stop_button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="30"
+                        android:textSize="12sp"
+                        android:layout_marginStart="@dimen/default_big_margin"
+                        android:layout_marginEnd="@dimen/default_big_margin"
+                        android:layout_marginTop="@dimen/default_small_margin"
+                        android:layout_marginBottom="@dimen/default_small_margin"
+                        android:text="@string/sold_before_text_button_search_activity" />
+
+                </LinearLayout>
 
                 <View style="@style/divider" />
 
@@ -367,6 +433,29 @@
                     style="@style/SliderTextInfoStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
+                <View style="@style/divider" />
+
+                <TextView
+                    style="@style/Title6Style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Location" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_margin"
+                    android:hint="location">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/activity_property_search_city_text_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
             </LinearLayout>
         </ScrollView>
 

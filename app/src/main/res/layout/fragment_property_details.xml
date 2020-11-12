@@ -20,6 +20,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <TextView
+                android:id="@+id/fragment_property_form_details_is_sold_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/fragment_property_form_details_sold_date_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -157,8 +169,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_big_margin"
         android:src="@drawable/ic_baseline_edit_24"
-        app:elevation="6dp"
         app:backgroundTint="@color/colorAccent"
+        app:elevation="6dp"
         app:layout_anchor="@+id/fragment_property_details_scroll_view"
         app:layout_anchorGravity="bottom|right|end" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
