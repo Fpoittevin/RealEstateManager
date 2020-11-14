@@ -140,6 +140,7 @@ class MainActivity : BaseActivity(),
 
     private fun showPropertyDetails(propertyId: Long) {
         binding.activityMainFrameLayoutSecond?.let {
+            propertiesListViewModel.propertyIdSelectedLiveData.value = propertyId
             displayFragment(
                 R.id.activity_main_frame_layout_second,
                 PropertyDetailsFragment.newInstance(propertyId, this)

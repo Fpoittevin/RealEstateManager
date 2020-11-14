@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import com.ocr.francois.realestatemanager.models.Property
 import com.ocr.francois.realestatemanager.models.PropertySearch
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 import com.ocr.francois.realestatemanager.repositories.CurrencyRepository
@@ -18,6 +19,7 @@ class PropertiesListViewModel(
     var propertySearchLiveData = MutableLiveData<PropertySearch?>().apply {
         postValue(null)
     }
+    var propertyIdSelectedLiveData = MutableLiveData<Long?>()
 
     fun getPropertiesWithPhotos(): LiveData<List<PropertyWithPhotos>> =
 

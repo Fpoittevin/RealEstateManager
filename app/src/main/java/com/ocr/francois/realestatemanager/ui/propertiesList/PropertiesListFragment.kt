@@ -9,12 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ocr.francois.realestatemanager.R
+import androidx.recyclerview.widget.RecyclerView
+import com.ocr.francois.realestatemanager.databinding.FragmentPropertiesListBinding
 import com.ocr.francois.realestatemanager.injection.Injection
-import kotlinx.android.synthetic.main.fragment_properties_list.view.*
 
 class PropertiesListFragment : Fragment() {
 
+    private lateinit var binding: FragmentPropertiesListBinding
+    private lateinit var recyclerView: RecyclerView
     private val propertiesAdapter = PropertiesAdapter()
     private val propertiesListViewModel: PropertiesListViewModel by activityViewModels {
         Injection.provideViewModelFactory(
@@ -31,34 +33,44 @@ class PropertiesListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val view: View = inflater.inflate(R.layout.fragment_properties_list, container, false)
+        binding = FragmentPropertiesListBinding.inflate(inflater, container, false)
+        configureRecyclerView()
 
-        configureRecyclerView(view)
-
-        return view
+        return binding.root
     }
 
     override fun onStart() {
         super.onStart()
-        propertiesListViewModel.getPropertiesWithPhotos().observe(viewLifecycleOwner, {
-            propertiesAdapter.updateProperties(it)
-        })
+        with(propertiesListViewModel) {
+            getPropertiesWithPhotos().observe(viewLifecycleOwner, {
+                propertiesAdapter.updateProperties(it)
+            })
+            propertyIdSelectedLiveData.observe(viewLifecycleOwner, {
+                with(propertiesAdapter) {
+                    updatePropertySelected(it)
+                    itemSelectedPosition?.let { position ->
+                        recyclerView.scrollToPosition(position)
+                    }
+                }
+            })
+        }
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        propertiesAdapter.setPropertyItemClickCallback(context as PropertiesAdapter.PropertyItemClickCallback)
+        propertiesAdapter.setPropertyItemClickCallback(activity as PropertiesAdapter.PropertyItemClickCallback)
     }
 
-    private fun configureRecyclerView(view: View) {
-        val recyclerView = view.fragment_properties_list_recycler_view
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = propertiesAdapter
-        recyclerView.addItemDecoration(
-            DividerItemDecoration(
-                requireContext(),
-                LinearLayoutManager.HORIZONTAL
+    private fun configureRecyclerView() {
+        recyclerView = binding.fragmentPropertiesListRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = propertiesAdapter
+            addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    LinearLayoutManager.HORIZONTAL
+                )
             )
-        )
+        }
     }
 }

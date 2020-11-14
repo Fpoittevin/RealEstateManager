@@ -2,14 +2,12 @@ package com.ocr.francois.realestatemanager.ui.propertyDetails
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.activity.viewModels
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityPropertyDetailsBinding
 import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.ui.propertyModification.PropertyModificationActivity
-import kotlinx.android.synthetic.main.activity_property_details.*
 
 class PropertyDetailsActivity : BaseActivity(),
     PropertyDetailsFragment.PropertyModificationFabListener {
@@ -38,6 +36,18 @@ class PropertyDetailsActivity : BaseActivity(),
             R.id.activity_details_frame_layout,
             PropertyDetailsFragment.newInstance(propertyId!!, this)
         )
+
+        setToolbarTitle()
+    }
+
+    private fun setToolbarTitle() {
+        propertyId?.let { id ->
+            propertyDetailsViewModel.getPropertyWithPhotos(id).observe(this, { propertyWithPhotos ->
+                propertyWithPhotos.property.type?.let {
+                    binding.activityPropertyDetailsToolbar.title = it
+                }
+            })
+        }
     }
 
     override fun onPropertyModificationClick(propertyId: Long) {

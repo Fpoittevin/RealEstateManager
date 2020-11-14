@@ -12,7 +12,7 @@ class PropertiesAdapter :
     private lateinit var propertyItemClickCallback: PropertyItemClickCallback
     private var propertiesWithPhotos: List<PropertyWithPhotos> = ArrayList()
 
-    private var itemSelectedPosition: Int? = null
+    var itemSelectedPosition: Int? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropertyViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -41,6 +41,15 @@ class PropertiesAdapter :
             itemSelectedPosition = position
             notifyDataSetChanged()
         }
+    }
+
+    fun updatePropertySelected(propertyId: Long?) {
+        for(propertyWithPhoto in propertiesWithPhotos) {
+            if(propertyWithPhoto.property.id == propertyId) {
+                itemSelectedPosition = propertiesWithPhotos.indexOf(propertyWithPhoto)
+            }
+        }
+        notifyDataSetChanged()
     }
 
     fun updateProperties(propertiesWithPhotosList: List<PropertyWithPhotos>) {
