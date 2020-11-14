@@ -13,8 +13,9 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/activity_property_creation_toolbar"
             android:layout_width="match_parent"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="@string/creation_title"
             app:titleTextAppearance="@style/TitleToolbarStyle" />
 
     </com.google.android.material.appbar.AppBarLayout>

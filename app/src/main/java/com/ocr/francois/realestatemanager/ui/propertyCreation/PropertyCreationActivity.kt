@@ -17,26 +17,11 @@ class PropertyCreationActivity : BaseActivity() {
 
         binding = ActivityPropertyCreationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        configureToolbar()
+        configureToolbar(binding.activityPropertyCreationToolbar, true)
 
         displayFragment(
             R.id.activity_creation_frame_layout,
             PropertyFormFragment.newInstance()
         )
-    }
-
-    private fun configureToolbar() {
-        setSupportActionBar(activity_property_creation_toolbar)
-        supportActionBar?.let{
-            it.setDisplayHomeAsUpEnabled(true)
-            it.setTitle(R.string.creation_title)
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> finish()
-        }
-        return super.onOptionsItemSelected(item)
     }
 }

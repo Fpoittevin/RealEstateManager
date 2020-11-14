@@ -11,24 +11,6 @@ import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 @Dao
 interface PropertyDao {
 
-    @Insert
-    fun insertProperty(property: Property): Long
-
-    @Insert
-    fun insertPhotos(photos: List<Photo>)
-
-    @Query("DELETE FROM Photo WHERE propertyId= :propertyId")
-    fun deletePhotosOfProperty(propertyId: Long)
-
-    @Update
-    suspend fun updateProperty(property: Property)
-
-    @Query("SELECT * FROM Property")
-    fun selectAllProperties(): LiveData<List<Property>>
-
-    @Query("SELECT Property.*, Photo.* FROM Property LEFT JOIN Photo ON Photo.propertyId = Property.id")
-    fun selectPropertiesWithPhotos(): LiveData<List<PropertyWithPhotos>>
-
     @Query("SELECT * FROM Property WHERE (lat BETWEEN :minLat AND :maxLat) AND (lng BETWEEN :minLng AND :maxLng)")
     fun selectPropertiesInBounds(
         minLat: Double,
@@ -40,24 +22,6 @@ interface PropertyDao {
     @Query("SELECT * FROM Property WHERE id = :id")
     fun selectProperty(id: Long): LiveData<Property>
 
-    suspend fun insertPropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos) {
-        propertyWithPhotos.property.id = insertProperty(propertyWithPhotos.property)
-        propertyWithPhotos.photosList.forEach {
-            it.propertyId = propertyWithPhotos.property.id
-        }
-        insertPhotos(propertyWithPhotos.photosList)
-    }
-
-    suspend fun updatePropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos) {
-        updateProperty(propertyWithPhotos.property)
-
-        deletePhotosOfProperty(propertyWithPhotos.property.id!!)
-        insertPhotos(propertyWithPhotos.photosList)
-    }
-
-    @Query("UPDATE property SET lat = :lat, lng = :lng WHERE id = :propertyId")
-    suspend fun insertLocationOfProperty(propertyId: Long, lat: Double, lng: Double)
-
     @Transaction
     @Query("SELECT * FROM Property")
     fun getPropertiesWithPhotos(): LiveData<List<PropertyWithPhotos>>
@@ -66,14 +30,40 @@ interface PropertyDao {
     @Query("SELECT * FROM Property WHERE id = :id")
     fun getPropertyWithPhotos(id: Long): LiveData<PropertyWithPhotos>
 
-    @Query("SELECT * FROM Property WHERE id = :id")
-    fun getProperty(id: Long): LiveData<Property>
-
     @Transaction
     @RawQuery
     fun getPropertiesBySearch(query: SupportSQLiteQuery): LiveData<List<PropertyWithPhotos>>
 
-
     @Query("SELECT * FROM Property WHERE id = :id")
     fun getPropertyWithCursor(id: Long): Cursor
+
+    @Insert
+    fun insertProperty(property: Property): Long
+
+    suspend fun insertPropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos) {
+        propertyWithPhotos.property.id = insertProperty(propertyWithPhotos.property)
+        propertyWithPhotos.photosList.forEach {
+            it.propertyId = propertyWithPhotos.property.id
+        }
+        insertPhotos(propertyWithPhotos.photosList)
+    }
+
+    @Query("UPDATE property SET lat = :lat, lng = :lng WHERE id = :propertyId")
+    suspend fun insertLocationOfProperty(propertyId: Long, lat: Double, lng: Double)
+
+    @Insert
+    fun insertPhotos(photos: List<Photo>)
+
+    suspend fun updatePropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos) {
+        updateProperty(propertyWithPhotos.property)
+
+        deletePhotosOfProperty(propertyWithPhotos.property.id!!)
+        insertPhotos(propertyWithPhotos.photosList)
+    }
+
+    @Update
+    suspend fun updateProperty(property: Property)
+
+    @Query("DELETE FROM Photo WHERE propertyId= :propertyId")
+    fun deletePhotosOfProperty(propertyId: Long)
 }

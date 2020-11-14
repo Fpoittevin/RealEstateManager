@@ -41,7 +41,7 @@ class PropertySearchActivity : BaseActivity(),
         binding = ActivityPropertySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        configureToolbar()
+        configureToolbar(binding.activityPropertySearchToolbar, true)
         configurePriceRangeSlider()
         configureSurfaceRangeSlider()
         configureRoomsRangeSlider()
@@ -67,21 +67,6 @@ class PropertySearchActivity : BaseActivity(),
             propertySearch = PropertySearch()
             return propertySearch as PropertySearch
         }
-    }
-
-    private fun configureToolbar() {
-        setSupportActionBar(activity_property_search_toolbar)
-        supportActionBar?.let {
-            it.setDisplayHomeAsUpEnabled(true)
-            it.setTitle(R.string.search_title)
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> finish()
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     // PRICE

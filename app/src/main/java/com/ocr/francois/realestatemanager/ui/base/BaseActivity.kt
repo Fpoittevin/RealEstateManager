@@ -1,14 +1,21 @@
 package com.ocr.francois.realestatemanager.ui.base
 
+import android.app.Activity
 import android.util.Log
+import android.view.MenuItem
+import android.view.View
+import android.view.inputmethod.InputMethod
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.events.FailureEvent
 import com.ocr.francois.realestatemanager.utils.IsInternetAvailableLiveData
+import kotlinx.android.synthetic.main.activity_settings.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
@@ -56,5 +63,28 @@ open class BaseActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    fun hideKeyboard() {
+        val view = currentFocus?: View(this)
+        val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    fun configureToolbar(toolbar: MaterialToolbar, withHomeButton: Boolean) {
+        setSupportActionBar(toolbar)
+
+        if(withHomeButton) {
+            supportActionBar?.let {
+                it.setDisplayHomeAsUpEnabled(true)
+            }
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

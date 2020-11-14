@@ -32,32 +32,12 @@ class PropertyDetailsActivity : BaseActivity(),
         setContentView(binding.root)
 
         propertyId = intent.getLongExtra(PROPERTY_ID_KEY, 1)
-        configureToolbar()
+        configureToolbar(binding.activityPropertyDetailsToolbar, true)
 
         displayFragment(
             R.id.activity_details_frame_layout,
             PropertyDetailsFragment.newInstance(propertyId!!, this)
         )
-    }
-
-    private fun configureToolbar() {
-        setSupportActionBar(activity_property_details_toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        propertyId?.let { propertyId ->
-            propertyDetailsViewModel.getProperty(propertyId).observe(this, { property ->
-                property.type?.let {
-                    binding.activityPropertyDetailsToolbar.title = it
-                }
-            })
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> finish()
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onPropertyModificationClick(propertyId: Long) {

@@ -16,6 +16,7 @@
             android:id="@+id/activity_settings_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:title="@string/settings_title"
             app:titleTextAppearance="@style/TitleToolbarStyle"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
@@ -31,6 +32,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_big_margin"
         android:orientation="horizontal">
 
         <RadioGroup

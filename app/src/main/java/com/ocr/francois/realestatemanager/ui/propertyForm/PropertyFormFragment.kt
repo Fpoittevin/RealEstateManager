@@ -6,11 +6,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.AbsListView
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
@@ -20,6 +19,7 @@ import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.models.Property
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 import com.ocr.francois.realestatemanager.notification.NotificationSender
+import com.ocr.francois.realestatemanager.ui.base.BaseFragment
 import com.ocr.francois.realestatemanager.ui.photosGallery.PhotosGalleryFragment
 import com.ocr.francois.realestatemanager.utils.Currency
 import com.ocr.francois.realestatemanager.utils.CurrencyLiveData
@@ -27,7 +27,7 @@ import com.ocr.francois.realestatemanager.utils.ImageUtil
 import com.ocr.francois.realestatemanager.utils.Utils
 import org.joda.time.LocalDate
 
-class PropertyFormFragment : Fragment(), TextWatcher {
+class PropertyFormFragment : BaseFragment(), TextWatcher {
 
     private lateinit var binding: FragmentPropertyFormBinding
     private lateinit var propertyWithPhotos: PropertyWithPhotos
@@ -65,13 +65,15 @@ class PropertyFormFragment : Fragment(), TextWatcher {
     ): View? {
 
         binding = FragmentPropertyFormBinding.inflate(inflater, container, false).apply {
-            fragmentPropertyFormSaveFab.setOnClickListener { saveProperty() }
+            fragmentPropertyFormSaveFab.setOnClickListener {
+                hideKeyboard()
+                saveProperty()
+            }
         }
 
         arguments?.let {
             it.getLong(PROPERTY_ID_KEY).let { propertyId ->
                 formTarget = FormTarget.MODIFICATION
-                Log.e("PROP ID", propertyId.toString())
                 propertyFormViewModel.getPropertyWithPhotos(propertyId)
                     .observe(viewLifecycleOwner, { propertyWithPhotos ->
                         this.propertyWithPhotos = propertyWithPhotos

@@ -2,13 +2,15 @@ package com.ocr.francois.realestatemanager.ui.loanSimulator
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityLoanSimulatorBinding
+import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_loan_simulator.*
 import kotlin.math.pow
 
-class LoanSimulatorActivity : AppCompatActivity() {
+class LoanSimulatorActivity : BaseActivity() {
 
     private var price = 0.0
     private var contribution = 0.0
@@ -25,24 +27,14 @@ class LoanSimulatorActivity : AppCompatActivity() {
 
         binding = ActivityLoanSimulatorBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        configureToolbar()
+        configureToolbar(binding.activityLoanSimulatorToolbar, true)
         configureCalculateButton()
-    }
-
-    private fun configureToolbar() {
-        setSupportActionBar(activity_loan_simulator_toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> finish()
-        }
-        return super.onOptionsItemSelected(item)
+        binding.activityLoanSimulatorResultsContainer.visibility = View.INVISIBLE
     }
 
     private fun configureCalculateButton() {
         binding.activityLoanSimulatorCalculateButton.setOnClickListener {
+            hideKeyboard()
             if (formIsCompleted()) {
                 calculateMonthlyPaymentAndLoanPrice()
             }
@@ -108,6 +100,8 @@ class LoanSimulatorActivity : AppCompatActivity() {
         ).times(monthlyPayment).minus(loanAmount)
 
         binding.apply {
+
+            activityLoanSimulatorResultsContainer.visibility = View.VISIBLE
             activityLoanSimulatorLoanPriceTextView.text = String.format("%.2f", loanPrice)
             activityLoanSimulatorMonthlyPaymentTextView.text = String.format("%.2f", monthlyPayment)
         }

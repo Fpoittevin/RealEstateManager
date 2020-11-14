@@ -1,29 +1,10 @@
 package com.ocr.francois.realestatemanager.utils
 
-import android.content.Context
 import com.ocr.francois.realestatemanager.models.Property
 
 class LocationTool {
 
     companion object {
-
-        fun getAndSaveLocationFromAddress(property: Property, context: Context) {
-
-            /*val address = addressConcatenation(property, false)
-
-            val workManager = WorkManager.getInstance(context)
-
-            val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build()
-
-            val req = OneTimeWorkRequestBuilder<LocationWorker>()
-                .setConstraints(constraints)
-                .addTag("TAG_OUTPUT")
-                .build()
-
-            workManager.enqueue(req)*/
-        }
 
         fun addressConcatenation(property: Property, toDisplay: Boolean): String {
 

@@ -21,7 +21,7 @@ class PropertyModificationActivity : BaseActivity() {
 
         binding = ActivityPropertyModificationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        configureToolbar()
+        configureToolbar(binding.activityPropertyModificationToolbar, true)
 
         val propertyId = intent.getLongExtra(PROPERTY_ID_KEY, 1)
 
@@ -29,20 +29,5 @@ class PropertyModificationActivity : BaseActivity() {
             R.id.activity_property_modification_frame_layout,
             PropertyFormFragment.newInstance(propertyId)
         )
-    }
-
-    private fun configureToolbar() {
-        setSupportActionBar(activity_property_modification_toolbar)
-        supportActionBar?.let{
-            it.setDisplayHomeAsUpEnabled(true)
-            it.setTitle(R.string.modification_title)
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> finish()
-        }
-        return super.onOptionsItemSelected(item)
     }
 }

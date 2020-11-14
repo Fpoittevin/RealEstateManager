@@ -14,6 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="@string/search_title"
             app:titleTextAppearance="@style/TitleToolbarStyle" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -319,25 +320,25 @@
                         android:id="@+id/activity_property_search_creation_date_start_button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="30"
-                        android:textSize="12sp"
                         android:layout_marginStart="@dimen/default_big_margin"
-                        android:layout_marginEnd="@dimen/default_big_margin"
                         android:layout_marginTop="@dimen/default_small_margin"
+                        android:layout_marginEnd="@dimen/default_big_margin"
                         android:layout_marginBottom="@dimen/default_small_margin"
-                        android:text="@string/creation_after_text_button_search_activity" />
+                        android:layout_weight="30"
+                        android:text="@string/creation_after_text_button_search_activity"
+                        android:textSize="12sp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/activity_property_search_creation_date_stop_button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="30"
-                        android:textSize="12sp"
                         android:layout_marginStart="@dimen/default_big_margin"
-                        android:layout_marginEnd="@dimen/default_big_margin"
                         android:layout_marginTop="@dimen/default_small_margin"
+                        android:layout_marginEnd="@dimen/default_big_margin"
                         android:layout_marginBottom="@dimen/default_small_margin"
-                        android:text="@string/creation_before_text_button_search_activity" />
+                        android:layout_weight="30"
+                        android:text="@string/creation_before_text_button_search_activity"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -354,8 +355,8 @@
                     android:id="@+id/activity_property_search_sold_date_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="@dimen/default_big_margin">
+                    android:layout_marginStart="@dimen/default_big_margin"
+                    android:orientation="vertical">
 
                     <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/activity_property_search_sold_switch"
@@ -379,25 +380,25 @@
                         android:id="@+id/activity_property_search_sale_date_start_button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="30"
-                        android:textSize="12sp"
                         android:layout_marginStart="@dimen/default_big_margin"
-                        android:layout_marginEnd="@dimen/default_big_margin"
                         android:layout_marginTop="@dimen/default_small_margin"
+                        android:layout_marginEnd="@dimen/default_big_margin"
                         android:layout_marginBottom="@dimen/default_small_margin"
-                        android:text="@string/sold_after_text_button_search_activity" />
+                        android:layout_weight="30"
+                        android:text="@string/sold_after_text_button_search_activity"
+                        android:textSize="12sp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/activity_property_search_sale_date_stop_button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="30"
-                        android:textSize="12sp"
                         android:layout_marginStart="@dimen/default_big_margin"
-                        android:layout_marginEnd="@dimen/default_big_margin"
                         android:layout_marginTop="@dimen/default_small_margin"
+                        android:layout_marginEnd="@dimen/default_big_margin"
                         android:layout_marginBottom="@dimen/default_small_margin"
-                        android:text="@string/sold_before_text_button_search_activity" />
+                        android:layout_weight="30"
+                        android:text="@string/sold_before_text_button_search_activity"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 

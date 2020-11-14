@@ -1,6 +1,8 @@
 package com.ocr.francois.realestatemanager.api
 
+import android.content.res.Resources
 import com.ocr.francois.realestatemanager.BuildConfig
+import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.models.GeocodeResponse
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -15,9 +17,8 @@ interface GeocoderService {
 
     companion object {
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("https://maps.google.com/maps/api/geocode/")
+            .baseUrl(Resources.getSystem().getString(R.string.google_geocode_base_url))
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 }
-//https://maps.google.com/maps/api/geocode/json?address=paris&&key=AIzaSyAF9UHLhqtzUeWQ3HdbMQmV6xkTLYJrYCc

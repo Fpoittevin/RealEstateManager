@@ -33,9 +33,6 @@ class PropertyRepository(private val propertyDao: PropertyDao, private val conte
         }
     }
 
-    fun getProperty(id: Long): LiveData<Property> =
-        propertyDao.getProperty(id)
-
     fun getPropertyWithPhotos(id: Long): LiveData<PropertyWithPhotos> =
         propertyDao.getPropertyWithPhotos(id)
 

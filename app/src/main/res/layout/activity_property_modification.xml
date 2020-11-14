@@ -16,6 +16,7 @@
             android:id="@+id/activity_property_modification_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:title="@string/modification_title"
             app:titleTextAppearance="@style/TitleToolbarStyle"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 

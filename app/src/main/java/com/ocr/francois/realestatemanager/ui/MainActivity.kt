@@ -14,6 +14,7 @@ import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.ui.loanSimulator.LoanSimulatorActivity
 import com.ocr.francois.realestatemanager.ui.mapView.MapViewActivity
+import com.ocr.francois.realestatemanager.ui.mapView.MapViewFragment
 import com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesAdapter
 import com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesListFragment
 import com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesListViewModel
@@ -23,13 +24,13 @@ import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFrag
 import com.ocr.francois.realestatemanager.ui.propertyModification.PropertyModificationActivity
 import com.ocr.francois.realestatemanager.ui.propertySearch.PropertySearchActivity
 import com.ocr.francois.realestatemanager.ui.settings.SettingsActivity
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : BaseActivity(),
     NavigationView.OnNavigationItemSelectedListener,
     PropertiesAdapter.PropertyItemClickCallback,
-    PropertyDetailsFragment.PropertyModificationFabListener {
+    PropertyDetailsFragment.PropertyModificationFabListener,
+    MapViewFragment.MarkerClickCallback {
 
     private lateinit var binding: ActivityMainBinding
     private val propertiesListFragment = PropertiesListFragment.newInstance()
@@ -49,7 +50,7 @@ class MainActivity : BaseActivity(),
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        configureToolbar()
+        configureToolbar(binding.activityMainToolbar, false)
         configureDrawerLayout()
         configureNavigationView()
 
@@ -57,10 +58,6 @@ class MainActivity : BaseActivity(),
             R.id.activity_main_frame_layout,
             propertiesListFragment
         )
-    }
-
-    private fun configureToolbar() {
-        setSupportActionBar(activity_main_toolbar)
     }
 
     private fun configureDrawerLayout() {
@@ -152,6 +149,17 @@ class MainActivity : BaseActivity(),
         }
     }
 
+    private fun showMapView() {
+        binding.activityMainFrameLayoutSecond?.let {
+            displayFragment(
+                R.id.activity_main_frame_layout_second,
+                MapViewFragment.newInstance(this)
+            )
+        } ?: run {
+            startMapViewActivity()
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.activity_main_toolbar_menu, menu)
         return true
@@ -184,7 +192,7 @@ class MainActivity : BaseActivity(),
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.activity_main_drawer_map -> startMapViewActivity()
+            R.id.activity_main_drawer_map -> showMapView()
             R.id.activity_main_drawer_loan -> startLoanSimulatorActivity()
             R.id.activity_main_drawer_settings -> startSettingsActivity()
         }
@@ -200,6 +208,10 @@ class MainActivity : BaseActivity(),
     }
 
     override fun onPropertyItemClick(propertyId: Long) {
+        showPropertyDetails(propertyId)
+    }
+
+    override fun onMarkerClickCallback(propertyId: Long) {
         showPropertyDetails(propertyId)
     }
 }

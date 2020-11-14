@@ -12,9 +12,6 @@ class PropertyDetailsViewModel(
     private val currencyRepository: CurrencyRepository
 ) : BaseCurrencyViewModel(currencyRepository) {
 
-
-    fun getProperty(id: Long) = propertyRepository.getProperty(id)
-
     fun getPropertyWithPhotos(id: Long) = MediatorLiveData<PropertyWithPhotos>().apply {
         addSource(propertyRepository.getPropertyWithPhotos(id)) { propertyWithPhotos ->
 
