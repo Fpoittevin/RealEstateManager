@@ -1,5 +1,6 @@
 package com.ocr.francois.realestatemanager.ui.photosGallery
 
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -11,7 +12,7 @@ import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.PhotosGalleryItemBinding
 import com.ocr.francois.realestatemanager.models.Photo
 
-class PhotosGalleryAdapter(private val isEditable: Boolean) :
+class PhotosGalleryAdapter(private val context: Context, private val isEditable: Boolean) :
     RecyclerView.Adapter<PhotosGalleryAdapter.PhotosGalleryViewHolder>() {
 
     internal val photosList = mutableListOf<Photo>()
@@ -33,7 +34,10 @@ class PhotosGalleryAdapter(private val isEditable: Boolean) :
             holder.binding.photosGalleryItemDeleteButton.setOnClickListener {
                 this.removePhotoFromList(photo)
             }
-            holder.binding.photosGalleryItemDescriptionTextInputLayout.error = "ERROR"
+            if (holder.binding.photosGalleryItemDescriptionTextInput.text.isNullOrEmpty()) {
+                holder.binding.photosGalleryItemDescriptionTextInputLayout.error =
+                    context.getString(R.string.photo_description_error)
+            }
             holder.binding.photosGalleryItemDescriptionTextView.visibility = View.GONE
             holder.binding.photosGalleryItemDescriptionTextInput.addTextChangedListener(object :
                 TextWatcher {
@@ -42,16 +46,18 @@ class PhotosGalleryAdapter(private val isEditable: Boolean) :
                     start: Int,
                     count: Int,
                     after: Int
-                ) {}
+                ) {
+                }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
                 override fun afterTextChanged(description: Editable?) {
-                    if(description.isNullOrEmpty()){
+                    if (description.isNullOrEmpty()) {
                         holder.binding.photosGalleryItemDescriptionTextInputLayout.error =
-                            "all photo need a description"
+                            context.getString(R.string.photo_description_error)
                     } else {
-                        holder.binding.photosGalleryItemDescriptionTextInputLayout.isErrorEnabled = false
+                        holder.binding.photosGalleryItemDescriptionTextInputLayout.isErrorEnabled =
+                            false
                         photo.description = description.toString()
                     }
                 }

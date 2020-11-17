@@ -9,7 +9,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
@@ -47,7 +46,7 @@ class PropertyFormFragment : BaseFragment(), TextWatcher {
     }
 
     companion object {
-        private const val PROPERTY_ID_KEY = "propertyId"
+        const val PROPERTY_ID_KEY = "PROPERTY_ID"
 
         fun newInstance(propertyId: Long? = null) =
             PropertyFormFragment().apply {
@@ -321,7 +320,7 @@ class PropertyFormFragment : BaseFragment(), TextWatcher {
             }
 
             val sharedPreferences = requireContext().getSharedPreferences(
-                getString(R.string.preference_file_key),
+                getString(R.string.preferences_file_key),
                 Context.MODE_PRIVATE
             )
 
@@ -354,7 +353,7 @@ class PropertyFormFragment : BaseFragment(), TextWatcher {
             }
             activity?.finish()
         } else {
-            Snackbar.make(binding.root, "an error occurred", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, getString(R.string.form_not_completed_error), Snackbar.LENGTH_SHORT).show()
             errorInForm = false
         }
     }

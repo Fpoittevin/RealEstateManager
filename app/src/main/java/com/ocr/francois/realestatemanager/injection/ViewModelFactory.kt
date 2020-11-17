@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.ocr.francois.realestatemanager.repositories.CurrencyRepository
 import com.ocr.francois.realestatemanager.repositories.PropertyRepository
+import com.ocr.francois.realestatemanager.ui.loanSimulator.LoanSimulatorViewModel
 import com.ocr.francois.realestatemanager.ui.mapView.MapViewModel
 import com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesListViewModel
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsViewModel
@@ -31,6 +32,9 @@ class ViewModelFactory(
             }
             modelClass.isAssignableFrom(SettingsViewModel::class.java) -> {
                 SettingsViewModel(currencyRepository) as T
+            }
+            modelClass.isAssignableFrom(LoanSimulatorViewModel::class.java) -> {
+                LoanSimulatorViewModel(currencyRepository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class")
         }

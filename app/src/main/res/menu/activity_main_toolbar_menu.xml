@@ -5,12 +5,12 @@
     <item
         android:id="@+id/main_activity_toolbar_menu_filter_button"
         android:icon="@drawable/ic_filter_alt_white_24"
-        android:title="@string/main_activity_toolbar_menu_map_view_button_title"
+        android:title="@string/search"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/main_activity_toolbar_menu_creation_button"
         android:icon="@drawable/ic_baseline_add_24"
-        android:title="@string/main_activity_toolbar_menu_creation_button_title"
+        android:title="@string/creation"
         app:showAsAction="ifRoom" />
 </menu>

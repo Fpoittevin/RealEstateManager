@@ -10,13 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.FragmentPhotosGalleryBinding
+import com.ocr.francois.realestatemanager.events.FailureEvent
 import com.ocr.francois.realestatemanager.models.Photo
 import com.ocr.francois.realestatemanager.utils.ImageUtil
+import org.greenrobot.eventbus.EventBus
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 import java.io.IOException
@@ -53,7 +54,7 @@ class PhotosGalleryFragment : Fragment(),
         super.onCreate(savedInstanceState)
         arguments?.let {
             isEditable = it.getBoolean(ARG_IS_EDITABLE)
-            photosGalleryAdapter = PhotosGalleryAdapter(isEditable)
+            photosGalleryAdapter = PhotosGalleryAdapter(requireContext(), isEditable)
         }
     }
 
@@ -129,7 +130,8 @@ class PhotosGalleryFragment : Fragment(),
                     ImageUtil.createImageFile(requireActivity())
                 } catch (ex: IOException) {
                     // Error occurred while creating the File$
-                    TODO("ERROR")
+                    EventBus.getDefault()
+                        .post(FailureEvent(getString(R.string.creation_file_error)))
                     null
                 }
                 photoFile?.also {

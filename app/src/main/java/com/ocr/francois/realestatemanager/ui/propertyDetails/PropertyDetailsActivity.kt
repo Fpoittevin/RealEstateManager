@@ -7,6 +7,7 @@ import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityPropertyDetailsBinding
 import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
+import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFragment.Companion.PROPERTY_ID_KEY
 import com.ocr.francois.realestatemanager.ui.propertyModification.PropertyModificationActivity
 
 class PropertyDetailsActivity : BaseActivity(),
@@ -17,10 +18,6 @@ class PropertyDetailsActivity : BaseActivity(),
 
     private val propertyDetailsViewModel: PropertyDetailsViewModel by viewModels {
         Injection.provideViewModelFactory(this)
-    }
-
-    companion object {
-        const val PROPERTY_ID_KEY = "propertyId"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

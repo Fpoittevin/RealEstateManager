@@ -1,9 +1,11 @@
 package com.ocr.francois.realestatemanager.ui.propertiesList
 
+import android.content.res.Resources
 import android.net.Uri
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.RecyclerViewPropertyItemBinding
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 import com.ocr.francois.realestatemanager.utils.Utils
@@ -13,7 +15,7 @@ class PropertyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val binding = RecyclerViewPropertyItemBinding.bind(itemView)
 
     fun setIsSelected() {
-       binding.recyclerViewPropertyItemCardView.cardElevation = 2.0F
+        binding.recyclerViewPropertyItemCardView.cardElevation = 2.0F
     }
 
     fun updateUi(propertyWithPhotos: PropertyWithPhotos) {
@@ -24,7 +26,6 @@ class PropertyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             recyclerViewPropertyItemTypeTextView.text = propertyWithPhotos.property.type
 
             propertyWithPhotos.property.saleTimestamp?.let {
-                recyclerViewPropertyItemSoldTextView.text = "sold"
                 recyclerViewPropertyItemSoldTextView.visibility = View.VISIBLE
                 recyclerViewPropertyItemSoldFilterView.visibility = View.VISIBLE
             } ?: run {
@@ -37,7 +38,7 @@ class PropertyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             }
 
             propertyWithPhotos.property.surface?.let {
-                val surface = Utils.formatNumber(it) + " m²"
+                val surface = Utils.formatNumber(it) + "m²"
                 recyclerViewPropertyItemSurfaceTextView.text = surface
             }
 

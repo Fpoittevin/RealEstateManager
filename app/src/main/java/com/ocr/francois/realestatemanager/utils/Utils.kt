@@ -1,6 +1,8 @@
 package com.ocr.francois.realestatemanager.utils
 
 import android.content.Context
+import android.content.res.Resources
+import com.ocr.francois.realestatemanager.R
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import java.text.NumberFormat
@@ -47,16 +49,12 @@ class Utils {
             return date.timeInMillis
         }
 
-        fun getFormattedPriceWithCurrency(currency: Currency, price: Int): String {
-
-            return when (currency) {
-                Currency.DOLLAR -> {
-                        "$ ${formatNumber(price)}"
-                }
-                Currency.EURO -> {
-                        "${formatNumber(price)} €"
-                }
-            }
+        fun getFormattedPriceWithCurrency(currency: Currency, price: Int) =
+            when (currency) {
+                Currency.DOLLAR ->
+                    "$" + formatNumber(price)
+                Currency.EURO ->
+                    formatNumber(price) + "€"
         }
     }
 }

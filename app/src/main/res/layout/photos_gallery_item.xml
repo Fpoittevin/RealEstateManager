@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,26 +13,26 @@
             android:id="@+id/photos_gallery_item_image_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            />
+            android:contentDescription="@string/gallery_photo" />
 
         <Button
-            style="@style/IconOnlyButtonStyle"
             android:id="@+id/photos_gallery_item_delete_button"
+            style="@style/IconOnlyButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
             app:icon="@drawable/ic_baseline_delete_24"
-            app:layout_constraintTop_toTopOf="@+id/photos_gallery_item_image_view"
             app:layout_constraintEnd_toEndOf="@+id/photos_gallery_item_image_view"
-            android:layout_margin="@dimen/default_margin" />
+            app:layout_constraintTop_toTopOf="@+id/photos_gallery_item_image_view" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
+        android:id="@+id/photos_gallery_item_description_text_view"
+        style="@style/BodyTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_marginTop="@dimen/default_margin"
-        android:id="@+id/photos_gallery_item_description_text_view"
-        style="@style/BodyTextStyle"/>
+        android:gravity="center" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/photos_gallery_item_description_text_input_layout"
@@ -40,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
-        android:hint="@string/description_required_hint_form"
+        android:hint="@string/description_required"
         app:helperText="@string/required_info"
         app:helperTextEnabled="true">
 

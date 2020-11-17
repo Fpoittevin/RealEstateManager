@@ -1,12 +1,10 @@
 package com.ocr.francois.realestatemanager.ui.propertyCreation
 
 import android.os.Bundle
-import android.view.MenuItem
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityPropertyCreationBinding
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.ui.propertyForm.PropertyFormFragment
-import kotlinx.android.synthetic.main.activity_property_creation.*
 
 class PropertyCreationActivity : BaseActivity() {
 

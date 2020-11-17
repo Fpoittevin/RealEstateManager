@@ -136,25 +136,33 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-                <TextView
-                    style="@style/Title6Style"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="50"
                     android:layout_height="wrap_content"
-                    android:text="@string/location" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/fragment_property_details_address_text_view"
-                    style="@style/BodyTextWithIconStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:drawableStartCompat="@drawable/ic_baseline_location_24" />
+                    <TextView
+                        style="@style/Title6Style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/location" />
+
+                    <TextView
+                        android:id="@+id/fragment_property_details_address_text_view"
+                        style="@style/BodyTextWithIconStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:drawableStartCompat="@drawable/ic_baseline_location_24" />
+                </LinearLayout>
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/fragment_property_details_map_container"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="50"
                     android:layout_height="200dp"
                     android:layout_marginTop="@dimen/default_small_margin"
                     map:liteMode="true" />

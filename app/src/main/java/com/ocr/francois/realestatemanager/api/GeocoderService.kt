@@ -1,8 +1,6 @@
 package com.ocr.francois.realestatemanager.api
 
-import android.content.res.Resources
 import com.ocr.francois.realestatemanager.BuildConfig
-import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.models.GeocodeResponse
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -16,8 +14,11 @@ interface GeocoderService {
     fun getLocation(@Query("address") address: String): Call<GeocodeResponse>
 
     companion object {
+
+        private const val GOOGLE_GEOCODE_BASE_URL = "https://maps.google.com/maps/api/geocode/"
+
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl(Resources.getSystem().getString(R.string.google_geocode_base_url))
+            .baseUrl(GOOGLE_GEOCODE_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

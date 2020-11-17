@@ -4,8 +4,6 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.DatePicker
@@ -15,7 +13,6 @@ import com.ocr.francois.realestatemanager.databinding.ActivityPropertySearchBind
 import com.ocr.francois.realestatemanager.models.PropertySearch
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.utils.Utils
-import kotlinx.android.synthetic.main.activity_property_search.*
 import org.joda.time.LocalDate
 
 class PropertySearchActivity : BaseActivity(),
@@ -34,6 +31,10 @@ class PropertySearchActivity : BaseActivity(),
         CREATION_STOP,
         SALE_START,
         SALE_STOP
+    }
+
+    companion object {
+        const val PROPERTY_SEARCH_KEY = "PROPERTY_SEARCH_KEY"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -397,7 +398,7 @@ class PropertySearchActivity : BaseActivity(),
             getPropertySearch().minCreationTimestamp?.let {
                 this.text = Utils.formatDate(LocalDate(it))
             } ?: run {
-                this.text = resources.getString(R.string.creation_after_text_button_search_activity)
+                this.text = resources.getString(R.string.creation_after)
             }
         }
         binding.activityPropertySearchCreationDateStopButton.apply {
@@ -405,21 +406,21 @@ class PropertySearchActivity : BaseActivity(),
                 this.text = Utils.formatDate(LocalDate(it))
             } ?: run {
                 this.text =
-                    resources.getString(R.string.creation_before_text_button_search_activity)
+                    resources.getString(R.string.creation_before)
             }
         }
         binding.activityPropertySearchSaleDateStartButton.apply {
             getPropertySearch().minSaleTimestamp?.let {
                 this.text = Utils.formatDate(LocalDate(it))
             } ?: run {
-                this.text = resources.getString(R.string.sold_after_text_button_search_activity)
+                this.text = resources.getString(R.string.sold_after)
             }
         }
         binding.activityPropertySearchSaleDateStopButton.apply {
             getPropertySearch().maxSaleTimestamp?.let {
                 this.text = Utils.formatDate(LocalDate(it))
             } ?: run {
-                this.text = resources.getString(R.string.sold_before_text_button_search_activity)
+                this.text = resources.getString(R.string.sold_before)
             }
         }
     }
@@ -547,8 +548,7 @@ class PropertySearchActivity : BaseActivity(),
             R.id.activity_property_search_fab -> {
 
                 propertySearch?.let {
-                    Log.e("property search:", propertySearch.toString())
-                    intent.putExtra("PROPERTY_SEARCH", propertySearch)
+                    intent.putExtra(PROPERTY_SEARCH_KEY, propertySearch)
                     setResult(RESULT_OK, intent)
                 } ?: run {
                     setResult(RESULT_CANCELED, intent)

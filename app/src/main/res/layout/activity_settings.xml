@@ -16,9 +16,9 @@
             android:id="@+id/activity_settings_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@string/settings_title"
-            app:titleTextAppearance="@style/TitleToolbarStyle"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="@string/settings"
+            app:titleTextAppearance="@style/TitleToolbarStyle" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -26,35 +26,27 @@
         style="@style/Title6Style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Currency" />
+        android:text="@string/currency" />
 
-
-    <LinearLayout
+    <RadioGroup
+        android:id="@+id/activity_settings_currencies_radio_group"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_big_margin"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <RadioGroup
-            android:id="@+id/activity_settings_currencies_radio_group"
+        <RadioButton
+            android:id="@+id/activity_settings_currencies_dollar_radio_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_baseline_dollar_24"
+            android:text="@string/dollar" />
 
-            <RadioButton
-                android:id="@+id/activity_settings_currencies_dollar_radio_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_baseline_dollar_24"
-                android:text="dollar" />
+        <RadioButton
+            android:id="@+id/activity_settings_currencies_euro_radio_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_baseline_euro_24"
+            android:text="@string/euro" />
 
-            <RadioButton
-                android:id="@+id/activity_settings_currencies_euro_radio_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_baseline_euro_24"
-                android:text="euro" />
+    </RadioGroup>
 
-        </RadioGroup>
-
-    </LinearLayout>
 </LinearLayout>

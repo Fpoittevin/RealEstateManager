@@ -1,13 +1,13 @@
 package com.ocr.francois.realestatemanager.ui.loanSimulator
 
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.viewModels
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityLoanSimulatorBinding
+import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_loan_simulator.*
+import com.ocr.francois.realestatemanager.utils.Currency
 import kotlin.math.pow
 
 class LoanSimulatorActivity : BaseActivity() {
@@ -20,7 +20,13 @@ class LoanSimulatorActivity : BaseActivity() {
     private var monthlyPayment = 0.0
     private var loanPrice = 0.0
 
+    private var currency = Currency.DOLLAR
+
     private lateinit var binding: ActivityLoanSimulatorBinding
+
+    private val loanSimulatorViewModel: LoanSimulatorViewModel by viewModels {
+        Injection.provideViewModelFactory(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +36,14 @@ class LoanSimulatorActivity : BaseActivity() {
         configureToolbar(binding.activityLoanSimulatorToolbar, true)
         configureCalculateButton()
         binding.activityLoanSimulatorResultsContainer.visibility = View.INVISIBLE
+
+        observeCurrency()
+    }
+
+    private fun observeCurrency() {
+        loanSimulatorViewModel.getCurrencyLiveData().observe(this, {
+            this.currency = it
+        })
     }
 
     private fun configureCalculateButton() {
@@ -101,9 +115,25 @@ class LoanSimulatorActivity : BaseActivity() {
 
         binding.apply {
 
+            var loanPriceText = ""
+            var monthlyPaymentText = ""
             activityLoanSimulatorResultsContainer.visibility = View.VISIBLE
-            activityLoanSimulatorLoanPriceTextView.text = String.format("%.2f", loanPrice)
-            activityLoanSimulatorMonthlyPaymentTextView.text = String.format("%.2f", monthlyPayment)
+            when (currency) {
+                Currency.DOLLAR -> {
+                    loanPriceText =
+                        "$ " + String.format("%.2f", loanPrice)
+                    monthlyPaymentText =
+                        "$ " + String.format("%.2f", monthlyPayment)
+                }
+                Currency.EURO -> {
+                    loanPriceText =
+                        String.format("%.2f", loanPrice) + " €"
+                    monthlyPaymentText =
+                        String.format("%.2f", monthlyPayment) + " €"
+                }
+            }
+            activityLoanSimulatorLoanPriceTextView.text = loanPriceText
+            activityLoanSimulatorMonthlyPaymentTextView.text = monthlyPaymentText
         }
     }
 }

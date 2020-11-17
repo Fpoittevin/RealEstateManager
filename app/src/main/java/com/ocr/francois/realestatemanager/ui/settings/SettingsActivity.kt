@@ -8,7 +8,6 @@ import com.ocr.francois.realestatemanager.databinding.ActivitySettingsBinding
 import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.utils.Currency
-import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : BaseActivity() {
 

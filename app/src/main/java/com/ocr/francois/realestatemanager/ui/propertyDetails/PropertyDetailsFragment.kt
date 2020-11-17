@@ -68,7 +68,7 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
     }
 
     companion object {
-        private const val PROPERTY_ID_KEY = "propertyId"
+        const val PROPERTY_ID_KEY = "PROPERTY_ID"
 
         fun newInstance(
             propertyId: Long,
@@ -88,7 +88,7 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
 
         binding.apply {
             property.saleTimestamp?.let {
-                fragmentPropertyFormDetailsIsSoldTextView.text = "SOLD"
+                fragmentPropertyFormDetailsIsSoldTextView.text = getString(R.string.sold)
                 fragmentPropertyFormDetailsSoldDateTextView.text = Utils.formatDate(LocalDate(it))
             } ?: run {
                 binding.apply {
@@ -117,11 +117,11 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
         }
 
         binding.fragmentPropertyDetailsNumberOfRoomsTextView.text =
-            getString(R.string.rooms_title_details_fragment, property.numberOfRooms)
+            getString(R.string.rooms_with_number, property.numberOfRooms)
         binding.fragmentPropertyDetailsNumberOfBathroomsTextView.text =
-            getString(R.string.bathrooms_title_details_fragment, property.numberOfBathrooms)
+            getString(R.string.bathrooms_with_number, property.numberOfBathrooms)
         binding.fragmentPropertyDetailsNumberOfBedroomsTextView.text =
-            getString(R.string.bedrooms_title_details_fragment, property.numberOfBedrooms)
+            getString(R.string.bedrooms_with_number, property.numberOfBedrooms)
 
         binding.fragmentPropertyDetailsAddressTextView.text =
             LocationTool.addressConcatenation(property, true)

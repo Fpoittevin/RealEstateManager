@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/recycler_view_property_item_card_view"
     style="@style/CardViewStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/recycler_view_property_item_card_view"
     app:cardElevation="5dp">
 
     <LinearLayout
@@ -20,7 +20,7 @@
                 android:id="@+id/recycler_view_property_item_photo_image_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="@string/property_photo_content_description"
+                android:contentDescription="@string/property_photo"
                 android:src="@drawable/ic_baseline_photo_24"
                 app:elevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -42,6 +42,7 @@
             <TextView
                 android:id="@+id/recycler_view_property_item_sold_text_view"
                 style="@style/Title6Style"
+                android:text="@string/sold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:elevation="4dp"
@@ -58,7 +59,7 @@
             android:padding="@dimen/default_margin">
 
             <TextView
-                android:id="@+id/issold"
+                android:id="@+id/is_sold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

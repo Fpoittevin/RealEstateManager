@@ -14,25 +14,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/fragment_property_form_sold_date_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/fragment_property_form_sold_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="is sold" />
-
-                <TextView
-                    android:id="@+id/fragment_property_form_sold_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
             <!-- GENERAL -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,7 +24,27 @@
                     style="@style/Title6Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/info_title_general" />
+                    android:text="@string/general" />
+
+                <LinearLayout
+                    android:id="@+id/fragment_property_form_sold_date_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_margin"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/fragment_property_form_sold_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/is_sold" />
+
+                    <TextView
+                        android:id="@+id/fragment_property_form_sold_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
 
                 <!-- Type -->
                 <com.google.android.material.textfield.TextInputLayout
@@ -52,7 +53,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_margin"
-                    android:hint="@string/type_hint_form_fragment"
+                    android:hint="@string/type"
                     app:helperText="@string/required_info"
                     app:helperTextEnabled="true">
 
@@ -66,6 +67,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
 
                     <!-- Price -->
@@ -76,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/default_margin"
                         android:layout_weight="50"
-                        android:hint="@string/price_hint_form_fragment"
+                        android:hint="@string/price"
                         app:helperText="@string/required_info"
                         app:helperTextEnabled="true">
 
@@ -96,7 +98,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/default_margin"
                         android:layout_weight="50"
-                        android:hint="@string/surface_hint_form_fragment"
+                        android:hint="@string/surface"
                         app:helperText="@string/required_info"
                         app:helperTextEnabled="true">
 
@@ -116,7 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_margin"
-                    android:hint="@string/estate_agent_hint_form_fragment">
+                    android:hint="@string/estate_agent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_property_form_estate_agent_text_input"
@@ -131,12 +133,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_margin"
-                    android:hint="@string/description_hint_form_fragment">
+                    android:hint="@string/description_hint">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_property_form_description_text_input"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:layout_height="150dp"
                         android:inputType="textMultiLine" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -155,11 +158,12 @@
                     style="@style/Title6Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/info_title_rooms" />
+                    android:text="@string/number_of_rooms" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
 
                     <!-- Rooms -->
@@ -169,7 +173,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/default_margin"
                         android:layout_weight="33"
-                        android:hint="@string/number_of_rooms_hint_form_fragment">
+                        android:hint="@string/rooms_hint">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/fragment_property_form_number_of_rooms_text_input"
@@ -186,7 +190,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/default_margin"
                         android:layout_weight="33"
-                        android:hint="@string/number_of_bathrooms_hint_form_fragment">
+                        android:hint="@string/bathrooms_hint">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/fragment_property_form_number_of_bathrooms_text_input"
@@ -203,7 +207,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/default_margin"
                         android:layout_weight="33"
-                        android:hint="@string/number_of_bedrooms_hint_form_fragment">
+                        android:hint="@string/bedrooms_hint">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/fragment_property_form_number_of_bedrooms_text_input"
@@ -228,7 +232,7 @@
                     style="@style/Title6Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/info_title_location" />
+                    android:text="@string/location" />
 
                 <!-- Address First -->
                 <com.google.android.material.textfield.TextInputLayout
@@ -237,7 +241,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_margin"
-                    android:hint="@string/address_first_hint_form_fragment"
+                    android:hint="@string/address"
                     app:helperText="* required"
                     app:helperTextEnabled="true">
 
@@ -255,7 +259,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_margin"
-                    android:hint="@string/address_second_hint_form_fragment">
+                    android:hint="@string/address_complements">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_property_form_address_second_text_input"
@@ -268,6 +272,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
 
                     <!-- Zip Code -->
@@ -278,7 +283,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/default_margin"
                         android:layout_weight="30"
-                        android:hint="@string/zip_code_hint_form_fragment"
+                        android:hint="@string/zip_code"
                         app:helperText="* required"
                         app:helperTextEnabled="true">
 
@@ -298,7 +303,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/default_margin"
                         android:layout_weight="70"
-                        android:hint="@string/city_hint_form_fragment"
+                        android:hint="@string/city"
                         app:helperText="* required"
                         app:helperTextEnabled="true">
 
@@ -325,14 +330,14 @@
                     style="@style/Title6Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/info_title_points_of_interests" />
+                    android:text="@string/points_of_interest" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/fragment_property_form_near_school_switch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_big_margin"
-                    android:text="@string/near_school_hint_form_fragment" />
+                    android:text="@string/near_school" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
 
@@ -340,7 +345,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_big_margin"
-                    android:text="@string/near_transports_hint_form_fragment" />
+                    android:text="@string/near_transports" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
 
@@ -348,14 +353,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_big_margin"
-                    android:text="@string/near_shops_hint_form_fragment" />
+                    android:text="@string/near_shops" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/fragment_property_form_near_parks_switch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_big_margin"
-                    android:text="@string/near_parks_hint_form_fragment" />
+                    android:text="@string/near_parks" />
 
             </LinearLayout>
 
@@ -370,7 +375,7 @@
                     style="@style/Title6Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/info_title_photo" />
+                    android:text="@string/photos" />
 
                 <FrameLayout
                     android:id="@+id/fragment_property_form_gallery_container"
@@ -385,13 +390,9 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fragment_property_form_save_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_big_margin"
+        style="@style/FabStyle"
+        android:contentDescription="@string/save_button"
         android:src="@drawable/ic_baseline_save_24"
-        app:backgroundTint="@color/colorAccent"
-        app:elevation="6dp"
-        app:layout_anchor="@+id/fragment_property_form_scroll_view"
-        app:layout_anchorGravity="bottom|right|end" />
+        app:layout_anchor="@+id/fragment_property_form_scroll_view" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

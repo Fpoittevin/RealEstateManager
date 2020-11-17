@@ -3,13 +3,13 @@
     <item
         android:id="@+id/activity_main_drawer_map"
         android:icon="@drawable/ic_baseline_map_24"
-        android:title="map" />
+        android:title="@string/map" />
     <item
         android:id="@+id/activity_main_drawer_loan"
         android:icon="@drawable/ic_baseline_bank_24"
-        android:title="loan" />
+        android:title="@string/loan" />
     <item
         android:id="@+id/activity_main_drawer_settings"
         android:icon="@drawable/ic_baseline_settings_24"
-        android:title="settings" />
+        android:title="@string/settings" />
 </menu>

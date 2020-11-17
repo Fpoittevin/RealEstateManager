@@ -6,7 +6,6 @@ import com.ocr.francois.realestatemanager.repositories.CurrencyRepository
 import com.ocr.francois.realestatemanager.repositories.PropertyRepository
 import com.ocr.francois.realestatemanager.ui.base.BaseCurrencyViewModel
 
-
 class PropertyDetailsViewModel(
     private val propertyRepository: PropertyRepository,
     private val currencyRepository: CurrencyRepository

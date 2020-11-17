@@ -11,7 +11,7 @@ class CurrencyRepository(
 
     private var preferences: SharedPreferences =
         this.context.getSharedPreferences(
-            this.context.getString(R.string.preference_file_key),
+            this.context.getString(R.string.preferences_file_key),
             Context.MODE_PRIVATE
         )
 

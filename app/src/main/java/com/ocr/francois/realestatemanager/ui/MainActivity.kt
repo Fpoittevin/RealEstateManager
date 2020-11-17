@@ -21,8 +21,10 @@ import com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesListViewMo
 import com.ocr.francois.realestatemanager.ui.propertyCreation.PropertyCreationActivity
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsActivity
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFragment
+import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFragment.Companion.PROPERTY_ID_KEY
 import com.ocr.francois.realestatemanager.ui.propertyModification.PropertyModificationActivity
 import com.ocr.francois.realestatemanager.ui.propertySearch.PropertySearchActivity
+import com.ocr.francois.realestatemanager.ui.propertySearch.PropertySearchActivity.Companion.PROPERTY_SEARCH_KEY
 import com.ocr.francois.realestatemanager.ui.settings.SettingsActivity
 
 
@@ -40,7 +42,6 @@ class MainActivity : BaseActivity(),
     }
 
     companion object {
-        private const val PROPERTY_ID_KEY = "propertyId"
         const val REQUEST_SEARCH_CODE = 1234
     }
 
@@ -175,9 +176,9 @@ class MainActivity : BaseActivity(),
 
         if (requestCode == REQUEST_SEARCH_CODE && resultCode == RESULT_OK && intent != null) {
             intent.extras?.let {
-                if (it.containsKey("PROPERTY_SEARCH")) {
+                if (it.containsKey(PROPERTY_SEARCH_KEY)) {
                     propertiesListViewModel.propertySearchLiveData.value =
-                        it.getParcelable("PROPERTY_SEARCH")
+                        it.getParcelable(PROPERTY_SEARCH_KEY)
                 }
             }
         }
@@ -197,6 +198,7 @@ class MainActivity : BaseActivity(),
             R.id.activity_main_drawer_loan -> startLoanSimulatorActivity()
             R.id.activity_main_drawer_settings -> startSettingsActivity()
         }
+        binding.activityMainDrawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 

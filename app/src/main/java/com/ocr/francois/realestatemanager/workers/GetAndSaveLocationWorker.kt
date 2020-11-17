@@ -4,10 +4,12 @@ import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.ocr.francois.realestatemanager.api.GeocoderService
+import com.ocr.francois.realestatemanager.events.FailureEvent
 import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.models.GeocodeResponse
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,15 +18,15 @@ class GetAndSaveLocationWorker(context: Context, params: WorkerParameters) :
     Worker(context, params) {
 
     companion object {
-        const val PROPERTY_ID_KEY = "propertyId"
-        const val PROPERTY_ADDRESS_KEY = "propertyAddress"
+        const val PROPERTY_ID_KEY = "PROPERTY_ID"
+        const val PROPERTY_ADDRESS_KEY = "PROPERTY_ADDRESS"
     }
 
     override fun doWork(): Result {
 
         val propertyId = inputData.getLong(PROPERTY_ID_KEY, 0)
         inputData.getString(PROPERTY_ADDRESS_KEY)?.let { address ->
-            if (propertyId.compareTo(0) != 0) {
+            if (propertyId.compareTo(0) != 0 && address.isNotEmpty()) {
                 GeocoderService
                     .retrofit
                     .create(
@@ -66,6 +68,8 @@ class GetAndSaveLocationWorker(context: Context, params: WorkerParameters) :
                         }
 
                         override fun onFailure(call: Call<GeocodeResponse>, t: Throwable) {
+                            EventBus.getDefault()
+                                .post(FailureEvent(t.message.toString()))
                         }
                     })
             }

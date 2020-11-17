@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/activity_property_search_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="@string/search"
+            app:titleTextAppearance="@style/TitleToolbarStyle" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/activity_property_search_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/default_big_margin">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Title6Style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/general" />
+
+                        <!--    Price   -->
+                        <TextView
+                            style="@style/BodyTextWithIconStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/price_between"
+                            app:drawableStartCompat="@drawable/ic_baseline_monetization_24" />
+
+                        <com.google.android.material.slider.RangeSlider
+                            android:id="@+id/activity_property_search_price_range_slider"
+                            style="@style/SliderStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:stepSize="1000"
+                            android:valueFrom="@integer/property_min_price"
+                            android:valueTo="@integer/property_max_price"
+                            app:values="@array/initial_price_slider_values" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/default_big_margin">
+
+                            <TextView
+                                android:id="@+id/activity_property_search_min_price_text_view"
+                                style="@style/SliderTextInfoStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/activity_property_search_max_price_text_view"
+                                style="@style/SliderTextInfoStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <!--    Surface -->
+                        <TextView
+                            style="@style/BodyTextWithIconStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/surface_between"
+                            app:drawableStartCompat="@drawable/ic_baseline_surface_24" />
+
+                        <com.google.android.material.slider.RangeSlider
+                            android:id="@+id/activity_property_search_surface_range_slider"
+                            style="@style/SliderStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:stepSize="10"
+                            android:valueFrom="@integer/property_min_surface"
+                            android:valueTo="@integer/property_max_surface"
+                            app:values="@array/initial_surface_slider_values" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/default_big_margin">
+
+                            <TextView
+                                android:id="@+id/activity_property_search_min_surface_text_view"
+                                style="@style/SliderTextInfoStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/activity_property_search_max_surface_text_view"
+                                style="@style/SliderTextInfoStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <!--    PHOTOS  -->
+                        <TextView
+                            style="@style/BodyTextWithIconStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/minimum_number_of_photos"
+                            app:drawableStartCompat="@drawable/ic_baseline_photo_24" />
+
+                        <com.google.android.material.slider.Slider
+                            android:id="@+id/activity_property_search_min_photos_slider"
+                            style="@style/SliderStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:stepSize="1"
+                            android:value="@integer/property_min_number_of_photos"
+                            android:valueFrom="@integer/property_min_number_of_photos"
+                            android:valueTo="@integer/property_max_number_of_photos" />
+
+                        <TextView
+                            android:id="@+id/activity_property_search_min_number_of_photos_text_view"
+                            style="@style/SliderTextInfoStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Title6Style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/number_of_rooms" />
+
+                        <!--    Rooms   -->
+                        <TextView
+                            style="@style/BodyTextWithIconStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/number_of_rooms_between"
+                            app:drawableStartCompat="@drawable/ic_baseline_rooms_24" />
+
+                        <com.google.android.material.slider.RangeSlider
+                            android:id="@+id/activity_property_search_rooms_range_slider"
+                            style="@style/SliderStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:stepSize="1"
+                            android:valueFrom="@integer/property_min_number_of_rooms"
+                            android:valueTo="@integer/property_max_number_of_rooms"
+                            app:values="@array/initial_rooms_slider_values" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/default_big_margin">
+
+                            <TextView
+                                android:id="@+id/activity_property_search_min_number_of_rooms_text_view"
+                                style="@style/SliderTextInfoStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/activity_property_search_max_number_of_rooms_text_view"
+                                style="@style/SliderTextInfoStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <TextView
+                            style="@style/BodyTextWithIconStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/number_of_bathrooms_between"
+                            app:drawableStartCompat="@drawable/ic_baseline_bathrooms_24" />
+
+                        <com.google.android.material.slider.RangeSlider
+                            android:id="@+id/activity_property_search_bathrooms_range_slider"
+                            style="@style/SliderStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:stepSize="1"
+                            android:valueFrom="@integer/property_min_number_of_bathrooms"
+                            android:valueTo="@integer/property_max_number_of_bathrooms"
+                            app:values="@array/initial_bathrooms_slider_values" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/default_big_margin">
+
+                            <TextView
+                                android:id="@+id/activity_property_search_min_number_of_bathrooms_text_view"
+                                style="@style/SliderTextInfoStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/activity_property_search_max_number_of_bathrooms_text_view"
+                                style="@style/SliderTextInfoStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <TextView
+                            style="@style/BodyTextWithIconStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/number_of_bedrooms_between"
+                            app:drawableStartCompat="@drawable/ic_baseline_bedrooms_24" />
+
+                        <com.google.android.material.slider.RangeSlider
+                            android:id="@+id/activity_property_search_bedrooms_range_slider"
+                            style="@style/SliderStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:stepSize="1"
+                            android:valueFrom="@integer/property_min_number_of_bedrooms"
+                            android:valueTo="@integer/property_max_number_of_bedrooms"
+                            app:values="@array/initial_bedrooms_slider_values" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/default_big_margin">
+
+                            <TextView
+                                android:id="@+id/activity_property_search_min_number_of_bedrooms_text_view"
+                                style="@style/SliderTextInfoStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/activity_property_search_max_number_of_bedrooms_text_view"
+                                style="@style/SliderTextInfoStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View style="@style/divider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:orientation="vertical">
+
+                        <!--    Points of interest  -->
+                        <TextView
+                            style="@style/Title6Style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/points_of_interest" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.chip.ChipGroup
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/activity_property_search_near_school_chip"
+                                    style="@style/ChipStyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/near_school" />
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/activity_property_search_near_transports_chip"
+                                    style="@style/ChipStyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/near_transports" />
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/activity_property_search_near_shops_chip"
+                                    style="@style/ChipStyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/near_shops" />
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/activity_property_search_near_parks_chip"
+                                    style="@style/ChipStyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/near_parks" />
+
+                            </com.google.android.material.chip.ChipGroup>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Title6Style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/location" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/default_margin"
+                            android:hint="@string/city">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/activity_property_search_city_text_input"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View style="@style/divider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Title6Style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/creation" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/activity_property_search_creation_date_start_button"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/default_big_margin"
+                                android:layout_marginTop="@dimen/default_small_margin"
+                                android:layout_marginEnd="@dimen/default_big_margin"
+                                android:layout_marginBottom="@dimen/default_small_margin"
+                                android:layout_weight="30"
+                                android:text="@string/creation_after"
+                                android:textSize="12sp" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/activity_property_search_creation_date_stop_button"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/default_big_margin"
+                                android:layout_marginTop="@dimen/default_small_margin"
+                                android:layout_marginEnd="@dimen/default_big_margin"
+                                android:layout_marginBottom="@dimen/default_small_margin"
+                                android:layout_weight="30"
+                                android:text="@string/creation_before"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Title6Style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/sale" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/activity_property_search_sale_date_start_button"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/default_big_margin"
+                                android:layout_marginTop="@dimen/default_small_margin"
+                                android:layout_marginEnd="@dimen/default_big_margin"
+                                android:layout_marginBottom="@dimen/default_small_margin"
+                                android:layout_weight="30"
+                                android:text="@string/sold_after"
+                                android:textSize="12sp" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/activity_property_search_sale_date_stop_button"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/default_big_margin"
+                                android:layout_marginTop="@dimen/default_small_margin"
+                                android:layout_marginEnd="@dimen/default_big_margin"
+                                android:layout_marginBottom="@dimen/default_small_margin"
+                                android:layout_weight="30"
+                                android:text="@string/sold_before"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/activity_property_search_sold_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/default_big_margin"
+                            android:hint="@string/is_sold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/activity_property_search_fab"
+            style="@style/FabStyle"
+            android:contentDescription="@string/search_button"
+            android:src="@drawable/ic_filter_alt_white_24"
+            app:layout_anchor="@+id/activity_property_search_scroll_view" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

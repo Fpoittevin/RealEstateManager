@@ -6,15 +6,12 @@ import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityPropertyModificationBinding
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.ui.propertyForm.PropertyFormFragment
+import com.ocr.francois.realestatemanager.ui.propertyForm.PropertyFormFragment.Companion.PROPERTY_ID_KEY
 import kotlinx.android.synthetic.main.activity_property_modification.*
 
 class PropertyModificationActivity : BaseActivity() {
 
     private lateinit var binding: ActivityPropertyModificationBinding
-
-    companion object {
-        private const val PROPERTY_ID_KEY = "propertyId"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

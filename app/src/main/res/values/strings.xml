@@ -3,9 +3,51 @@
 
     <string name="google_geocode_base_url">https://maps.google.com/maps/api/geocode/</string>
 
+    // NOTIFICATION
+    <string name="notification_title">Real Estate Manager</string>
+    <string name="notification_text">A new property has been added</string>
 
-    // BASE
+    // TITLES
+    <string name="settings">Settings</string>
+    <string name="search">Search</string>
+    <string name="creation">Creation</string>
+    <string name="modification">Modification</string>
+    <string name="map">Map</string>
+    <string name="loan">Loan Simulator</string>
+
+    <string name="loan_price">loan\nprice</string>
+    <string name="monthly_payment">monthly\npayment</string>
+    <string name="general">General</string>
+    <string name="price_between">Price between</string>
+    <string name="surface_between">Surface between</string>
+    <string name="number_of_rooms">Number of rooms</string>
+    <string name="number_of_rooms_between">Number of rooms between</string>
+    <string name="number_of_bathrooms_between">Number of bathrooms between</string>
+    <string name="number_of_bedrooms_between">Number of bedrooms between</string>
+    <string name="points_of_interest">Points of interest</string>
+    <string name="near_school">near school</string>
+    <string name="near_transports">near transports</string>
+    <string name="near_shops">near shops</string>
+    <string name="near_parks">near parks</string>
+    <string name="sale">Sale</string>
+    <string name="photos">Photos</string>
+    <string name="minimum_number_of_photos">Minimum number of photos</string>
+    <string name="location">Location</string>
+    <string name="currency">Currency</string>
+    <string name="dollar">dollar</string>
+    <string name="euro">euro</string>
+    <string name="photo_source">Photo source</string>
+    <string name="camera">camera</string>
+    <string name="gallery">gallery</string>
+    <string name="rooms">Rooms</string>
+    <string name="description">Description</string>
+
+    // PREFERENCES
+    <string name="preferences_file_key">rem_preference</string>
+
+    // ALERTS
     <string name="unknown_error_message">an unknown error occurred</string>
+    <string name="form_not_completed_error">some required fields are not filled in</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
@@ -13,73 +55,57 @@
     <string name="network_required">this section requires internet</string>
     <string name="location_dialog_title">Location</string>
     <string name="location_required">this section requires location</string>
-
-    <string name="property_photo_content_description">Property photo</string>
-
-    // MAIN ACTIVITY TOOLBAR MENU
-    <string name="main_activity_toolbar_menu_creation_button_title">add new property</string>
-    <string name="main_activity_toolbar_menu_map_view_button_title">map view</string>
-
-    // PROPERTY INFO TITLES
-    <string name="info_title_general">General</string>
-    <string name="info_title_rooms">Number of rooms</string>
-    <string name="info_title_location">Location</string>
-    <string name="info_title_description">Description</string>
-    <string name="info_title_points_of_interests">Points of interests</string>
-    <string name="info_title_photo">Photos</string>
-
-    // DETAILS FRAGMENT
-    <string name="rooms_title_details_fragment">%1$d rooms</string>
-    <string name="bathrooms_title_details_fragment">%1$d bathrooms</string>
-    <string name="bedrooms_title_details_fragment">%1$d bedrooms</string>
-
-    // FORM FRAGMENT
-    <string name="required_info">* required</string>
-    <string name="type_hint_form_fragment">type*</string>
-    <string name="price_hint_form_fragment">price*</string>
-    <string name="surface_hint_form_fragment">surface*</string>
-    <string name="estate_agent_hint_form_fragment">estate agent</string>
-    <string name="description_hint_form_fragment">description</string>
-    <string name="description_required_hint_form">description*</string>
-    <string name="number_of_rooms_hint_form_fragment">rooms</string>
-    <string name="number_of_bathrooms_hint_form_fragment">bathrooms</string>
-    <string name="number_of_bedrooms_hint_form_fragment">bedrooms</string>
-    <string name="address_first_hint_form_fragment">address*</string>
-    <string name="address_second_hint_form_fragment">address complements</string>
-    <string name="city_hint_form_fragment">city*</string>
-    <string name="zip_code_hint_form_fragment">zip code*</string>
-    <string name="near_school_hint_form_fragment">near school</string>
-    <string name="near_transports_hint_form_fragment">near transports</string>
-    <string name="near_shops_hint_form_fragment">near shops</string>
-    <string name="near_parks_hint_form_fragment">near parks</string>
-    <string name="required_field">this field is required</string>
-
-    // CREATION FRAGMENT
-
-    // SEARCH ACTIVITY
-    <string name="creation_after_text_button_search_activity">CREATED AFTER</string>
-    <string name="creation_before_text_button_search_activity">CREATED BEFORE</string>
-    <string name="sold_after_text_button_search_activity">SOLD AFTER</string>
-    <string name="sold_before_text_button_search_activity">SOLD BEFORE</string>
-
     <string name="request_camera_permission">RealEstateManager needs access to the camera</string>
+    <string name="creation_file_error">Error occurred while creating the File</string>
 
-    // NOTIFICATION
-    <string name="notification_title">Real Estate Manager</string>
-    <string name="notification_text">A new property has been added</string>
+    // FORMS
+    <string name="required_info">* required</string>
+    <string name="required_field">this field is required</string>
+    <string name="photo_description_error">each photo must have a description</string>
 
+    // INFORMATION
+    <string name="sold">sold</string>
+    <string name="rooms_with_number">%1$d rooms</string>
+    <string name="bathrooms_with_number">%1$d bathrooms</string>
+    <string name="bedrooms_with_number">%1$d bedrooms</string>
+
+    // NAVIGATION
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="preference_file_key">rem_preference</string>
+    // HINT
+    <string name="price">price</string>
+    <string name="contribution">contribution</string>
+    <string name="duration">duration in years</string>
+    <string name="rate">rate</string>
+    <string name="city">city</string>
+    <string name="is_sold">is sold</string>
+    <string name="type">type</string>
+    <string name="surface">surface</string>
+    <string name="estate_agent">estate agent</string>
+    <string name="description_hint">description</string>
+    <string name="rooms_hint">rooms</string>
+    <string name="bathrooms_hint">bathrooms</string>
+    <string name="bedrooms_hint">bedrooms</string>
+    <string name="address">address</string>
+    <string name="address_complements">address_complements</string>
+    <string name="zip_code">zip code</string>
+    <string name="description_required">description*</string>
 
-    <string name="settings_title">Settings</string>
-    <string name="search_title">Search</string>
-    <string name="creation_title">Creation</string>
-    <string name="modification_title">Modification</string>
-    <string name="map_title">Map</string>
-    <string name="loan_title">Loan Simulator</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    // BUTTONS
+    <string name="calculate">calculate</string>
+    <string name="creation_after">CREATED AFTER</string>
+    <string name="creation_before">CREATED BEFORE</string>
+    <string name="sold_after">SOLD AFTER</string>
+    <string name="sold_before">SOLD BEFORE</string>
+    <string name="add_picture">add picture</string>
+
+    // CONTENT DESCRIPTIONS
+    <string name="header_picture">header_picture</string>
+    <string name="search_button">search button</string>
+    <string name="modification_button">modification button</string>
+    <string name="save_button">save button</string>
+    <string name="gallery_photo">gallery photo</string>
+    <string name="property_photo">property_photo</string>
 
 </resources>

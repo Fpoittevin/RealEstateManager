@@ -6,6 +6,7 @@ import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityMapViewBinding
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsActivity
+import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFragment.Companion.PROPERTY_ID_KEY
 import kotlinx.android.synthetic.main.activity_map_view_ex.*
 
 class MapViewActivity : BaseActivity(),
@@ -13,10 +14,6 @@ class MapViewActivity : BaseActivity(),
 
     private lateinit var binding: ActivityMapViewBinding
     private val mapViewFragment = MapViewFragment.newInstance(this)
-
-    companion object {
-        private const val PROPERTY_ID_KEY = "propertyId"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

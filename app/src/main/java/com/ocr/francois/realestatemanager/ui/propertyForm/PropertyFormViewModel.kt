@@ -46,9 +46,9 @@ class PropertyFormViewModel(
             currency = it
             value?.let { propertyWithPhotos ->
                 propertyWithPhotos.property.apply {
-                    price?.let {
+                    price?.let { price ->
                         formattedPrice =
-                            convertPriceInCurrentCurrency(it).toString()
+                            convertPriceInCurrentCurrency(price).toString()
                     }
                 }
             }
