@@ -11,18 +11,17 @@ class PropertyDetailsViewModel(
     private val currencyRepository: CurrencyRepository
 ) : BaseCurrencyViewModel(currencyRepository) {
 
-    fun getPropertyWithPhotos(id: Long) = MediatorLiveData<PropertyWithPhotos>().apply {
-        addSource(propertyRepository.getPropertyWithPhotos(id)) { propertyWithPhotos ->
+    val propertyWithPhotos = MediatorLiveData<PropertyWithPhotos>()
 
-            convertAndFormatPrice(propertyWithPhotos.property)
-
-            value = propertyWithPhotos
-        }
-        addSource(currencyRepository.getCurrencyLiveData()) { newCurrency ->
-            currency = newCurrency
-
-            value?.let { propertyWithPhotos ->
-                convertAndFormatPrice(propertyWithPhotos.property)
+    fun getPropertyWithPhotos(id: Long) {
+        if (propertyWithPhotos.value == null) {
+            propertyWithPhotos.apply {
+                addSource(propertyRepository.getPropertyWithPhotos(id)) { propertyWithPhotos ->
+                    value = propertyWithPhotos
+                }
+                addSource(currencyRepository.getCurrencyLiveData()) { newCurrency ->
+                    currency = newCurrency
+                }
             }
         }
     }

@@ -1,98 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/recycler_view_property_item_card_view"
-    style="@style/CardViewStyle"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardElevation="5dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <data>
+        <import type="android.view.View" />
+
+        <variable
+            name="propertyWithPhotos"
+            type="com.ocr.francois.realestatemanager.models.PropertyWithPhotos" />
+
+        <variable
+            name="viewModel"
+            type="com.ocr.francois.realestatemanager.ui.propertiesList.PropertiesListViewModel" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/recycler_view_property_item_card_view"
+        style="@style/CardViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp">
-
-            <ImageView
-                android:id="@+id/recycler_view_property_item_photo_image_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/property_photo"
-                android:src="@drawable/ic_baseline_photo_24"
-                app:elevation="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <View
-                android:id="@+id/recycler_view_property_item_sold_filter_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/blackOpacity"
-                app:elevation="2dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/recycler_view_property_item_sold_text_view"
-                style="@style/Title6Style"
-                android:text="@string/sold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:elevation="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        app:cardElevation="5dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/default_margin">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/is_sold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
 
-            <TextView
-                android:id="@+id/recycler_view_property_item_price_text_view"
-                style="@style/TextAppearance.MaterialComponents.Overline"
+                <ImageView
+                    android:id="@+id/recycler_view_property_item_photo_image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/property_photo"
+                    android:src="@drawable/ic_baseline_photo_24"
+                    app:elevation="0dp"
+                    app:bindPhotoUri="@{propertyWithPhotos.photosList[0].uri}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/recycler_view_property_item_sold_filter_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/blackOpacity"
+                    app:elevation="2dp"
+                    android:visibility="@{propertyWithPhotos.property.saleTimestamp != null ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/recycler_view_property_item_sold_text_view"
+                    style="@style/Title6Style"
+                    android:text="@string/sold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:elevation="4dp"
+                    android:visibility="@{propertyWithPhotos.property.saleTimestamp != null ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_small_margin" />
+                android:orientation="vertical"
+                android:padding="@dimen/default_margin">
 
-            <TextView
-                android:id="@+id/recycler_view_property_item_type_text_view"
-                style="@style/TextAppearance.MaterialComponents.Headline4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_small_margin"
-                android:textColor="@color/colorAccent" />
+                <TextView
+                    android:id="@+id/is_sold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-            <TextView
-                android:id="@+id/recycler_view_property_item_surface_text_view"
-                style="@style/TextAppearance.MaterialComponents.Body1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_small_margin" />
+                <TextView
+                    android:id="@+id/recycler_view_property_item_price_text_view"
+                    style="@style/TextAppearance.MaterialComponents.Overline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:price="@{propertyWithPhotos.property.price}"
+                    app:currency="@{viewModel.currencyLiveData}"
+                    app:default="@{null}"
+                    android:layout_margin="@dimen/default_small_margin" />
 
-            <TextView
-                android:id="@+id/recycler_view_property_item_city_text_view"
-                style="@style/TextAppearance.MaterialComponents.Body1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_small_margin" />
+                <TextView
+                    android:id="@+id/recycler_view_property_item_type_text_view"
+                    style="@style/TextAppearance.MaterialComponents.Headline4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_small_margin"
+                    android:text="@{propertyWithPhotos.property.type}"
+                    android:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/recycler_view_property_item_surface_text_view"
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:surface="@{propertyWithPhotos.property.surface}"
+                    app:default="@{null}"
+                    android:layout_margin="@dimen/default_small_margin" />
+
+                <TextView
+                    android:id="@+id/recycler_view_property_item_city_text_view"
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{propertyWithPhotos.property.city}"
+                    android:layout_margin="@dimen/default_small_margin" />
+
+            </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

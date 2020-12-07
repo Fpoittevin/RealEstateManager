@@ -1,75 +1,29 @@
 package com.ocr.francois.realestatemanager.ui.photosGallery
 
-import android.content.Context
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.PhotosGalleryItemBinding
 import com.ocr.francois.realestatemanager.models.Photo
 
-class PhotosGalleryAdapter(private val context: Context, private val isEditable: Boolean) :
+class PhotosGalleryAdapter :
     RecyclerView.Adapter<PhotosGalleryAdapter.PhotosGalleryViewHolder>() {
 
-    internal val photosList = mutableListOf<Photo>()
+    private val photosList = mutableListOf<Photo>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotosGalleryViewHolder {
 
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.photos_gallery_item, parent, false)
+        val itemBinding = PhotosGalleryItemBinding.inflate(inflater, parent, false)
 
-        return PhotosGalleryViewHolder(view)
+        return PhotosGalleryViewHolder(itemBinding)
     }
 
     override fun onBindViewHolder(holder: PhotosGalleryViewHolder, position: Int) {
 
         val photo = photosList[position]
-        holder.updateUi(photo)
-
-        if (isEditable) {
-            holder.binding.photosGalleryItemDeleteButton.setOnClickListener {
-                this.removePhotoFromList(photo)
-            }
-            if (holder.binding.photosGalleryItemDescriptionTextInput.text.isNullOrEmpty()) {
-                holder.binding.photosGalleryItemDescriptionTextInputLayout.error =
-                    context.getString(R.string.photo_description_error)
-            }
-            holder.binding.photosGalleryItemDescriptionTextView.visibility = View.GONE
-            holder.binding.photosGalleryItemDescriptionTextInput.addTextChangedListener(object :
-                TextWatcher {
-                override fun beforeTextChanged(
-                    description: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
-                override fun afterTextChanged(description: Editable?) {
-                    if (description.isNullOrEmpty()) {
-                        holder.binding.photosGalleryItemDescriptionTextInputLayout.error =
-                            context.getString(R.string.photo_description_error)
-                    } else {
-                        holder.binding.photosGalleryItemDescriptionTextInputLayout.isErrorEnabled =
-                            false
-                        photo.description = description.toString()
-                    }
-                }
-
-            }
-
-            )
-        } else {
-            holder.binding.photosGalleryItemDeleteButton.visibility = View.GONE
-            holder.binding.photosGalleryItemDescriptionTextInputLayout.visibility = View.GONE
-        }
-
+        holder.bind(photo)
     }
 
     override fun getItemCount() = photosList.size
@@ -82,32 +36,12 @@ class PhotosGalleryAdapter(private val context: Context, private val isEditable:
         notifyDataSetChanged()
     }
 
-    internal fun addPhotoInList(photo: Photo) {
-        photosList.add(photo)
-        notifyDataSetChanged()
-    }
+    class PhotosGalleryViewHolder(private val binding: PhotosGalleryItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-    private fun removePhotoFromList(photo: Photo) {
-        photosList.remove(photo)
-        notifyDataSetChanged()
-    }
-
-    class PhotosGalleryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        internal var binding = PhotosGalleryItemBinding.bind(itemView)
-
-        fun updateUi(photo: Photo) {
+        fun bind(photo: Photo) {
             binding.apply {
-                Glide
-                    .with(itemView)
-                    .load(photo.uri)
-                    .centerCrop()
-                    .into(photosGalleryItemImageView)
-
-                photo.description?.let {
-                    photosGalleryItemDescriptionTextInput.setText(it)
-                    photosGalleryItemDescriptionTextView.text = it
-                }
+                this.photo = photo
             }
         }
     }

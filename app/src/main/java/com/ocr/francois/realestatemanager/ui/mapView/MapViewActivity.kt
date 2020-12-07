@@ -2,12 +2,12 @@ package com.ocr.francois.realestatemanager.ui.mapView
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.databinding.DataBindingUtil
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityMapViewBinding
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsActivity
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFragment.Companion.PROPERTY_ID_KEY
-import kotlinx.android.synthetic.main.activity_map_view_ex.*
 
 class MapViewActivity : BaseActivity(),
     MapViewFragment.MarkerClickCallback {
@@ -18,15 +18,8 @@ class MapViewActivity : BaseActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMapViewBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        configureToolbar()
-    }
-
-    private fun configureToolbar() {
-        setSupportActionBar(activity_map_view_toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_map_view)
+        configureToolbar(binding.activityMapViewToolbar, true)
 
         displayFragment(
             R.id.activity_map_view_frame_layout,

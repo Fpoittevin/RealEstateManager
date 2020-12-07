@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.FragmentPropertiesListBinding
 import com.ocr.francois.realestatemanager.injection.Injection
 
@@ -17,7 +19,7 @@ class PropertiesListFragment : Fragment() {
 
     private lateinit var binding: FragmentPropertiesListBinding
     private lateinit var recyclerView: RecyclerView
-    private val propertiesAdapter = PropertiesAdapter()
+    private lateinit var propertiesAdapter: PropertiesAdapter
     private val propertiesListViewModel: PropertiesListViewModel by activityViewModels {
         Injection.provideViewModelFactory(
             requireContext()
@@ -31,9 +33,9 @@ class PropertiesListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        binding = FragmentPropertiesListBinding.inflate(inflater, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_properties_list, container, false)
         configureRecyclerView()
 
         return binding.root
@@ -41,6 +43,7 @@ class PropertiesListFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
         with(propertiesListViewModel) {
             getPropertiesWithPhotos().observe(viewLifecycleOwner, {
                 propertiesAdapter.updateProperties(it)
@@ -58,6 +61,7 @@ class PropertiesListFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        propertiesAdapter = PropertiesAdapter(propertiesListViewModel)
         propertiesAdapter.setPropertyItemClickCallback(activity as PropertiesAdapter.PropertyItemClickCallback)
     }
 

@@ -3,6 +3,7 @@ package com.ocr.francois.realestatemanager.ui.settings
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.databinding.DataBindingUtil
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivitySettingsBinding
 import com.ocr.francois.realestatemanager.injection.Injection
@@ -21,11 +22,14 @@ class SettingsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_settings)
+        binding.apply {
+            lifecycleOwner = this@SettingsActivity
+            viewModel = settingsViewModel
+        }
 
         preferences = getPreferences(MODE_PRIVATE)
 
-        setContentView(binding.root)
         configureToolbar(binding.activitySettingsToolbar, true)
         configureCurrenciesRadioGroup()
     }

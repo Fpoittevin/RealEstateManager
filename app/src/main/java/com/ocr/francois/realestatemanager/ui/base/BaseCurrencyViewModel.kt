@@ -21,16 +21,4 @@ open class BaseCurrencyViewModel(
             Currency.EURO ->
                 Utils.convertDollarToEuro(price)
         }
-
-    protected fun convertAndFormatPrice(property: Property) {
-        property.apply {
-            price?.let {
-                formattedPrice =
-                    Utils.getFormattedPriceWithCurrency(
-                        currency,
-                        convertPriceInCurrentCurrency(it)
-                    )
-            }
-        }
-    }
 }

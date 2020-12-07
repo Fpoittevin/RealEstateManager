@@ -3,6 +3,7 @@ package com.ocr.francois.realestatemanager.ui.propertyDetails
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.databinding.DataBindingUtil
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityPropertyDetailsBinding
 import com.ocr.francois.realestatemanager.injection.Injection
@@ -23,8 +24,11 @@ class PropertyDetailsActivity : BaseActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityPropertyDetailsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_property_details)
+        binding.apply {
+            viewModel = propertyDetailsViewModel
+            lifecycleOwner = this@PropertyDetailsActivity
+        }
 
         propertyId = intent.getLongExtra(PROPERTY_ID_KEY, 1)
         configureToolbar(binding.activityPropertyDetailsToolbar, true)
@@ -33,18 +37,6 @@ class PropertyDetailsActivity : BaseActivity(),
             R.id.activity_details_frame_layout,
             PropertyDetailsFragment.newInstance(propertyId!!, this)
         )
-
-        setToolbarTitle()
-    }
-
-    private fun setToolbarTitle() {
-        propertyId?.let { id ->
-            propertyDetailsViewModel.getPropertyWithPhotos(id).observe(this, { propertyWithPhotos ->
-                propertyWithPhotos.property.type?.let {
-                    binding.activityPropertyDetailsToolbar.title = it
-                }
-            })
-        }
     }
 
     override fun onPropertyModificationClick(propertyId: Long) {

@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.ocr.francois.realestatemanager.models.PropertySearch
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 import com.ocr.francois.realestatemanager.repositories.CurrencyRepository
 import com.ocr.francois.realestatemanager.repositories.PropertyRepository
 import com.ocr.francois.realestatemanager.ui.base.BaseCurrencyViewModel
+import com.ocr.francois.realestatemanager.ui.propertySearch.PropertySearch
 
 class PropertiesListViewModel(
     private val propertyRepository: PropertyRepository,
@@ -28,22 +28,10 @@ class PropertiesListViewModel(
                     propertyRepository.getPropertiesWithPhotos(propertySearch)
                 }
             ) { propertiesWithPhotos ->
-                for (propertyWithPhotos in propertiesWithPhotos) {
-                    convertAndFormatPrice(propertyWithPhotos.property)
-                }
                 value = propertiesWithPhotos
             }
             addSource(currencyRepository.getCurrencyLiveData()) {
                 currency = it
-
-                value?.let { propertiesWithPhotos ->
-                    for (propertyWithPhotos in propertiesWithPhotos) {
-                        convertAndFormatPrice(propertyWithPhotos.property)
-                    }
-                    value = propertiesWithPhotos
-                }
             }
         }
-
-
 }

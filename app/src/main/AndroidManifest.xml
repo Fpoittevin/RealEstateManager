@@ -32,7 +32,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_api_key" />
 
-        <activity android:name=".ui.mapView.ExMapViewActivity" />
         <activity android:name=".ui.propertyCreation.PropertyCreationActivity" />
         <activity android:name=".ui.propertyDetails.PropertyDetailsActivity" />
         <activity android:name=".ui.MainActivity">

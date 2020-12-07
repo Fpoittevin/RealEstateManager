@@ -3,10 +3,10 @@ package com.ocr.francois.realestatemanager.ui.propertiesList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.ocr.francois.realestatemanager.R
+import com.ocr.francois.realestatemanager.databinding.RecyclerViewPropertyItemBinding
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 
-class PropertiesAdapter :
+class PropertiesAdapter(private val propertiesListViewModel: PropertiesListViewModel) :
     RecyclerView.Adapter<PropertyViewHolder>() {
 
     private lateinit var propertyItemClickCallback: PropertyItemClickCallback
@@ -16,9 +16,9 @@ class PropertiesAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropertyViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.recycler_view_property_item, parent, false)
+        val itemBinding = RecyclerViewPropertyItemBinding.inflate(inflater, parent, false)
 
-        return PropertyViewHolder(view)
+        return PropertyViewHolder(itemBinding)
     }
 
     override fun getItemCount(): Int {
@@ -28,7 +28,7 @@ class PropertiesAdapter :
     override fun onBindViewHolder(holder: PropertyViewHolder, position: Int) {
         val propertyWithPhotos = propertiesWithPhotos[position]
 
-        holder.updateUi(propertyWithPhotos)
+        holder.bind(propertyWithPhotos, propertiesListViewModel)
 
         if (position == itemSelectedPosition) {
             holder.setIsSelected()

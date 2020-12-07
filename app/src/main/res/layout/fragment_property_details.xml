@@ -1,135 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:map="http://schemas.android.com/apk/res-auto">
 
-    <ScrollView
-        android:id="@+id/fragment_property_details_scroll_view"
+    <data>
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <ScrollView
+            android:id="@+id/fragment_property_details_scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <FrameLayout
-                android:id="@+id/fragment_property_details_gallery_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/fragment_property_form_details_is_sold_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-
-            <TextView
-                android:id="@+id/fragment_property_form_details_sold_date_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:baselineAligned="false"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/Title6Style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/general" />
-
-                    <TextView
-                        android:id="@+id/fragment_property_details_surface_text_view"
-                        style="@style/BodyTextWithIconStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:drawableStartCompat="@drawable/ic_baseline_surface_24" />
-
-                    <TextView
-                        android:id="@+id/fragment_property_details_price_text_view"
-                        style="@style/BodyTextWithIconStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:drawableStartCompat="@drawable/ic_baseline_monetization_24" />
-
-                    <TextView
-                        android:id="@+id/fragment_property_details_estate_agent_text_view"
-                        style="@style/BodyTextWithIconStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:drawableStartCompat="@drawable/ic_baseline_person_24" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/Title6Style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/rooms" />
-
-                    <TextView
-                        android:id="@+id/fragment_property_details_number_of_rooms_text_view"
-                        style="@style/BodyTextWithIconStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:drawableStartCompat="@drawable/ic_baseline_rooms_24" />
-
-                    <TextView
-                        android:id="@+id/fragment_property_details_number_of_bathrooms_text_view"
-                        style="@style/BodyTextWithIconStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:drawableStartCompat="@drawable/ic_baseline_bathrooms_24" />
-
-                    <TextView
-                        android:id="@+id/fragment_property_details_number_of_bedrooms_text_view"
-                        style="@style/BodyTextWithIconStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:drawableStartCompat="@drawable/ic_baseline_bedrooms_24" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <View style="@style/divider" />
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    style="@style/Title6Style"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/description" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/fragment_property_details_description_text_view"
-                    style="@style/BodyTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    <FrameLayout
+                        android:id="@+id/fragment_property_details_gallery_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-            </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Title6Style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/general" />
+
+                        <TextView
+                            android:id="@+id/fragment_property_details_surface_text_view"
+                            style="@style/BodyTextWithIconStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:surface="@{viewModel.propertyWithPhotos.property.surface}"
+                            map:drawableStartCompat="@drawable/ic_baseline_surface_24" />
+
+                        <TextView
+                            android:id="@+id/fragment_property_details_price_text_view"
+                            style="@style/BodyTextWithIconStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:currency="@{viewModel.currencyLiveData}"
+                            app:price="@{viewModel.propertyWithPhotos.property.price}"
+                            map:drawableStartCompat="@drawable/ic_baseline_monetization_24" />
+
+                        <TextView
+                            android:id="@+id/fragment_property_details_agent_text_view"
+                            style="@style/BodyTextWithIconStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.propertyWithPhotos.property.estateAgent}"
+                            map:drawableStartCompat="@drawable/ic_baseline_person_24" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Title6Style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/rooms" />
+
+                        <TextView
+                            android:id="@+id/fragment_property_details_number_of_rooms_text_view"
+                            style="@style/BodyTextWithIconStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{String.valueOf(viewModel.propertyWithPhotos.property.numberOfRooms)}"
+                            map:drawableStartCompat="@drawable/ic_baseline_rooms_24" />
+
+                        <TextView
+                            android:id="@+id/fragment_property_details_number_of_bathrooms_text_view"
+                            style="@style/BodyTextWithIconStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{String.valueOf(viewModel.propertyWithPhotos.property.numberOfBathrooms)}"
+                            map:drawableStartCompat="@drawable/ic_baseline_bathrooms_24" />
+
+                        <TextView
+                            android:id="@+id/fragment_property_details_number_of_bedrooms_text_view"
+                            style="@style/BodyTextWithIconStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{String.valueOf(viewModel.propertyWithPhotos.property.numberOfBedrooms)}"
+                            map:drawableStartCompat="@drawable/ic_baseline_bedrooms_24" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View style="@style/divider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Title6Style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/description" />
+
+                    <TextView
+                        android:id="@+id/fragment_property_details_description_text_view"
+                        style="@style/BodyTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.propertyWithPhotos.property.description}" />
+
+                </LinearLayout>
+
+                <View style="@style/divider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Title6Style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/points_of_interest" />
+
+                    <com.google.android.flexbox.FlexboxLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:justifyContent="center"
+                        app:flexWrap="wrap"
+                        android:layout_margin="@dimen/default_big_margin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/default_big_margin"
+                            android:textAlignment="center"
+                            android:visibility="@{viewModel.propertyWithPhotos.property.nearSchool ? View.VISIBLE : View.GONE}"
+                            android:text="@string/near_school" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/default_big_margin"
+                            android:textAlignment="center"
+                            android:visibility="@{viewModel.propertyWithPhotos.property.nearTransports ? View.VISIBLE : View.GONE}"
+                            android:text="@string/near_transports" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/default_big_margin"
+                            android:textAlignment="center"
+                            android:visibility="@{viewModel.propertyWithPhotos.property.nearShops ? View.VISIBLE : View.GONE}"
+                            android:text="@string/near_shops" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/default_big_margin"
+                            android:textAlignment="center"
+                            android:visibility="@{viewModel.propertyWithPhotos.property.nearParks ? View.VISIBLE : View.GONE}"
+                            android:text="@string/near_parks" />
+
+                    </com.google.android.flexbox.FlexboxLayout>
+
+                </LinearLayout>
 
             <View style="@style/divider" />
 
@@ -149,14 +218,18 @@
                     style="@style/BodyTextWithIconStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:drawableStartCompat="@drawable/ic_baseline_location_24" />
+                    app:address_first="@{viewModel.propertyWithPhotos.property.addressFirst}"
+                    app:address_second="@{viewModel.propertyWithPhotos.property.addressSecond}"
+                    app:city="@{viewModel.propertyWithPhotos.property.city}"
+                    app:zip_code="@{viewModel.propertyWithPhotos.property.zipCode}"
+                    map:drawableStartCompat="@drawable/ic_baseline_location_24" />
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/fragment_property_details_map_container"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_marginTop="@dimen/default_small_margin"
+                    android:layout_marginTop="@dimen/default_big_margin"
                     map:liteMode="true" />
             </LinearLayout>
 
@@ -165,13 +238,11 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fragment_property_details_modification_fab"
+        style="@style/FabStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_big_margin"
         android:contentDescription="@string/modification_button"
         android:src="@drawable/ic_baseline_edit_24"
-        app:backgroundTint="@color/colorAccent"
-        app:elevation="6dp"
-        app:layout_anchor="@+id/fragment_property_details_scroll_view"
-        app:layout_anchorGravity="bottom|right|end" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        app:layout_anchor="@+id/fragment_property_details_scroll_view" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout></layout>

@@ -1,6 +1,7 @@
 package com.ocr.francois.realestatemanager.ui.propertyCreation
 
 import android.os.Bundle
+import androidx.databinding.DataBindingUtil
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityPropertyCreationBinding
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
@@ -13,8 +14,8 @@ class PropertyCreationActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityPropertyCreationBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_property_creation)
+
         configureToolbar(binding.activityPropertyCreationToolbar, true)
 
         displayFragment(

@@ -41,6 +41,8 @@
     <string name="gallery">gallery</string>
     <string name="rooms">Rooms</string>
     <string name="description">Description</string>
+    <string name="all">all</string>
+    <string name="for_sale">for sale</string>
 
     // PREFERENCES
     <string name="preferences_file_key">rem_preference</string>
@@ -107,5 +109,7 @@
     <string name="save_button">save button</string>
     <string name="gallery_photo">gallery photo</string>
     <string name="property_photo">property_photo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

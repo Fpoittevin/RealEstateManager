@@ -1,40 +1,29 @@
 package com.ocr.francois.realestatemanager.ui.propertyForm
 
 import android.app.DatePickerDialog
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.FragmentPropertyFormBinding
 import com.ocr.francois.realestatemanager.injection.Injection
-import com.ocr.francois.realestatemanager.models.Property
-import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 import com.ocr.francois.realestatemanager.notification.NotificationSender
-import com.ocr.francois.realestatemanager.ui.base.BaseFragment
-import com.ocr.francois.realestatemanager.ui.photosGallery.PhotosGalleryFragment
-import com.ocr.francois.realestatemanager.utils.Currency
-import com.ocr.francois.realestatemanager.utils.CurrencyLiveData
-import com.ocr.francois.realestatemanager.utils.ImageUtil
+import com.ocr.francois.realestatemanager.ui.photosGallery.PhotosGalleryFormFragment
 import com.ocr.francois.realestatemanager.utils.Utils
 import org.joda.time.LocalDate
 
-class PropertyFormFragment : BaseFragment(), TextWatcher {
+
+class PropertyFormFragment : Fragment() {
 
     private lateinit var binding: FragmentPropertyFormBinding
-    private lateinit var propertyWithPhotos: PropertyWithPhotos
-    private val photosGalleryFragment = PhotosGalleryFragment.newInstance(true)
     private lateinit var formTarget: FormTarget
-    private var errorInForm = false
-    private var isAddressChanged = false
-
+    private val photosGalleryFragment =
+        PhotosGalleryFormFragment.newInstance()
     private val propertyFormViewModel: PropertyFormViewModel by activityViewModels {
         Injection.provideViewModelFactory(
             requireContext()
@@ -59,47 +48,42 @@ class PropertyFormFragment : BaseFragment(), TextWatcher {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
-        binding = FragmentPropertyFormBinding.inflate(inflater, container, false).apply {
-            fragmentPropertyFormSaveFab.setOnClickListener {
-                hideKeyboard()
-                saveProperty()
-            }
-        }
-
+    ): View {
         arguments?.let {
-            it.getLong(PROPERTY_ID_KEY).let { propertyId ->
+            it.getLong(PROPERTY_ID_KEY).let { id ->
+                propertyFormViewModel.getPropertyWithPhotos(id)
                 formTarget = FormTarget.MODIFICATION
-                propertyFormViewModel.getPropertyWithPhotos(propertyId)
-                    .observe(viewLifecycleOwner, { propertyWithPhotos ->
-                        this.propertyWithPhotos = propertyWithPhotos
-
-                        updateUi()
-                    })
             }
         } ?: run {
-            this.propertyWithPhotos = PropertyWithPhotos(
-                Property(),
-                mutableListOf()
-            )
             formTarget = FormTarget.CREATION
+        }
+
+        binding =
+            DataBindingUtil.inflate(
+                inflater,
+                R.layout.fragment_property_form,
+                container,
+                false
+            )
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = propertyFormViewModel
         }
 
         configurePhotosGallery()
         configureSoldSwitch()
-        configureAddressTextInputs()
+        configureSaveButton()
 
         return binding.root
     }
 
-    private fun configureAddressTextInputs() {
-        binding.fragmentPropertyFormAddressFirstTextInput.addTextChangedListener(this)
-        binding.fragmentPropertyFormAddressSecondTextInput.addTextChangedListener(this)
-        binding.fragmentPropertyFormZipCodeTextInput.addTextChangedListener(this)
-        binding.fragmentPropertyFormCityTextInput.addTextChangedListener(this)
+    private fun configurePhotosGallery() {
+        childFragmentManager.beginTransaction()
+            .replace(R.id.fragment_property_form_gallery_container, photosGalleryFragment)
+            .commit()
     }
 
     private fun configureSoldSwitch() {
@@ -109,23 +93,25 @@ class PropertyFormFragment : BaseFragment(), TextWatcher {
                 requireContext(),
                 { _, year: Int, month: Int, dayOfMonth: Int ->
                     val saleTimeStamp = Utils.getTimestampFromDatePicker(year, month, dayOfMonth)
-                    propertyWithPhotos.property.saleTimestamp = saleTimeStamp
-                    binding.fragmentPropertyFormSoldTextView.text =
-                        Utils.formatDate(LocalDate(saleTimeStamp))
+                    propertyFormViewModel.onSaleTimeStampChange(saleTimeStamp)
                 },
                 LocalDate.now().year,
                 (LocalDate.now().monthOfYear - 1),
                 LocalDate.now().dayOfMonth
             ).also {
                 it.datePicker.maxDate = Utils.getTodayTimestamp()
+            }.also {
+                it.setOnCancelListener {
+                    binding.fragmentPropertyFormSoldSwitch.isChecked = false
+                }
             }
 
-            binding.fragmentPropertyFormSoldSwitch.setOnCheckedChangeListener { _, value: Boolean ->
-                if (value && propertyWithPhotos.property.saleTimestamp == null) {
+            binding.fragmentPropertyFormSoldSwitch.setOnClickListener {
+                val switch = it as SwitchMaterial
+                if (switch.isChecked) {
                     datePickerDialog.show()
                 } else {
-                    propertyWithPhotos.property.saleTimestamp = null
-                    binding.fragmentPropertyFormSoldTextView.text = ""
+                    propertyFormViewModel.onSaleTimeStampChange(null)
                 }
             }
         } else {
@@ -133,236 +119,17 @@ class PropertyFormFragment : BaseFragment(), TextWatcher {
         }
     }
 
-    private fun updateUi() {
-
-        binding.run {
-            propertyWithPhotos.property.run {
-                saleTimestamp?.let {
-                    fragmentPropertyFormSoldSwitch.isChecked = true
-                    fragmentPropertyFormSoldTextView.text = Utils.formatDate(LocalDate(it))
-                }
-                type?.let {
-                    fragmentPropertyFormTypeTextInput.setText(it)
-                }
-                formattedPrice?.let {
-                    fragmentPropertyFormPriceTextInput.setText(it)
-                }
-                surface?.let {
-                    fragmentPropertyFormSurfaceTextInput.setText(it.toString())
-                }
-                estateAgent?.let {
-                    fragmentPropertyFormEstateAgentTextInput.setText(estateAgent)
-                }
-                description?.let {
-                    fragmentPropertyFormDescriptionTextInput.setText(description)
-                }
-
-                numberOfRooms?.let {
-                    fragmentPropertyFormNumberOfRoomsTextInput.setText(it.toString())
-                }
-                numberOfBathrooms?.let {
-                    fragmentPropertyFormNumberOfBathroomsTextInput.setText(it.toString())
-                }
-                numberOfBedrooms?.let {
-                    fragmentPropertyFormNumberOfBedroomsTextInput.setText(it.toString())
-                }
-
-                addressFirst?.let {
-                    fragmentPropertyFormAddressFirstTextInput.setText(it)
-                }
-                addressSecond?.let {
-                    fragmentPropertyFormAddressSecondTextInput.setText(it)
-                }
-                city?.let {
-                    fragmentPropertyFormCityTextInput.setText(it)
-                }
-                zipCode?.let {
-                    fragmentPropertyFormZipCodeTextInput.setText(it)
-                }
-                fragmentPropertyFormNearSchoolSwitch.isChecked = nearSchool
-                fragmentPropertyFormNearTransportsSwitch.isChecked = nearTransports
-                fragmentPropertyFormNearShopsSwitch.isChecked = nearShops
-                fragmentPropertyFormNearParksSwitch.isChecked = nearParks
-            }
-        }
-
-        photosGalleryFragment.updateList(propertyWithPhotos.photosList)
-    }
-
-    private fun configurePhotosGallery() {
-
-        childFragmentManager.beginTransaction()
-            .replace(R.id.fragment_property_form_gallery_container, photosGalleryFragment)
-            .commit()
-    }
-
-    private fun checkTextInputValue(textInput: TextInputEditText): String? {
-        return if (textInput.text.isNullOrEmpty()) {
-            null
-        } else {
-            textInput.text.toString()
-        }
-    }
-
-    private fun checkDataAndHydrateProperty() {
-        propertyWithPhotos.property.apply {
-            // TYPE
-            checkTextInputValue(binding.fragmentPropertyFormTypeTextInput)?.let {
-                type = it
-            } ?: run {
-                binding.fragmentPropertyFormTypeTextInputLayout.error =
-                    getString(R.string.required_field)
-                errorInForm = true
-            }
-
-            //  PRICE
-            checkTextInputValue(binding.fragmentPropertyFormPriceTextInput)?.let {
-                price = it.toInt()
-            } ?: run {
-                binding.fragmentPropertyFormPriceTextInputLayout.error =
-                    getString(R.string.required_field)
-                errorInForm = true
-            }
-
-            //  SURFACE
-            checkTextInputValue(binding.fragmentPropertyFormSurfaceTextInput)?.let {
-                surface = it.toInt()
-            } ?: run {
-                binding.fragmentPropertyFormSurfaceTextInputLayout.error =
-                    getString(R.string.required_field)
-                errorInForm = true
-            }
-
-            //  ROOMS / BATHROOMS / BEDROOMS
-            numberOfRooms =
-                binding.fragmentPropertyFormNumberOfRoomsTextInput.text.toString()
-                    .toIntOrNull()
-            numberOfBathrooms =
-                binding.fragmentPropertyFormNumberOfBathroomsTextInput.text.toString()
-                    .toIntOrNull()
-            numberOfBedrooms =
-                binding.fragmentPropertyFormNumberOfBedroomsTextInput.text.toString()
-                    .toIntOrNull()
-
-            //  DESCRIPTION
-            description = binding.fragmentPropertyFormDescriptionTextInput.text.toString()
-
-            //  ADDRESS
-            checkTextInputValue(binding.fragmentPropertyFormAddressFirstTextInput)?.let {
-                addressFirst = it
-            } ?: run {
-                binding.fragmentPropertyFormAddressFirstTextInputLayout.error =
-                    getString(R.string.required_field)
-                errorInForm = true
-            }
-
-            //  ADDRESS SECOND
-            addressSecond =
-                binding.fragmentPropertyFormAddressSecondTextInput.text.toString()
-
-            // CITY
-            checkTextInputValue(binding.fragmentPropertyFormCityTextInput)?.let {
-                city = it
-            } ?: run {
-                binding.fragmentPropertyFormCityTextInputLayout.error =
-                    getString(R.string.required_field)
-                errorInForm = true
-            }
-
-            //  ZIP CODE
-            checkTextInputValue(binding.fragmentPropertyFormZipCodeTextInput)?.let {
-                zipCode = it
-            } ?: run {
-                binding.fragmentPropertyFormZipCodeTextInputLayout.error =
-                    getString(R.string.required_field)
-                errorInForm = true
-            }
-
-            //  ESTATE AGENT
-            estateAgent = binding.fragmentPropertyFormEstateAgentTextInput.text.toString()
-
-            //  POINTS OF INTEREST
-            nearSchool = binding.fragmentPropertyFormNearSchoolSwitch.isChecked
-            nearTransports = binding.fragmentPropertyFormNearTransportsSwitch.isChecked
-            nearSchool = binding.fragmentPropertyFormNearShopsSwitch.isChecked
-            nearParks = binding.fragmentPropertyFormNearParksSwitch.isChecked
-
-            //  PHOTOS
-            val photosList = photosGalleryFragment.getPhotosList()
-            if (photosList.isEmpty()) {
-                errorInForm = true
-            } else {
-                for (photo in photosList) {
-                    if (photo.description.isNullOrEmpty()) {
-                        photosGalleryFragment.photosGalleryAdapter.notifyDataSetChanged()
-                        errorInForm = true
-                    }
-                }
-            }
-        }
-    }
-
-    private fun saveProperty() {
-
-        checkDataAndHydrateProperty()
-
-        if (!errorInForm) {
-            propertyWithPhotos.apply {
-                photosList.apply {
-                    forEach {
-                        if (!photosGalleryFragment.getPhotosList().contains(it)) {
-                            ImageUtil.deleteFileFromUri(Uri.parse(it.uri))
-                        }
-                    }
-                    clear()
-                    addAll(photosGalleryFragment.getPhotosList())
-                }
-            }
-
-            val sharedPreferences = requireContext().getSharedPreferences(
-                getString(R.string.preferences_file_key),
-                Context.MODE_PRIVATE
-            )
-
-            sharedPreferences.getString(CurrencyLiveData.CURRENCY_KEY, Currency.DOLLAR.name)?.let {
-                Currency.valueOf(
-                    it
-                )
-            }?.let {
-                if (it == Currency.EURO) {
-                    propertyWithPhotos.property.price?.let { price ->
-                        price.apply {
-                            Utils.convertEuroToDollar(price)
-                        }
-                    }
-                }
-            }
-
+    private fun configureSaveButton() {
+        binding.fragmentPropertyFormSaveFab.setOnClickListener {
             when (formTarget) {
                 FormTarget.CREATION -> {
-                    propertyWithPhotos.property.creationTimestamp = Utils.getTodayTimestamp()
-                    propertyFormViewModel.createPropertyWithPhotos(
-                        propertyWithPhotos
-                    )
+                    propertyFormViewModel.createPropertyWithPhotos()
                     NotificationSender().sendNotification(requireContext())
                 }
-                FormTarget.MODIFICATION -> propertyFormViewModel.updatePropertyWithPhotos(
-                    propertyWithPhotos,
-                    isAddressChanged
-                )
+                FormTarget.MODIFICATION ->
+                    propertyFormViewModel.updatePropertyWithPhotos()
             }
             activity?.finish()
-        } else {
-            Snackbar.make(binding.root, getString(R.string.form_not_completed_error), Snackbar.LENGTH_SHORT).show()
-            errorInForm = false
         }
-    }
-
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
-    override fun afterTextChanged(s: Editable?) {
-        isAddressChanged = true
     }
 }

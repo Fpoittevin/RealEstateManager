@@ -6,10 +6,11 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
 import androidx.work.*
 import com.google.android.gms.maps.model.LatLngBounds
+import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.database.dao.PropertyDao
 import com.ocr.francois.realestatemanager.models.Property
-import com.ocr.francois.realestatemanager.models.PropertySearch
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
+import com.ocr.francois.realestatemanager.ui.propertySearch.PropertySearch
 import com.ocr.francois.realestatemanager.utils.LocationTool
 import com.ocr.francois.realestatemanager.workers.GetAndSaveLocationWorker
 
@@ -43,7 +44,10 @@ class PropertyRepository(private val propertyDao: PropertyDao, private val conte
             getAndSaveLocation(
                 it,
                 LocationTool.addressConcatenation(
-                    propertyWithPhotos.property,
+                    propertyWithPhotos.property.addressFirst,
+                    null,
+                    propertyWithPhotos.property.city,
+                    propertyWithPhotos.property.zipCode,
                     false
                 )
             )
@@ -54,19 +58,24 @@ class PropertyRepository(private val propertyDao: PropertyDao, private val conte
         propertyDao.insertLocationOfProperty(propertyId, lat, lng)
     }
 
-    suspend fun updatePropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos, isAddressChanged: Boolean) {
+    suspend fun updatePropertyWithPhotos(
+        propertyWithPhotos: PropertyWithPhotos,
+        isAddressChanged: Boolean
+    ) {
         propertyDao.updatePropertyWithPhotos(propertyWithPhotos)
-        if(isAddressChanged) {
+        if (isAddressChanged) {
             getAndSaveLocation(
                 propertyWithPhotos.property.id!!,
                 LocationTool.addressConcatenation(
-                    propertyWithPhotos.property,
+                    propertyWithPhotos.property.addressFirst,
+                    null,
+                    propertyWithPhotos.property.city,
+                    propertyWithPhotos.property.zipCode,
                     false
                 )
             )
         }
     }
-
 
     private fun generateSqlLiteQuerySearch(propertySearch: PropertySearch): SupportSQLiteQuery {
 
@@ -84,56 +93,60 @@ class PropertyRepository(private val propertyDao: PropertyDao, private val conte
         stringBuilder.append("SELECT * FROM Property AS Pr").apply {
 
             //  Price
-            propertySearch.minPrice?.let {
-                addWhereOrAnd()
-                append("price >= ?")
-                args.add(it)
+            propertySearch.minMaxPrice[0]?.let {
+                if (it != context.resources.getIntArray(R.array.initial_price_slider_values)[0]) {
+                    addWhereOrAnd()
+                    append("price >= ?")
+                    args.add(it)
+                }
             }
-            propertySearch.maxPrice?.let {
-                addWhereOrAnd()
-                append("price <= ?")
-                args.add(it)
+            propertySearch.minMaxPrice[1]?.let {
+                if (it != context.resources.getIntArray(R.array.initial_price_slider_values)[1]) {
+                    addWhereOrAnd()
+                    append("price <= ?")
+                    args.add(it)
+                }
             }
 
             //  Surface
-            propertySearch.minSurface?.let {
+            propertySearch.minMaxSurface[0]?.let {
                 addWhereOrAnd()
                 append("surface >= ?")
                 args.add(it)
             }
-            propertySearch.maxSurface?.let {
+            propertySearch.minMaxSurface[1]?.let {
                 addWhereOrAnd()
                 append("surface <= ?")
                 args.add(it)
             }
 
             //  Rooms
-            propertySearch.minNumberOfRooms?.let {
+            propertySearch.minMaxRooms[0]?.let {
                 addWhereOrAnd()
                 append("numberOfRooms >= ?")
                 args.add(it)
             }
-            propertySearch.maxNumberOfRooms?.let {
+            propertySearch.minMaxRooms[1]?.let {
                 addWhereOrAnd()
                 append("numberOfRooms <= ?")
                 args.add(it)
             }
-            propertySearch.minNumberOfBathrooms?.let {
+            propertySearch.minMaxBathrooms[0]?.let  {
                 addWhereOrAnd()
                 append("numberOfBathrooms >= ?")
                 args.add(it)
             }
-            propertySearch.maxNumberOfBathrooms?.let {
+            propertySearch.minMaxBathrooms[1]?.let  {
                 addWhereOrAnd()
                 append("numberOfBathrooms <= ?")
                 args.add(it)
             }
-            propertySearch.minNumberOfBedrooms?.let {
+            propertySearch.minMaxBedrooms[0]?.let {
                 addWhereOrAnd()
                 append("numberOfBedrooms >= ?")
                 args.add(it)
             }
-            propertySearch.maxNumberOfBedrooms?.let {
+            propertySearch.minMaxBedrooms[1]?.let {
                 addWhereOrAnd()
                 append("numberOfBedrooms <= ?")
                 args.add(it)
@@ -170,10 +183,13 @@ class PropertyRepository(private val propertyDao: PropertyDao, private val conte
             }
 
             //  Sale
+
             propertySearch.isSold?.let {
                 addWhereOrAnd()
-                if (it) append("saleTimestamp IS NOT NULL") // ??
+                if (it) append("saleTimestamp IS NOT NULL")
+                else append("saleTimestamp IS NULL")
             }
+
             propertySearch.minSaleTimestamp?.let {
                 addWhereOrAnd()
                 append("saleTimestamp >= ?")
@@ -201,7 +217,6 @@ class PropertyRepository(private val propertyDao: PropertyDao, private val conte
             }
         }
         return SimpleSQLiteQuery(stringBuilder.toString(), args.toArray())
-
     }
 
     private fun getAndSaveLocation(propertyId: Long, address: String) {

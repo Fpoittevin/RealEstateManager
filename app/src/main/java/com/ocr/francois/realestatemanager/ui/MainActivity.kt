@@ -7,6 +7,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import androidx.databinding.DataBindingUtil
 import com.google.android.material.navigation.NavigationView
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityMainBinding
@@ -48,8 +49,11 @@ class MainActivity : BaseActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.apply {
+            viewModel = propertiesListViewModel
+            lifecycleOwner = this@MainActivity
+        }
 
         configureToolbar(binding.activityMainToolbar, false)
         configureDrawerLayout()
@@ -171,19 +175,6 @@ class MainActivity : BaseActivity(),
         startPropertyModificationActivity(propertyId)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
-        super.onActivityResult(requestCode, resultCode, intent)
-
-        if (requestCode == REQUEST_SEARCH_CODE && resultCode == RESULT_OK && intent != null) {
-            intent.extras?.let {
-                if (it.containsKey(PROPERTY_SEARCH_KEY)) {
-                    propertiesListViewModel.propertySearchLiveData.value =
-                        it.getParcelable(PROPERTY_SEARCH_KEY)
-                }
-            }
-        }
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.main_activity_toolbar_menu_creation_button -> startPropertyCreationActivity()
@@ -216,5 +207,12 @@ class MainActivity : BaseActivity(),
 
     override fun onMarkerClickCallback(propertyId: Long) {
         showPropertyDetails(propertyId)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        propertiesListViewModel.propertySearchLiveData.value =
+            data?.getParcelableExtra(PROPERTY_SEARCH_KEY)
     }
 }

@@ -33,6 +33,11 @@ class Utils {
             val dateFormatter = DateTimeFormat.forPattern("dd/MM/YYYY")
             return dateFormatter.print(date)
         }
+        fun formatDate(timestamp: Long): String {
+            val date = LocalDate(timestamp)
+            val dateFormatter = DateTimeFormat.forPattern("dd/MM/YYYY")
+            return dateFormatter.print(date)
+        }
 
         fun getTodayTimestamp(): Long {
             return Date().time

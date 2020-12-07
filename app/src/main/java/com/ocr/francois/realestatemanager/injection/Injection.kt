@@ -1,8 +1,10 @@
 package com.ocr.francois.realestatemanager.injection
 
+import android.app.Application
 import android.content.Context
 import com.ocr.francois.realestatemanager.database.RealEstateManagerDatabase
 import com.ocr.francois.realestatemanager.repositories.CurrencyRepository
+import com.ocr.francois.realestatemanager.repositories.PhotoRepository
 import com.ocr.francois.realestatemanager.repositories.PropertyRepository
 
 class Injection {
@@ -16,10 +18,14 @@ class Injection {
         private fun provideCurrencyRepository(context: Context) =
             CurrencyRepository(context)
 
+        private fun providePhotoRepository() =
+            PhotoRepository()
+
         fun provideViewModelFactory(context: Context) =
             ViewModelFactory(
                 providePropertyRepository(context),
-                provideCurrencyRepository(context)
+                provideCurrencyRepository(context),
+                providePhotoRepository()
             )
     }
 }

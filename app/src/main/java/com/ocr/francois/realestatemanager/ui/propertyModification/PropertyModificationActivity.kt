@@ -1,13 +1,12 @@
 package com.ocr.francois.realestatemanager.ui.propertyModification
 
 import android.os.Bundle
-import android.view.MenuItem
+import androidx.databinding.DataBindingUtil
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityPropertyModificationBinding
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.ui.propertyForm.PropertyFormFragment
 import com.ocr.francois.realestatemanager.ui.propertyForm.PropertyFormFragment.Companion.PROPERTY_ID_KEY
-import kotlinx.android.synthetic.main.activity_property_modification.*
 
 class PropertyModificationActivity : BaseActivity() {
 
@@ -16,8 +15,8 @@ class PropertyModificationActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityPropertyModificationBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_property_modification)
+
         configureToolbar(binding.activityPropertyModificationToolbar, true)
 
         val propertyId = intent.getLongExtra(PROPERTY_ID_KEY, 1)

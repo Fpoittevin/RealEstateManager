@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.FragmentPhotoSourceChoiceDialogBinding
 
 
@@ -24,14 +26,14 @@ class PhotoSourceChoiceDialogFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentPhotoSourceChoiceDialogBinding.inflate(inflater, container, false).also {
-            it.fragmentPhotoSourceChoiceDialogCameraButton.setOnClickListener {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_photo_source_choice_dialog, container, false)
+            binding.fragmentPhotoSourceChoiceDialogCameraButton.setOnClickListener {
                 photoSourceChoiceListener.onCameraButtonClick()
             }
-            it.fragmentPhotoSourceChoiceDialogGalleryButton.setOnClickListener {
+            binding.fragmentPhotoSourceChoiceDialogGalleryButton.setOnClickListener {
                 photoSourceChoiceListener.onGalleryButtonClick()
             }
-        }
+
         return binding.root
     }
 

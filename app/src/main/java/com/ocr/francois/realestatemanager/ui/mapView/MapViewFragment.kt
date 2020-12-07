@@ -9,6 +9,7 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.gms.location.LocationServices
@@ -48,8 +49,11 @@ class MapViewFragment(private val markerClickCallback: MarkerClickCallback) : Fr
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentMapViewBinding.inflate(inflater, container, false)
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map_view, container, false)
+        binding.apply {
+            lifecycleOwner = this@MapViewFragment
+        }
 
         //Todo: observeConnexion()
         checkLocationPermissions()

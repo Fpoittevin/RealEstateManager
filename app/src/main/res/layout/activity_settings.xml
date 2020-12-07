@@ -1,52 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.settings.SettingsActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.appbar.AppBarLayout
-        style="@style/Widget.MaterialComponents.ActionBar.Primary"
+    <data>
+        <variable
+            name="viewModel"
+            type="com.ocr.francois.realestatemanager.ui.settings.SettingsViewModel" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.settings.SettingsActivity">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/activity_settings_toolbar"
+        <com.google.android.material.appbar.AppBarLayout
+            style="@style/Widget.MaterialComponents.ActionBar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/activity_settings_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:title="@string/settings"
+                app:titleTextAppearance="@style/TitleToolbarStyle" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <TextView
+            style="@style/Title6Style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency" />
+
+        <RadioGroup
+            android:id="@+id/activity_settings_currencies_radio_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:title="@string/settings"
-            app:titleTextAppearance="@style/TitleToolbarStyle" />
+            android:layout_marginStart="@dimen/default_big_margin"
+            android:layout_marginEnd="@dimen/default_big_margin"
+            android:orientation="horizontal">
 
-    </com.google.android.material.appbar.AppBarLayout>
+            <RadioButton
+                android:id="@+id/activity_settings_currencies_dollar_radio_button"
+                android:layout_width="0dp"
+                android:layout_weight="50"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_baseline_dollar_24"
+                android:text="@string/dollar" />
 
-    <TextView
-        style="@style/Title6Style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/currency" />
+            <RadioButton
+                android:id="@+id/activity_settings_currencies_euro_radio_button"
+                android:layout_width="0dp"
+                android:layout_weight="50"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_baseline_euro_24"
+                android:text="@string/euro" />
 
-    <RadioGroup
-        android:id="@+id/activity_settings_currencies_radio_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        </RadioGroup>
 
-        <RadioButton
-            android:id="@+id/activity_settings_currencies_dollar_radio_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_baseline_dollar_24"
-            android:text="@string/dollar" />
-
-        <RadioButton
-            android:id="@+id/activity_settings_currencies_euro_radio_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_baseline_euro_24"
-            android:text="@string/euro" />
-
-    </RadioGroup>
-
-</LinearLayout>
+    </LinearLayout>
+</layout>

@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/photos_gallery_item_image_view"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="500dp"
             android:contentDescription="@string/gallery_photo"
             app:bindPhotoUri="@{photo.uri}" />
 

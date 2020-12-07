@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -16,55 +17,19 @@ import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.FragmentPropertyDetailsBinding
 import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.models.Property
-import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
-import com.ocr.francois.realestatemanager.ui.photosGallery.PhotosGalleryFragment
-import com.ocr.francois.realestatemanager.utils.LocationTool
-import com.ocr.francois.realestatemanager.utils.Utils
-import org.joda.time.LocalDate
+import com.ocr.francois.realestatemanager.ui.photosGallery.PhotosGalleryDetailsFragment
 
 class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var property: Property
-    private lateinit var propertyWithPhotos: PropertyWithPhotos
     private lateinit var binding: FragmentPropertyDetailsBinding
     private lateinit var propertyModificationFabListener: PropertyModificationFabListener
-    private val photosGalleryFragment = PhotosGalleryFragment.newInstance(false)
+    private val photosGalleryFragment = PhotosGalleryDetailsFragment.newInstance()
 
     private val propertyDetailsViewModel: PropertyDetailsViewModel by activityViewModels {
         Injection.provideViewModelFactory(
             requireContext()
         )
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        binding = FragmentPropertyDetailsBinding.inflate(inflater, container, false)
-
-        configurePhotosGallery()
-
-        arguments?.let {
-            val propertyId = it.getLong(PROPERTY_ID_KEY)
-
-            propertyDetailsViewModel.getPropertyWithPhotos(propertyId)
-                .observe(viewLifecycleOwner, { propertyWithPhotos ->
-                    this.propertyWithPhotos = propertyWithPhotos
-                    updateUi()
-                })
-            binding.fragmentPropertyDetailsModificationFab.setOnClickListener {
-                propertyModificationFabListener.onPropertyModificationClick(propertyId)
-            }
-        }
-
-        return binding.root
-    }
-
-    private fun configurePhotosGallery() {
-        childFragmentManager.beginTransaction()
-            .replace(R.id.fragment_property_details_gallery_container, photosGalleryFragment)
-            .commit()
     }
 
     companion object {
@@ -82,63 +47,55 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
             }
     }
 
-    private fun updateUi() {
-        this.property = propertyWithPhotos.property
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-
+        binding =
+            DataBindingUtil.inflate(
+                inflater,
+                R.layout.fragment_property_details,
+                container,
+                false
+            )
         binding.apply {
-            property.saleTimestamp?.let {
-                fragmentPropertyFormDetailsIsSoldTextView.text = getString(R.string.sold)
-                fragmentPropertyFormDetailsSoldDateTextView.text = Utils.formatDate(LocalDate(it))
-            } ?: run {
-                binding.apply {
-                    fragmentPropertyFormDetailsIsSoldTextView.visibility = View.GONE
-                    fragmentPropertyFormDetailsSoldDateTextView.visibility = View.GONE
-                }
+            lifecycleOwner = this@PropertyDetailsFragment
+            viewModel = propertyDetailsViewModel
+        }
+
+        arguments?.let {
+            val propertyId = it.getLong(PROPERTY_ID_KEY)
+
+            propertyDetailsViewModel.getPropertyWithPhotos(propertyId)
+            binding.fragmentPropertyDetailsModificationFab.setOnClickListener {
+                propertyModificationFabListener.onPropertyModificationClick(propertyId)
             }
         }
+        propertyDetailsViewModel.propertyWithPhotos.observe(viewLifecycleOwner, {
+            this.property = it.property
+            configureMap()
+        })
+        configurePhotosGallery()
 
-        property.description?.let {
-            binding.fragmentPropertyDetailsDescriptionTextView.text = it
-        }
+        return binding.root
+    }
 
-        property.surface?.let {
-            binding.fragmentPropertyDetailsSurfaceTextView.text = StringBuilder()
-                .append(it.toString())
-                .append(" m²")
-                .toString()
-        }
-        property.formattedPrice?.let {
-            binding.fragmentPropertyDetailsPriceTextView.text =
-                it
-        }
-        property.estateAgent?.let {
-            binding.fragmentPropertyDetailsEstateAgentTextView.text = it
-        }
-
-        binding.fragmentPropertyDetailsNumberOfRoomsTextView.text =
-            getString(R.string.rooms_with_number, property.numberOfRooms)
-        binding.fragmentPropertyDetailsNumberOfBathroomsTextView.text =
-            getString(R.string.bathrooms_with_number, property.numberOfBathrooms)
-        binding.fragmentPropertyDetailsNumberOfBedroomsTextView.text =
-            getString(R.string.bedrooms_with_number, property.numberOfBedrooms)
-
-        binding.fragmentPropertyDetailsAddressTextView.text =
-            LocationTool.addressConcatenation(property, true)
-
-        photosGalleryFragment.updateList(propertyWithPhotos.photosList)
-        configureMap()
+    private fun configurePhotosGallery() {
+        childFragmentManager.beginTransaction()
+            .replace(R.id.fragment_property_details_gallery_container, photosGalleryFragment)
+            .commit()
     }
 
     private fun configureMap() {
-        val mapFragment =
-            childFragmentManager.findFragmentById(R.id.fragment_property_details_map_container) as SupportMapFragment
+
+        val mapFragment = childFragmentManager
+            .findFragmentById(R.id.fragment_property_details_map_container) as SupportMapFragment
 
         if (property.lat != null && property.lng != null) {
             mapFragment.getMapAsync(this)
         } else {
-            val viewGroup = binding.fragmentPropertyDetailsMapContainer.parent as ViewGroup
-            viewGroup.removeView(binding.fragmentPropertyDetailsMapContainer)
+            mapFragment.view?.visibility = View.GONE
         }
     }
 

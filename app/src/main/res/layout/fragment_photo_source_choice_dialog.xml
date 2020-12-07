@@ -1,41 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.photosGallery.PhotoSourceChoiceDialogFragment">
-
-    <TextView
-        style="@style/Title6Style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/photo_source" />
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.photosGallery.PhotoSourceChoiceDialogFragment">
 
-        <Button
-            android:id="@+id/fragment_photo_source_choice_dialog_camera_button"
-            android:layout_width="0dp"
-            android:layout_weight="50"
+        <TextView
+            style="@style/Title6Style"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            style="@android:style/ButtonBar"
-            android:text="@string/camera"
-            app:icon="@drawable/ic_baseline_camera_alt_24" />
+            android:text="@string/photo_source" />
 
-        <Button
-            android:id="@+id/fragment_photo_source_choice_dialog_gallery_button"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="50"
-            android:layout_margin="@dimen/default_margin"
-            style="@android:style/ButtonBar"
-            android:text="@string/gallery"
-            app:icon="@drawable/ic_baseline_photo_library_24" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/fragment_photo_source_choice_dialog_camera_button"
+                android:layout_width="0dp"
+                android:layout_weight="50"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                style="@android:style/ButtonBar"
+                android:text="@string/camera"
+                app:icon="@drawable/ic_baseline_camera_alt_24" />
+
+            <Button
+                android:id="@+id/fragment_photo_source_choice_dialog_gallery_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:layout_margin="@dimen/default_margin"
+                style="@android:style/ButtonBar"
+                android:text="@string/gallery"
+                app:icon="@drawable/ic_baseline_photo_library_24" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</layout>

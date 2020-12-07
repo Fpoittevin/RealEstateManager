@@ -1,12 +1,16 @@
 package com.ocr.francois.realestatemanager.utils
 
-import com.ocr.francois.realestatemanager.models.Property
-
 class LocationTool {
 
     companion object {
 
-        fun addressConcatenation(property: Property, toDisplay: Boolean): String {
+        fun addressConcatenation(
+            addressFirst: String?,
+            addressSecond: String?,
+            city: String?,
+            zipCode: String?,
+            toDisplay: Boolean
+        ): String {
 
             val separator = if (toDisplay)
                 "\n"
@@ -15,18 +19,18 @@ class LocationTool {
 
             val addressStringBuilder = StringBuilder()
 
-            property.addressFirst?.let { addressStringBuilder.append(it) }
-            property.addressSecond?.let {
+            addressFirst?.let { addressStringBuilder.append(it) }
+            addressSecond?.let {
                 addressStringBuilder
                     .append(separator)
                     .append(it)
             }
-            property.zipCode?.let {
+            zipCode?.let {
                 addressStringBuilder
                     .append(separator)
                     .append(it)
             }
-            property.city?.let {
+            city?.let {
                 addressStringBuilder
                     .append(" ")
                     .append(it)
