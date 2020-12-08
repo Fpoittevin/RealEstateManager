@@ -10,7 +10,7 @@ import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsActi
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFragment.Companion.PROPERTY_ID_KEY
 
 class MapViewActivity : BaseActivity(),
-    MapViewFragment.MarkerClickCallback {
+    MapViewFragment.MapCallback {
 
     private lateinit var binding: ActivityMapViewBinding
     private val mapViewFragment = MapViewFragment.newInstance(this)
@@ -29,6 +29,10 @@ class MapViewActivity : BaseActivity(),
 
     override fun onMarkerClickCallback(propertyId: Long) {
         startPropertyDetailsActivity(propertyId)
+    }
+
+    override fun onCancelMapCallback() {
+        finish()
     }
 
     private fun startPropertyDetailsActivity(propertyId: Long) {

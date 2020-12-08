@@ -48,23 +48,6 @@ open class BaseActivity : AppCompatActivity() {
         ).show()
     }
 
-    fun observeConnexion() {
-        IsInternetAvailableLiveData(this).observe(this, {
-            if (!it) {
-                MaterialAlertDialogBuilder(this).apply {
-                    setPositiveButton(R.string.ok) { _, _ ->
-                        finish()
-                    }
-                    setTitle(R.string.network_dialog_title)
-                    setMessage(R.string.network_required)
-                    create().also {
-                        show()
-                    }
-                }
-            }
-        })
-    }
-
     fun hideKeyboard() {
         val view = currentFocus ?: View(this)
         val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager

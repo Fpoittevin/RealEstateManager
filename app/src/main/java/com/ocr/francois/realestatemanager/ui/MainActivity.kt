@@ -33,7 +33,7 @@ class MainActivity : BaseActivity(),
     NavigationView.OnNavigationItemSelectedListener,
     PropertiesAdapter.PropertyItemClickCallback,
     PropertyDetailsFragment.PropertyModificationFabListener,
-    MapViewFragment.MarkerClickCallback {
+    MapViewFragment.MapCallback {
 
     private lateinit var binding: ActivityMainBinding
     private val propertiesListFragment = PropertiesListFragment.newInstance()
@@ -207,6 +207,13 @@ class MainActivity : BaseActivity(),
 
     override fun onMarkerClickCallback(propertyId: Long) {
         showPropertyDetails(propertyId)
+    }
+
+    override fun onCancelMapCallback() {
+        displayFragment(
+            R.id.activity_main_frame_layout,
+            propertiesListFragment
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

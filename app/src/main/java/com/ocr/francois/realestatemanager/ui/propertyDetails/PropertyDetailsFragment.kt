@@ -18,6 +18,7 @@ import com.ocr.francois.realestatemanager.databinding.FragmentPropertyDetailsBin
 import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.models.Property
 import com.ocr.francois.realestatemanager.ui.photosGallery.PhotosGalleryDetailsFragment
+import com.ocr.francois.realestatemanager.utils.IsInternetAvailableLiveData
 
 class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
 
@@ -50,7 +51,7 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding =
             DataBindingUtil.inflate(
@@ -92,6 +93,21 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
         val mapFragment = childFragmentManager
             .findFragmentById(R.id.fragment_property_details_map_container) as SupportMapFragment
 
+        IsInternetAvailableLiveData(requireContext()).observe(viewLifecycleOwner, { isInternetAvailable ->
+            isInternetAvailable?.let {
+                if (isInternetAvailable) {
+                    if (property.lat != null && property.lng != null) {
+                        mapFragment.view?.visibility = View.VISIBLE
+                        mapFragment.getMapAsync(this)
+                    } else {
+                        mapFragment.view?.visibility = View.GONE
+                    }
+                } else {
+                    mapFragment.view?.visibility = View.GONE
+                }
+            }
+        })
+
         if (property.lat != null && property.lng != null) {
             mapFragment.getMapAsync(this)
         } else {
@@ -100,8 +116,6 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(map: GoogleMap) {
-
-        //TODO: enlever le fragment map si pas de connexion
 
         val latLng = LatLng(property.lat!!, property.lng!!)
         map.moveCamera(CameraUpdateFactory.newLatLng(latLng))
