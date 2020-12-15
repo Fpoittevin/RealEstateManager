@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:id="@+id/activity_loan_simulator"
         tools:context=".ui.loanSimulator.LoanSimulatorActivity">
 
         <com.google.android.material.appbar.AppBarLayout

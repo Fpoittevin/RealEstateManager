@@ -7,7 +7,7 @@ import com.ocr.francois.realestatemanager.utils.Utils
 
 class PhotoRepository {
 
-    suspend fun deletePhotoFile(photo: Photo) {
+    fun deletePhotoFile(photo: Photo) {
         ImageUtil.deleteFileFromUri(Uri.parse(photo.uri))
     }
 }

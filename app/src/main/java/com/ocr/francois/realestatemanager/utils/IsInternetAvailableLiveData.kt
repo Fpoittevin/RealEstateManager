@@ -12,7 +12,7 @@ import android.net.NetworkInfo
 import android.net.NetworkRequest
 import androidx.lifecycle.LiveData
 
-class IsInternetAvailableLiveData(private val context: Context) : LiveData<Boolean?>() {
+class IsInternetAvailableLiveData(private val context: Context) : LiveData<Boolean>() {
 
     private var connectivityManager: ConnectivityManager? = null
     private var networkRequestBuilder: NetworkRequest.Builder? = null

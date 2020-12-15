@@ -19,12 +19,13 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class PropertyContentProviderTest {
-
+    // TODO: correction content provider test
     private lateinit var contentResolver: ContentResolver
 
     companion object {
         const val PROPERTY_ID = 1
     }
+
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
@@ -41,13 +42,16 @@ class PropertyContentProviderTest {
     fun insertAndGetProperty() {
 
         contentResolver.insert(PropertyContentProvider.URI_PROPERTY, generateProperty())
-        val cursor = contentResolver.query(ContentUris.withAppendedId(PropertyContentProvider.URI_PROPERTY,
-            PROPERTY_ID.toLong()), null, null, null, null
+        val cursor = contentResolver.query(
+            ContentUris.withAppendedId(
+                PropertyContentProvider.URI_PROPERTY,
+                PROPERTY_ID.toLong()
+            ), null, null, null, null
         )
         assertThat(cursor, notNullValue())
-        //assertEquals(cursor!!.count, 1)
-        //assertTrue(cursor.moveToFirst())
-        //assertEquals(cursor.getString(cursor.getColumnIndexOrThrow("description")), "Lorem Ipsum")
+        assertEquals(cursor!!.count, 1)
+        assertTrue(cursor.moveToFirst())
+        assertEquals(cursor.getString(cursor.getColumnIndexOrThrow("description")), "Lorem Ipsum")
     }
 
     private fun generateProperty(): ContentValues {
@@ -59,7 +63,7 @@ class PropertyContentProviderTest {
             put("numberOfRooms", 3)
             put("numberOfBathrooms", 1)
             put("numberOfBedrooms", 2)
-            put("description","Lorem Ipsum")
+            put("description", "Lorem Ipsum")
             put("addressFirst", "240 5th Avenue")
             put("addressSecond", "appt 4")
             put("city", "New York City")

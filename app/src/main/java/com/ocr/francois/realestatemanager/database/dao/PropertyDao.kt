@@ -23,7 +23,7 @@ interface PropertyDao {
     fun selectProperty(id: Long): LiveData<Property>
 
     @Transaction
-    @Query("SELECT * FROM Property")
+    @Query("SELECT * FROM Property ORDER BY id DESC")
     fun getPropertiesWithPhotos(): LiveData<List<PropertyWithPhotos>>
 
     @Transaction
@@ -54,11 +54,14 @@ interface PropertyDao {
     @Insert
     fun insertPhotos(photos: List<Photo>)
 
+    @Transaction
     suspend fun updatePropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos) {
+
         updateProperty(propertyWithPhotos.property)
 
         deletePhotosOfProperty(propertyWithPhotos.property.id!!)
         insertPhotos(propertyWithPhotos.photosList)
+
     }
 
     @Update

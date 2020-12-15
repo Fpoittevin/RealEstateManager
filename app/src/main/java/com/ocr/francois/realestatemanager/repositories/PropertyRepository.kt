@@ -215,6 +215,8 @@ class PropertyRepository(private val propertyDao: PropertyDao, private val conte
                 val string = "%$it%"
                 args.add(string)
             }
+
+            append(" ORDER BY id DESC")
         }
         return SimpleSQLiteQuery(stringBuilder.toString(), args.toArray())
     }

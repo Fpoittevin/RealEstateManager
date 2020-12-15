@@ -24,7 +24,7 @@ class PropertyFormFragment : Fragment() {
     private lateinit var formTarget: FormTarget
     private val photosGalleryFragment =
         PhotosGalleryFormFragment.newInstance()
-    private val propertyFormViewModel: PropertyFormViewModel by activityViewModels {
+    val propertyFormViewModel: PropertyFormViewModel by activityViewModels {
         Injection.provideViewModelFactory(
             requireContext()
         )

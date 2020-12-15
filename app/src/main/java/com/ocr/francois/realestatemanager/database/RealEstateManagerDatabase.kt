@@ -62,10 +62,10 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     Date().time,
                     null,
                     "Bob",
-                    false,
-                    false,
-                    false,
-                    false,
+                    nearSchool = false,
+                    nearTransports = false,
+                    nearShops = false,
+                    nearParks = false,
                     40.7267391,
                     -73.9860395
                 )
@@ -85,10 +85,10 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     Date().time,
                     null,
                     "Bob",
-                    false,
-                    false,
-                    false,
-                    false,
+                    nearSchool = false,
+                    nearTransports = false,
+                    nearShops = false,
+                    nearParks = false,
                     40.7300416,
                     -73.9867517
                 )
@@ -108,10 +108,10 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     Date().time,
                     null,
                     "Bob",
-                    false,
-                    false,
-                    false,
-                    false,
+                    nearSchool = false,
+                    nearTransports = false,
+                    nearShops = false,
+                    nearParks = false,
                     40.7327449,
                     -73.9851557
                 )
@@ -131,10 +131,10 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     Date().time,
                     null,
                     "Bob",
-                    false,
-                    false,
-                    false,
-                    false,
+                    nearSchool = false,
+                    nearTransports = false,
+                    nearShops = false,
+                    nearParks = false,
                     null,
                     null
                 )

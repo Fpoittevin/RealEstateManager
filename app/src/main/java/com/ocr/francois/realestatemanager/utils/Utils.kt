@@ -1,8 +1,6 @@
 package com.ocr.francois.realestatemanager.utils
 
 import android.content.Context
-import android.content.res.Resources
-import com.ocr.francois.realestatemanager.R
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import java.text.NumberFormat

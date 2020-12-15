@@ -27,6 +27,7 @@ import com.ocr.francois.realestatemanager.ui.propertyModification.PropertyModifi
 import com.ocr.francois.realestatemanager.ui.propertySearch.PropertySearchActivity
 import com.ocr.francois.realestatemanager.ui.propertySearch.PropertySearchActivity.Companion.PROPERTY_SEARCH_KEY
 import com.ocr.francois.realestatemanager.ui.settings.SettingsActivity
+import com.ocr.francois.realestatemanager.utils.IsInternetAvailableLiveData
 
 
 class MainActivity : BaseActivity(),
@@ -35,7 +36,7 @@ class MainActivity : BaseActivity(),
     PropertyDetailsFragment.PropertyModificationFabListener,
     MapViewFragment.MapCallback {
 
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     private val propertiesListFragment = PropertiesListFragment.newInstance()
 
     private val propertiesListViewModel: PropertiesListViewModel by viewModels {

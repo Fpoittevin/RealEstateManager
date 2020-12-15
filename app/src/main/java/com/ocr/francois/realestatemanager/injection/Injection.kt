@@ -1,6 +1,5 @@
 package com.ocr.francois.realestatemanager.injection
 
-import android.app.Application
 import android.content.Context
 import com.ocr.francois.realestatemanager.database.RealEstateManagerDatabase
 import com.ocr.francois.realestatemanager.repositories.CurrencyRepository

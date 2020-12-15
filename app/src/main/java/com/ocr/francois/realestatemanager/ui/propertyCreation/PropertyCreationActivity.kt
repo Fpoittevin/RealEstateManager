@@ -10,6 +10,7 @@ import com.ocr.francois.realestatemanager.ui.propertyForm.PropertyFormFragment
 class PropertyCreationActivity : BaseActivity() {
 
     private lateinit var binding: ActivityPropertyCreationBinding
+    val propertyFormFragment = PropertyFormFragment.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +21,7 @@ class PropertyCreationActivity : BaseActivity() {
 
         displayFragment(
             R.id.activity_creation_frame_layout,
-            PropertyFormFragment.newInstance()
+            propertyFormFragment
         )
     }
 }

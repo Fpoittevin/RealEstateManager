@@ -21,10 +21,10 @@ class PropertiesListViewModel(
     var propertyIdSelectedLiveData = MutableLiveData<Long?>()
 
     fun getPropertiesWithPhotos(): LiveData<List<PropertyWithPhotos>> =
-
         MediatorLiveData<List<PropertyWithPhotos>>().apply {
             addSource(
                 Transformations.switchMap(propertySearchLiveData) { propertySearch ->
+
                     propertyRepository.getPropertiesWithPhotos(propertySearch)
                 }
             ) { propertiesWithPhotos ->

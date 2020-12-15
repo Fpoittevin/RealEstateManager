@@ -21,6 +21,7 @@ class PropertyFormViewModel(
     private val propertyRepository: PropertyRepository,
     private val currencyRepository: CurrencyRepository,
     private val photoRepository: PhotoRepository
+
 ) : BaseCurrencyViewModel(currencyRepository) {
 
     var propertyWithPhotosLiveData = MediatorLiveData<PropertyWithPhotos>().apply {
@@ -33,24 +34,39 @@ class PropertyFormViewModel(
     val photosListLiveData = MutableLiveData<List<Photo>>().apply {
         value = photosList
     }
-    var isFormValid = MediatorLiveData<Boolean>().apply {
-        addSource(photosListLiveData) {
-            for (photo in it) {
-                if (photo.description.isNullOrEmpty()) {
-                    this.value = false
-                }
+
+    private val isPhotosListValid = MediatorLiveData<Boolean>().apply {
+        addSource(photosListLiveData) { photosList ->
+            value = photosList.isNotEmpty()
+        }
+    }
+    private val areRequiredFieldsCompleted = MutableLiveData(false)
+    private var isAddressChanged = false
+
+    val isFormValid = MediatorLiveData<Boolean>().apply {
+        addSource(isPhotosListValid) {
+            value = areRequiredFieldsCompleted.value?.let{ areRequiredFieldsCompleted ->
+                areRequiredFieldsCompleted && it
+            } ?: run {
+                it
+            }
+        }
+        addSource(areRequiredFieldsCompleted) {
+            value = isPhotosListValid.value?.let{ isPhotosListValid ->
+                isPhotosListValid && it
+            } ?: run {
+                it
             }
         }
     }
-    private var isAddressChanged = false
 
-    fun onRequiredFieldChange(count: Int) {
-        isFormValid.value = count != 0
+    fun onRequiredFieldChange() {
+        areRequiredFieldsCompleted.value = checkRequiredFields()
     }
 
-    fun onAddressFieldChange(count: Int) {
+    fun onAddressFieldChange() {
         isAddressChanged = true
-        onRequiredFieldChange(count)
+        onRequiredFieldChange()
     }
 
     fun onSaleTimeStampChange(saleTimestamp: Long?) {
@@ -149,4 +165,18 @@ class PropertyFormViewModel(
 
         return propertyWithPhotos
     }
+
+    private fun checkRequiredFields(): Boolean =
+        propertyWithPhotosLiveData.value?.let {
+            with(it.property) {
+                !type.isNullOrEmpty() &&
+                        price != null &&
+                        surface != null &&
+                        !addressFirst.isNullOrEmpty() &&
+                        !zipCode.isNullOrEmpty() &&
+                        !city.isNullOrEmpty()
+            }
+        } ?: run {
+            false
+        }
 }

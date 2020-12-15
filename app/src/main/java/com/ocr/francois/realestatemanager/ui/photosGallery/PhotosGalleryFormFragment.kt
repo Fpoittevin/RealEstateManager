@@ -200,7 +200,7 @@ class PhotosGalleryFormFragment : Fragment(),
     }
 
     override fun beforeTextChanged(text: CharSequence, p1: Int, p2: Int, p3: Int) {
-        propertyFormViewModel.onRequiredFieldChange(text.length)
+        propertyFormViewModel.onRequiredFieldChange()
     }
 
     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -208,6 +208,6 @@ class PhotosGalleryFormFragment : Fragment(),
     }
 
     override fun afterTextChanged(text: Editable) {
-        propertyFormViewModel.onRequiredFieldChange(text.length)
+        propertyFormViewModel.onRequiredFieldChange()
     }
 }
