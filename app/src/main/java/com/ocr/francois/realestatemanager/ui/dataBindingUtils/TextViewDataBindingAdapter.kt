@@ -1,4 +1,4 @@
-package com.ocr.francois.realestatemanager.ui.dataBindingAdapters
+package com.ocr.francois.realestatemanager.ui.dataBindingUtils
 
 import android.view.View
 import android.widget.TextView

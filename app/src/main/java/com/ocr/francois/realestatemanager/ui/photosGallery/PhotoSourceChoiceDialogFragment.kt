@@ -25,7 +25,7 @@ class PhotoSourceChoiceDialogFragment : DialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_photo_source_choice_dialog, container, false)
             binding.fragmentPhotoSourceChoiceDialogCameraButton.setOnClickListener {
                 photoSourceChoiceListener.onCameraButtonClick()

@@ -13,7 +13,7 @@ class PhotosGalleryFormAdapter(
 ) :
     RecyclerView.Adapter<PhotosGalleryFormAdapter.PhotosGalleryFormViewHolder>() {
 
-    internal val photosList = mutableListOf<Photo>()
+    private val photosList = mutableListOf<Photo>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotosGalleryFormViewHolder {
 

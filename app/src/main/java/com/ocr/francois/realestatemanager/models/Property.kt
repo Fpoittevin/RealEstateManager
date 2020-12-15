@@ -1,12 +1,9 @@
 package com.ocr.francois.realestatemanager.models
 
 import android.content.ContentValues
-import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import kotlinx.android.parcel.Parcelize
-import java.util.*
 
 @Entity
 data class Property(

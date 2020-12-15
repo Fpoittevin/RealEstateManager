@@ -9,22 +9,22 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class PropertySearch(
-    private var _minMaxPrice: Array<Int?>,
-    private var _minMaxSurface: Array<Int?>,
-    private var _minMaxRooms: Array<Int?>,
-    private var _minMaxBathrooms: Array<Int?>,
-    private var _minMaxBedrooms: Array<Int?>,
-    private var _minNumberOfPhotos: Int?,
+    private var _minMaxPrice: Array<Int?> = arrayOf(null, null),
+    private var _minMaxSurface: Array<Int?> = arrayOf(null, null),
+    private var _minMaxRooms: Array<Int?> = arrayOf(null, null),
+    private var _minMaxBathrooms: Array<Int?> = arrayOf(null, null),
+    private var _minMaxBedrooms: Array<Int?> = arrayOf(null, null),
+    private var _minNumberOfPhotos: Int? = null,
     private var _nearSchool: Boolean = false,
     private var _nearTransports: Boolean = false,
     private var _nearShops: Boolean = false,
     private var _nearParks: Boolean = false,
     private var _isSold: Boolean? = null,
-    private var _minCreationTimestamp: Long?,
-    private var _maxCreationTimestamp: Long?,
-    private var _minSaleTimestamp: Long?,
-    private var _maxSaleTimestamp: Long?,
-    private var _city: String?
+    private var _minCreationTimestamp: Long? = null,
+    private var _maxCreationTimestamp: Long? = null,
+    private var _minSaleTimestamp: Long? = null,
+    private var _maxSaleTimestamp: Long? = null,
+    private var _city: String? = null
 
 ) : BaseObservable(), Parcelable {
 

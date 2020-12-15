@@ -45,22 +45,4 @@ object Converter {
     fun stringOrNullToString(value: String?): String {
         return value ?: ""
     }
-
-    @InverseMethod("intOrNullToFloat")
-    @JvmStatic
-    fun floatToIntOrNull(initialValue: Int, value: Float): Int? =
-        if (value.toInt() == initialValue) {
-            null
-        } else {
-            value.toInt()
-        }
-
-    @JvmStatic
-    fun intOrNullToFloat(initialValue: Int, value: Int?): Float {
-        value?.let {
-            return value.toFloat()
-        } ?: run {
-            return initialValue.toFloat()
-        }
-    }
 }

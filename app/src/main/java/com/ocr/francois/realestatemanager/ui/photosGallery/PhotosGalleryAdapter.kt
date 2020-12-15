@@ -2,7 +2,6 @@ package com.ocr.francois.realestatemanager.ui.photosGallery
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.ocr.francois.realestatemanager.databinding.PhotosGalleryItemBinding
 import com.ocr.francois.realestatemanager.models.Photo

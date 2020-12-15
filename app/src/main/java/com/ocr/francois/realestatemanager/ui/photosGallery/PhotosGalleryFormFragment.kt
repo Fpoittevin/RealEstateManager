@@ -123,6 +123,7 @@ class PhotosGalleryFormFragment : Fragment(),
     }
 
     private fun openCameraForImage() {
+        // TODO: 15/12/2020 check resolve activity error
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
                 val photoFile: File? = try {

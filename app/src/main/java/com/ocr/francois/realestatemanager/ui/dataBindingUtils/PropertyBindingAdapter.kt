@@ -4,27 +4,10 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import androidx.databinding.InverseBindingAdapter
-import androidx.databinding.InverseBindingListener
 import com.bumptech.glide.Glide
-import com.google.android.material.slider.RangeSlider
-import com.google.android.material.slider.Slider
-import com.ocr.francois.realestatemanager.utils.Currency
 import com.ocr.francois.realestatemanager.utils.LocationTool
 import com.ocr.francois.realestatemanager.utils.Utils
 import org.joda.time.LocalDate
-
-@BindingAdapter("app:bindText")
-fun bindText(view: TextView, text: String?) {
-
-    if (text.isNullOrEmpty()) {
-        view.visibility = View.GONE
-    } else {
-        view.visibility = View.VISIBLE
-        view.text = text
-    }
-}
-
 
 @BindingAdapter(
     "bind:address_first", "bind:address_second", "bind:city", "bind:zip_code",

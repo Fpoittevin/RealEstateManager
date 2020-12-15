@@ -15,24 +15,7 @@ class PropertySearchViewModel(
         }
     }
 
-    val propertySearch = PropertySearch(
-        arrayOf(null, null),
-        arrayOf(null, null),
-        arrayOf(null, null),
-        arrayOf(null, null),
-        arrayOf(null, null),
-        null,
-        _nearSchool = false,
-        _nearTransports = false,
-        _nearShops = false,
-        _nearParks = false,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-    )
+    val propertySearch = PropertySearch()
 
     fun isSoldChange(newValue: Boolean?) {
         propertySearch.apply {

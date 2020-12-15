@@ -12,7 +12,7 @@ class PropertyContentProvider : ContentProvider() {
 
     companion object {
         const val AUTHORITY = "com.ocr.francois.realestatemanager.provider"
-        val TABLE_NAME = Property::class.java.simpleName
+        val TABLE_NAME: String = Property::class.java.simpleName
         val URI_PROPERTY: Uri = Uri.parse("content://$AUTHORITY/$TABLE_NAME")
     }
 
@@ -26,7 +26,7 @@ class PropertyContentProvider : ContentProvider() {
         selection: String?,
         selectionArgs: Array<out String>?,
         sortOrder: String?
-    ): Cursor? {
+    ): Cursor {
         val id = ContentUris.parseId(uri)
         return RealEstateManagerDatabase
             .getInstance(context!!)
@@ -36,7 +36,7 @@ class PropertyContentProvider : ContentProvider() {
             }
     }
 
-    override fun getType(uri: Uri): String? {
+    override fun getType(uri: Uri): String {
         return "vnd.android.cursor.item/$AUTHORITY.$TABLE_NAME"
     }
 
