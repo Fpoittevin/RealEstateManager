@@ -22,7 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.mapView.MapViewActivity"></activity>
+        <activity android:name=".ui.mapView.MapViewActivity" />
         <activity android:name=".ui.loanSimulator.LoanSimulatorActivity" />
         <activity android:name=".ui.settings.SettingsActivity" />
         <activity android:name=".ui.propertySearch.PropertySearchActivity" />
@@ -54,7 +54,7 @@
         <provider
             android:name=".provider.PropertyContentProvider"
             android:authorities="com.ocr.francois.realestatemanager.provider"
-            android:exported="true" />
+            android:exported="false" />
     </application>
 
 </manifest>

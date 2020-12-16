@@ -122,17 +122,17 @@ class PropertyFormFragmentTest {
             .perform(scrollTo())
             .perform(replaceText(property.addressSecond.toString()))
 
-        onView(withId(R.id.fragment_photos_gallery_add_photo_button))
-            .perform(scrollTo())
-
         onView(withId(R.id.fragment_property_form_near_school_switch))
             .perform(scrollTo())
             .perform(click())
         onView(withId(R.id.fragment_property_form_near_transports_switch))
+            .perform(scrollTo())
             .perform(click())
         onView(withId(R.id.fragment_property_form_near_shops_switch))
+            .perform(scrollTo())
             .perform(click())
         onView(withId(R.id.fragment_property_form_near_parks_switch))
+            .perform(scrollTo())
             .perform(click())
 
         propertyFormViewModel.propertyWithPhotosLiveData.value?.property?.let {

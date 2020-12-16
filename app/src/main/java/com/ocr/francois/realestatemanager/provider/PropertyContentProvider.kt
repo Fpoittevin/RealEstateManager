@@ -40,32 +40,14 @@ class PropertyContentProvider : ContentProvider() {
         return "vnd.android.cursor.item/$AUTHORITY.$TABLE_NAME"
     }
 
-    override fun insert(uri: Uri, values: ContentValues?): Uri? {
-        var returnUri: Uri? = null
-        context?.let {
+    override fun insert(uri: Uri, values: ContentValues?): Nothing? = null
 
-            val id = RealEstateManagerDatabase
-                .getInstance(it)
-                .propertyDao()
-                .insertProperty(Property.fromContentValues(values!!))
-            if (id != 0.toLong()) {
-                it.contentResolver.notifyChange(uri, null)
-                returnUri = ContentUris.withAppendedId(uri, id)
-            }
-        }
-        return returnUri
-    }
-
-    override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
-        return 0
-    }
+    override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?) = 0
 
     override fun update(
         uri: Uri,
         values: ContentValues?,
         selection: String?,
         selectionArgs: Array<out String>?
-    ): Int {
-        return 0
-    }
+    ) = 0
 }

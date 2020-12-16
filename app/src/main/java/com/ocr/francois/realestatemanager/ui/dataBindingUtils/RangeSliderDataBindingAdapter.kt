@@ -1,4 +1,4 @@
-package com.ocr.francois.realestatemanager.ui.dataBindingAdapters
+package com.ocr.francois.realestatemanager.ui.dataBindingUtils
 
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
