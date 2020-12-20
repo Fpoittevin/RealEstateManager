@@ -11,9 +11,8 @@ open class BaseCurrencyViewModel(
 
     protected var currency = Currency.DOLLAR
 
-    fun getCurrencyLiveData() = currencyRepository.getCurrencyLiveData()
 
-    protected fun convertPriceInCurrentCurrency(price: Int) =
+    fun convertPriceInCurrentCurrency(price: Int) =
         when (currency) {
             Currency.DOLLAR ->
                 price

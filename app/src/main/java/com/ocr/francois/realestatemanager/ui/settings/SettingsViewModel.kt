@@ -8,6 +8,8 @@ class SettingsViewModel(
     private val currencyRepository: CurrencyRepository
 ) : BaseCurrencyViewModel(currencyRepository) {
 
+    val currencyLiveData = currencyRepository.getCurrencyLiveData()
+
     fun saveCurrency(currency: Currency) {
         currencyRepository.saveCurrency(currency)
     }

@@ -15,6 +15,7 @@ class PropertiesListViewModel(
     private val currencyRepository: CurrencyRepository
 ) : BaseCurrencyViewModel(currencyRepository) {
 
+    val currencyLiveData = currencyRepository.getCurrencyLiveData()
     var propertySearchLiveData = MutableLiveData<PropertySearch?>().apply {
         postValue(null)
     }

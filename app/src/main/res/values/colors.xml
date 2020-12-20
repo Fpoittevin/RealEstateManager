@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--
     <color name="primaryColor">#3f51b5</color>
     <color name="primaryDarkColor">#002984</color>
     <color name="secondaryColor">#00b0ff</color>
+    -->
+    <color name="primaryColor">#3f51b5</color>
+    <color name="primaryDarkColor">#002984</color>
+    <color name="secondaryColor">#00b8d4</color>
     <color name="blackOpacity">#6D000000</color>
 </resources>

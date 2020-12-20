@@ -30,14 +30,10 @@ data class Property(
     var nearShops: Boolean = false,
     var nearParks: Boolean = false,
 
-
     var lat: Double? = null,
     var lng: Double? = null,
 
-    @Ignore
-    var formattedPrice: String? = null
 ) {
-
     companion object {
         fun fromContentValues(values: ContentValues): Property {
             val property = Property()
@@ -78,7 +74,6 @@ data class Property(
                     getAsBoolean("nearShops")
                 if (containsKey("nearParks")) property.nearParks =
                     getAsBoolean("nearParks")
-
                 if (containsKey("lat")) property.lat =
                     getAsDouble("lat")
                 if (containsKey("lng")) property.lng =

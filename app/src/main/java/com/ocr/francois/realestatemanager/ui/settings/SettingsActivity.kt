@@ -36,7 +36,7 @@ class SettingsActivity : BaseActivity() {
 
     private fun configureCurrenciesRadioGroup() {
 
-        settingsViewModel.getCurrencyLiveData().observe(this, { currency ->
+        settingsViewModel.currencyLiveData.observe(this, { currency ->
             currency?.let {
                 when (it) {
                     Currency.DOLLAR ->

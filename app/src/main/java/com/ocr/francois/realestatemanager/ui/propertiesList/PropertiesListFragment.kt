@@ -38,6 +38,8 @@ class PropertiesListFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_properties_list, container, false)
         configureRecyclerView()
 
+        propertiesListViewModel.currencyLiveData.observeForever {  }
+
         return binding.root
     }
 

@@ -117,7 +117,8 @@
                                         android:afterTextChanged="@{(text) -> viewModel.onRequiredFieldChange()}"
                                         android:beforeTextChanged="@{(text, start, before, count) -> viewModel.onRequiredFieldChange()}"
                                         android:inputType="number"
-                                        android:text="@={Converter.intToString(viewModel.propertyWithPhotosLiveData.property.price)}" />
+                                        app:priceText="@={viewModel.propertyWithPhotosLiveData.property.price}"
+                                        app:currency="@{viewModel.currencyLiveData}" />
 
                                 </com.google.android.material.textfield.TextInputLayout>
 

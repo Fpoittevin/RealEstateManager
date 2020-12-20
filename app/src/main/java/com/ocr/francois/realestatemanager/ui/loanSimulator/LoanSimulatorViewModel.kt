@@ -20,6 +20,7 @@ class LoanSimulatorViewModel(currencyRepository: CurrencyRepository) : BaseCurre
     val rateLiveData = MutableLiveData<String>()
     private var rate: Double? = null
     private var loanAmount: Double? = null
+    val currencyLiveData = currencyRepository.getCurrencyLiveData()
 
     private val monthlyPaymentLiveData = MutableLiveData<Double>()
     private val loanPriceLiveData = MutableLiveData<Double>()
@@ -27,7 +28,7 @@ class LoanSimulatorViewModel(currencyRepository: CurrencyRepository) : BaseCurre
     val haveResultToDisplay = MutableLiveData<Boolean>().apply { value = false }
 
     val monthlyPaymentFormattedLiveData = MediatorLiveData<String>().apply {
-        addSource(getCurrencyLiveData()) {
+        addSource(currencyLiveData) {
             this@LoanSimulatorViewModel.currency = it
         }
         addSource(monthlyPaymentLiveData) {
@@ -39,7 +40,7 @@ class LoanSimulatorViewModel(currencyRepository: CurrencyRepository) : BaseCurre
     }
 
     val loanPriceFormattedLiveData = MediatorLiveData<String>().apply {
-        addSource(getCurrencyLiveData()) {
+        addSource(currencyLiveData) {
             this@LoanSimulatorViewModel.currency = it
         }
         addSource(loanPriceLiveData) {

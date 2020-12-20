@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -36,8 +37,8 @@
                     android:layout_height="match_parent"
                     android:contentDescription="@string/property_photo"
                     android:src="@drawable/ic_baseline_photo_24"
-                    app:elevation="0dp"
                     app:bindPhotoUri="@{propertyWithPhotos.photosList[0].uri}"
+                    app:elevation="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -48,8 +49,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/blackOpacity"
-                    app:elevation="2dp"
                     android:visibility="@{propertyWithPhotos.property.saleTimestamp != null ? View.VISIBLE : View.GONE}"
+                    app:elevation="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -58,11 +59,11 @@
                 <TextView
                     android:id="@+id/recycler_view_property_item_sold_text_view"
                     style="@style/Title6Style"
-                    android:text="@string/sold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:elevation="4dp"
+                    android:text="@string/sold"
                     android:visibility="@{propertyWithPhotos.property.saleTimestamp != null ? View.VISIBLE : View.GONE}"
+                    app:elevation="4dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -85,10 +86,9 @@
                     style="@style/TextAppearance.MaterialComponents.Overline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:price="@{propertyWithPhotos.property.price}"
+                    android:layout_margin="@dimen/default_small_margin"
                     app:currency="@{viewModel.currencyLiveData}"
-                    app:default="@{null}"
-                    android:layout_margin="@dimen/default_small_margin" />
+                    app:price="@{propertyWithPhotos.property.price}" />
 
                 <TextView
                     android:id="@+id/recycler_view_property_item_type_text_view"
@@ -97,24 +97,24 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_small_margin"
                     android:text="@{propertyWithPhotos.property.type}"
-                    android:textColor="@color/colorAccent" />
+                    android:textColor="@color/secondaryColor" />
 
                 <TextView
                     android:id="@+id/recycler_view_property_item_surface_text_view"
                     style="@style/TextAppearance.MaterialComponents.Body1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:surface="@{propertyWithPhotos.property.surface}"
+                    android:layout_margin="@dimen/default_small_margin"
                     app:default="@{null}"
-                    android:layout_margin="@dimen/default_small_margin" />
+                    app:surface="@{propertyWithPhotos.property.surface}" />
 
                 <TextView
                     android:id="@+id/recycler_view_property_item_city_text_view"
                     style="@style/TextAppearance.MaterialComponents.Body1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{propertyWithPhotos.property.city}"
-                    android:layout_margin="@dimen/default_small_margin" />
+                    android:layout_margin="@dimen/default_small_margin"
+                    android:text="@{propertyWithPhotos.property.city}" />
 
             </LinearLayout>
 

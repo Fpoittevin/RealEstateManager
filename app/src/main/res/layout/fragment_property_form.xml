@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--suppress ALL -->
+<?xml version="1.0" encoding="utf-8"?><!--suppress ALL -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <import type="com.ocr.francois.realestatemanager.ui.dataBindingUtils.Converter" />
 
         <variable
@@ -12,9 +12,9 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/fragment_property_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fragment_property_form">
+        android:layout_height="match_parent">
 
         <ScrollView
             android:id="@+id/fragment_property_form_scroll_view"
@@ -75,8 +75,8 @@
                             android:id="@+id/fragment_property_form_type_text_input"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:beforeTextChanged="@{(text, start, before, count) -> viewModel.onRequiredFieldChange()}"
                             android:afterTextChanged="@{(text) -> viewModel.onRequiredFieldChange()}"
+                            android:beforeTextChanged="@{(text, start, before, count) -> viewModel.onRequiredFieldChange()}"
                             android:text="@={Converter.stringOrNullToString(viewModel.propertyWithPhotosLiveData.property.type)}" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -103,10 +103,11 @@
                                 android:id="@+id/fragment_property_form_price_text_input"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="number"
-                                android:beforeTextChanged="@{(text, start, before, count) -> viewModel.onRequiredFieldChange()}"
                                 android:afterTextChanged="@{(text) -> viewModel.onRequiredFieldChange()}"
-                                android:text="@={Converter.intToString(viewModel.propertyWithPhotosLiveData.property.price)}" />
+                                android:beforeTextChanged="@{(text, start, before, count) -> viewModel.onRequiredFieldChange()}"
+                                android:inputType="number"
+                                app:currency="@{viewModel.currencyLiveData}"
+                                app:priceText="@={viewModel.propertyWithPhotosLiveData.property.price}" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -126,9 +127,9 @@
                                 android:id="@+id/fragment_property_form_surface_text_input"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="number"
-                                android:beforeTextChanged="@{(text, start, before, count) -> viewModel.onRequiredFieldChange()}"
                                 android:afterTextChanged="@{(text) -> viewModel.onRequiredFieldChange()}"
+                                android:beforeTextChanged="@{(text, start, before, count) -> viewModel.onRequiredFieldChange()}"
+                                android:inputType="number"
                                 android:text="@={Converter.intToString(viewModel.propertyWithPhotosLiveData.property.surface)}" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -277,9 +278,9 @@
                             android:id="@+id/fragment_property_form_address_first_text_input"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:beforeTextChanged="@{(text, start, before, count) -> viewModel.onRequiredFieldChange()}"
                             android:afterTextChanged="@{(text) -> viewModel.onAddressFieldChange()}"
+                            android:beforeTextChanged="@{(text, start, before, count) -> viewModel.onRequiredFieldChange()}"
+                            android:inputType="text"
                             android:text="@={Converter.stringOrNullToString(viewModel.propertyWithPhotosLiveData.property.addressFirst)}" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -323,9 +324,9 @@
                                 android:id="@+id/fragment_property_form_zip_code_text_input"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="text"
-                                android:beforeTextChanged="@{(text, start, before, count) -> viewModel.onRequiredFieldChange()}"
                                 android:afterTextChanged="@{(text) -> viewModel.onAddressFieldChange()}"
+                                android:beforeTextChanged="@{(text, start, before, count) -> viewModel.onRequiredFieldChange()}"
+                                android:inputType="text"
                                 android:text="@={Converter.stringOrNullToString(viewModel.propertyWithPhotosLiveData.property.zipCode)}" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -346,8 +347,8 @@
                                 android:id="@+id/fragment_property_form_city_text_input"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:beforeTextChanged="@{(text, start, before, count) -> viewModel.onRequiredFieldChange()}"
                                 android:afterTextChanged="@{(text) -> viewModel.onAddressFieldChange()}"
+                                android:beforeTextChanged="@{(text, start, before, count) -> viewModel.onRequiredFieldChange()}"
                                 android:inputType="text"
                                 android:text="@={Converter.stringOrNullToString(viewModel.propertyWithPhotosLiveData.property.city)}" />
 
@@ -434,8 +435,8 @@
             android:id="@+id/fragment_property_form_save_fab"
             style="@style/FabStyle"
             android:contentDescription="@string/save_button"
-            android:src="@drawable/ic_baseline_save_24"
             android:enabled="@{viewModel.isFormValid()}"
+            android:src="@drawable/ic_baseline_save_24"
             app:layout_anchor="@+id/fragment_property_form_scroll_view" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

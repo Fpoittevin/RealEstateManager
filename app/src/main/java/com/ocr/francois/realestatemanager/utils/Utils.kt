@@ -10,9 +10,9 @@ import kotlin.math.roundToInt
 class Utils {
 
     companion object {
-        fun convertDollarToEuro(dollar: Int) = (dollar * 0.89).roundToInt()
+        fun convertDollarToEuro(dollar: Int) = (dollar * 0.8158271).roundToInt()
 
-        fun convertEuroToDollar(euro: Int) = (euro * 1.12).roundToInt()
+        fun convertEuroToDollar(euro: Int) = (euro * 1.225749).roundToInt()
 
         fun isInternetAvailable(context: Context) = IsInternetAvailableLiveData(context)
 

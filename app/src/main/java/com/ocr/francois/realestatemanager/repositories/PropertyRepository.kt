@@ -1,6 +1,7 @@
 package com.ocr.francois.realestatemanager.repositories
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
@@ -62,6 +63,7 @@ class PropertyRepository(private val propertyDao: PropertyDao, private val conte
         propertyWithPhotos: PropertyWithPhotos,
         isAddressChanged: Boolean
     ) {
+        Log.e("price from repo", propertyWithPhotos.property.price.toString())
         propertyDao.updatePropertyWithPhotos(propertyWithPhotos)
         if (isAddressChanged) {
             getAndSaveLocation(

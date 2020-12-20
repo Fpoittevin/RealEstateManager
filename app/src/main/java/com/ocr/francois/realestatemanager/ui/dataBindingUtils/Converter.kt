@@ -1,6 +1,7 @@
 package com.ocr.francois.realestatemanager.ui.dataBindingUtils
 
 import androidx.databinding.InverseMethod
+import com.ocr.francois.realestatemanager.utils.Currency
 import com.ocr.francois.realestatemanager.utils.Utils
 import org.joda.time.LocalDate
 

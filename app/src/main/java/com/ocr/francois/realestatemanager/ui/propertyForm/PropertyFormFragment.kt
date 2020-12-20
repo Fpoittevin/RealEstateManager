@@ -2,6 +2,7 @@ package com.ocr.francois.realestatemanager.ui.propertyForm
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -121,6 +122,7 @@ class PropertyFormFragment : Fragment() {
 
     private fun configureSaveButton() {
         binding.fragmentPropertyFormSaveFab.setOnClickListener {
+            Log.e("price : ", propertyFormViewModel.propertyWithPhotosLiveData.value?.property?.price.toString())
             when (formTarget) {
                 FormTarget.CREATION -> {
                     propertyFormViewModel.createPropertyWithPhotos()

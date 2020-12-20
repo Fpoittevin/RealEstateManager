@@ -13,7 +13,7 @@
 
     <style name="FabStyle" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
         <item name="layout_anchorGravity">bottom|right|end</item>
-        <item name="backgroundTint">@color/colorAccent</item>
+        <item name="backgroundTint">@color/secondaryColor</item>
         <item name="android:layout_margin">@dimen/default_big_margin</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
@@ -21,7 +21,7 @@
 
     <style name="Title6Style" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="fontFamily">@font/roboto_medium</item>
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/secondaryColor</item>
         <item name="android:layout_margin">@dimen/default_big_margin</item>
     </style>
 
