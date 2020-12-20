@@ -35,10 +35,11 @@ class PropertiesListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_properties_list, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_properties_list, container, false)
         configureRecyclerView()
 
-        propertiesListViewModel.currencyLiveData.observeForever {  }
+        propertiesListViewModel.currencyLiveData.observeForever { }
 
         return binding.root
     }
@@ -48,6 +49,11 @@ class PropertiesListFragment : Fragment() {
 
         with(propertiesListViewModel) {
             getPropertiesWithPhotos().observe(viewLifecycleOwner, {
+                if (it.isEmpty()) {
+                    binding.fragmentPropertiesListNoPropertyTextView.visibility = View.VISIBLE
+                } else {
+                    binding.fragmentPropertiesListNoPropertyTextView.visibility = View.GONE
+                }
                 propertiesAdapter.updateProperties(it)
             })
             propertyIdSelectedLiveData.observe(viewLifecycleOwner, {

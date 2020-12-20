@@ -43,6 +43,7 @@
     <string name="description">Description</string>
     <string name="all">all</string>
     <string name="for_sale">for sale</string>
+    <string name="no_property">no property</string>
 
     // PREFERENCES
     <string name="preferences_file_key">rem_preference</string>

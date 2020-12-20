@@ -47,11 +47,21 @@
                     android:layout_height="match_parent"
                     android:layout_weight="30" />
 
-                <FrameLayout
+                <RelativeLayout
                     android:id="@+id/activity_main_frame_layout_second"
                     android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:layout_weight="70" />
+                    android:layout_weight="70">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_horizontal"
+                        android:id="@+id/activity_main_select_text_view"
+                        android:text="select a property from the list to see details" />
+
+                </RelativeLayout>
 
             </LinearLayout>
 

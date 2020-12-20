@@ -149,7 +149,7 @@ class MapViewFragment(
         }
     }
 
-    private fun checkLocationIsEnabled() {
+    fun checkLocationIsEnabled() {
         val locationManager =
             requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {

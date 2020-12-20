@@ -2,12 +2,15 @@ package com.ocr.francois.realestatemanager.ui.mapView
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityMapViewBinding
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsActivity
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFragment.Companion.PROPERTY_ID_KEY
+import pub.devrel.easypermissions.EasyPermissions
 
 class MapViewActivity : BaseActivity(),
     MapViewFragment.MapCallback {
@@ -43,5 +46,26 @@ class MapViewActivity : BaseActivity(),
             putExtra(PROPERTY_ID_KEY, propertyId)
         }
         startActivity(propertyDetailsIntent)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        Log.e("requestCode", requestCode.toString())
+        Log.e("permissions", permissions.toString())
+        Log.e("grantResults", grantResults.toString())
+        if (EasyPermissions.hasPermissions(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        ) {
+            mapViewFragment.checkLocationIsEnabled()
+        } else {
+            finish()
+        }
     }
 }
