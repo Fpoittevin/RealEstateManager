@@ -42,6 +42,29 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/BodyTextWithIconStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/is_sold"
+                        android:layout_gravity="center"
+                        android:visibility="@{viewModel.propertyWithPhotos.property.saleTimestamp != null ? View.VISIBLE : View.GONE}" />
+
+                    <TextView
+                        style="@style/BodyTextWithIconStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@{Converter.formatTimestamp(viewModel.propertyWithPhotos.property.saleTimestamp)}"
+                        android:visibility="@{viewModel.propertyWithPhotos.property.saleTimestamp != null ? View.VISIBLE : View.GONE}" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:baselineAligned="false"
                     android:orientation="horizontal">
 

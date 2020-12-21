@@ -19,9 +19,6 @@ interface PropertyDao {
         maxLng: Double
     ): LiveData<List<Property>>
 
-    @Query("SELECT * FROM Property WHERE id = :id")
-    fun selectProperty(id: Long): LiveData<Property>
-
     @Transaction
     @Query("SELECT * FROM Property ORDER BY id DESC")
     fun getPropertiesWithPhotos(): LiveData<List<PropertyWithPhotos>>
@@ -40,6 +37,7 @@ interface PropertyDao {
     @Insert
     fun insertProperty(property: Property): Long
 
+    @Transaction
     suspend fun insertPropertyWithPhotos(propertyWithPhotos: PropertyWithPhotos) {
         propertyWithPhotos.property.id = insertProperty(propertyWithPhotos.property)
         propertyWithPhotos.photosList.forEach {

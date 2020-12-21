@@ -76,7 +76,6 @@ class MapViewFragment(
                 zoomToUserLocation()
             }
         })
-
         checkLocationPermissions()
 
         return binding.root

@@ -1,6 +1,5 @@
 package com.ocr.francois.realestatemanager.ui.propertyDetails
 
-import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
@@ -23,7 +22,6 @@ class PropertyDetailsViewModel(
             propertyWithPhotos.apply {
                 addSource(propertyRepository.getPropertyWithPhotos(id)) { propertyWithPhotos ->
                     value = propertyWithPhotos
-                    Log.e("From details:", propertyWithPhotos.property.price.toString())
                 }
                 addSource(currencyRepository.getCurrencyLiveData()) { newCurrency ->
                     currency = newCurrency

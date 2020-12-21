@@ -62,7 +62,6 @@ class PropertyRepository(private val propertyDao: PropertyDao, private val conte
         propertyWithPhotos: PropertyWithPhotos,
         isAddressChanged: Boolean
     ) {
-        Log.e("price from repo", propertyWithPhotos.property.price.toString())
         propertyDao.updatePropertyWithPhotos(propertyWithPhotos)
         if (isAddressChanged) {
             getAndSaveLocation(
@@ -201,7 +200,7 @@ class PropertyRepository(private val propertyDao: PropertyDao, private val conte
             //  Photos
             propertySearch.minNumberOfPhotos?.let {
                 addWhereOrAnd()
-                append("(SELECT COUNT() FROM Photo WHERE propertyId = Pr.id) > ?")
+                append("(SELECT COUNT() FROM Photo WHERE propertyId = Pr.id) >= ?")
                 args.add(it)
             }
 

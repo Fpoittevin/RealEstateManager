@@ -121,38 +121,6 @@ class PhotosGalleryFormFragment : Fragment(),
         closePhotosSourceChoiceDialog()
         openGalleryForImage()
     }
-/*
-    private fun openCameraForImage() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_CAMERA_CODE)
-        } catch (e: ActivityNotFoundException) {
-            EventBus.getDefault()
-                .post(FailureEvent(getString(R.string.creation_file_error)))
-            val photoFile: File? = try {
-                ImageUtil.createImageFile(requireActivity())
-            } catch (ex: IOException) {
-                EventBus.getDefault()
-                    .post(FailureEvent(getString(R.string.creation_file_error)))
-                null
-            }
-
-            photoFile?.let {
-                newPhotoURI = FileProvider.getUriForFile(
-                    requireContext(),
-                    requireContext().packageName,
-                    it
-                )
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, newPhotoURI)
-                startActivityForResult(takePictureIntent, REQUEST_CAMERA_CODE)
-            } ?: run {
-                EventBus.getDefault()
-                    .post(FailureEvent(getString(R.string.creation_file_error)))
-            }
-        }
-    }
-    */
 
     private fun openCameraForImage() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->

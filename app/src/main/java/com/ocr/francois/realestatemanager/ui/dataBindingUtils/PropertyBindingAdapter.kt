@@ -9,43 +9,48 @@ import com.ocr.francois.realestatemanager.utils.LocationTool
 import com.ocr.francois.realestatemanager.utils.Utils
 import org.joda.time.LocalDate
 
-@BindingAdapter(
-    "bind:address_first", "bind:address_second", "bind:city", "bind:zip_code",
-    requireAll = false
-)
-fun bindAddress(
-    view: TextView,
-    addressFirst: String?,
-    addressSecond: String?,
-    city: String?,
-    zipCode: String?
-) {
-    view.text = LocationTool.addressConcatenation(
-        addressFirst,
-        addressSecond,
-        city,
-        zipCode,
-        true
+object PropertyBindingAdapter {
+    @JvmStatic
+    @BindingAdapter(
+        "bind:address_first", "bind:address_second", "bind:city", "bind:zip_code",
+        requireAll = false
     )
-}
-
-@BindingAdapter("app:bindSoldDate")
-fun bindSoldDate(view: TextView, saleTimestamp: Long?) {
-    saleTimestamp?.let {
-        view.visibility = View.VISIBLE
-        view.text = Utils.formatDate(LocalDate(saleTimestamp))
-    } ?: run {
-        view.visibility = View.GONE
+    fun bindAddress(
+        view: TextView,
+        addressFirst: String?,
+        addressSecond: String?,
+        city: String?,
+        zipCode: String?
+    ) {
+        view.text = LocationTool.addressConcatenation(
+            addressFirst,
+            addressSecond,
+            city,
+            zipCode,
+            true
+        )
     }
-}
 
-@BindingAdapter("app:bindPhotoUri")
-fun bindPhotoUri(view: ImageView, uri: String?) {
-    uri?.let {
-        Glide
-            .with(view.context)
-            .load(uri)
-            .centerCrop()
-            .into(view)
+    @JvmStatic
+    @BindingAdapter("app:bindSoldDate")
+    fun bindSoldDate(view: TextView, saleTimestamp: Long?) {
+        saleTimestamp?.let {
+            view.visibility = View.VISIBLE
+            view.text = Utils.formatDate(LocalDate(saleTimestamp))
+        } ?: run {
+            view.visibility = View.GONE
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:bindPhotoUri")
+    fun bindPhotoUri(view: ImageView, uri: String?) {
+        uri?.let {
+            Glide
+                .with(view.context)
+                .load(uri)
+                .centerCrop()
+                .into(view)
+        }
     }
 }

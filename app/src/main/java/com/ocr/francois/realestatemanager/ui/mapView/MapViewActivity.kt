@@ -2,7 +2,6 @@ package com.ocr.francois.realestatemanager.ui.mapView
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.databinding.DataBindingUtil
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityMapViewBinding
@@ -54,9 +53,6 @@ class MapViewActivity : BaseActivity(),
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        Log.e("requestCode", requestCode.toString())
-        Log.e("permissions", permissions.toString())
-        Log.e("grantResults", grantResults.toString())
         if (EasyPermissions.hasPermissions(
                 this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION

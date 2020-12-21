@@ -10,12 +10,12 @@ class UtilsTest {
 
     @Test
     fun convertDollarToEuroTest() {
-        assertEquals(89, Utils.convertDollarToEuro(100))
+        assertEquals(82, Utils.convertDollarToEuro(100))
     }
 
     @Test
     fun convertEuroToDollarTest() {
-        assertEquals(112, Utils.convertEuroToDollar(100))
+        assertEquals(123, Utils.convertEuroToDollar(100))
     }
 
     @Test

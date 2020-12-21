@@ -4,7 +4,9 @@
     xmlns:map="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <import type="android.view.View" />
+        <import type="com.ocr.francois.realestatemanager.ui.dataBindingUtils.Converter" />
 
         <variable
             name="viewModel"
@@ -12,9 +14,9 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/fragment_property_details"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fragment_property_details">
+        android:layout_height="match_parent">
 
         <ScrollView
             android:id="@+id/fragment_property_details_scroll_view"
@@ -35,6 +37,29 @@
                         android:id="@+id/fragment_property_details_gallery_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/BodyTextWithIconStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/is_sold"
+                        android:layout_gravity="center"
+                        android:visibility="@{viewModel.propertyWithPhotos.property.saleTimestamp != null ? View.VISIBLE : View.GONE}" />
+
+                    <TextView
+                        style="@style/BodyTextWithIconStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@{Converter.formatTimestamp(viewModel.propertyWithPhotos.property.saleTimestamp)}"
+                        android:visibility="@{viewModel.propertyWithPhotos.property.saleTimestamp != null ? View.VISIBLE : View.GONE}" />
 
                 </LinearLayout>
 
@@ -161,89 +186,90 @@
                     <com.google.android.flexbox.FlexboxLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:justifyContent="center"
+                        android:layout_margin="@dimen/default_big_margin"
                         app:flexWrap="wrap"
-                        android:layout_margin="@dimen/default_big_margin">
+                        app:justifyContent="center">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/default_big_margin"
+                            android:text="@string/near_school"
                             android:textAlignment="center"
-                            android:visibility="@{viewModel.propertyWithPhotos.property.nearSchool ? View.VISIBLE : View.GONE}"
-                            android:text="@string/near_school" />
+                            android:visibility="@{viewModel.propertyWithPhotos.property.nearSchool ? View.VISIBLE : View.GONE}" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/default_big_margin"
+                            android:text="@string/near_transports"
                             android:textAlignment="center"
-                            android:visibility="@{viewModel.propertyWithPhotos.property.nearTransports ? View.VISIBLE : View.GONE}"
-                            android:text="@string/near_transports" />
+                            android:visibility="@{viewModel.propertyWithPhotos.property.nearTransports ? View.VISIBLE : View.GONE}" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/default_big_margin"
+                            android:text="@string/near_shops"
                             android:textAlignment="center"
-                            android:visibility="@{viewModel.propertyWithPhotos.property.nearShops ? View.VISIBLE : View.GONE}"
-                            android:text="@string/near_shops" />
+                            android:visibility="@{viewModel.propertyWithPhotos.property.nearShops ? View.VISIBLE : View.GONE}" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/default_big_margin"
+                            android:text="@string/near_parks"
                             android:textAlignment="center"
-                            android:visibility="@{viewModel.propertyWithPhotos.property.nearParks ? View.VISIBLE : View.GONE}"
-                            android:text="@string/near_parks" />
+                            android:visibility="@{viewModel.propertyWithPhotos.property.nearParks ? View.VISIBLE : View.GONE}" />
 
                     </com.google.android.flexbox.FlexboxLayout>
 
                 </LinearLayout>
 
-            <View style="@style/divider" />
+                <View style="@style/divider" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/Title6Style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/location" />
-
-                <TextView
-                    android:id="@+id/fragment_property_details_address_text_view"
-                    style="@style/BodyTextWithIconStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:address_first="@{viewModel.propertyWithPhotos.property.addressFirst}"
-                    app:address_second="@{viewModel.propertyWithPhotos.property.addressSecond}"
-                    app:city="@{viewModel.propertyWithPhotos.property.city}"
-                    app:zip_code="@{viewModel.propertyWithPhotos.property.zipCode}"
-                    map:drawableStartCompat="@drawable/ic_baseline_location_24" />
-
-                <androidx.fragment.app.FragmentContainerView
-                    android:id="@+id/fragment_property_details_map_container"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="@dimen/default_big_margin"
-                    map:liteMode="true" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Title6Style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/location" />
+
+                    <TextView
+                        android:id="@+id/fragment_property_details_address_text_view"
+                        style="@style/BodyTextWithIconStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:address_first="@{viewModel.propertyWithPhotos.property.addressFirst}"
+                        app:address_second="@{viewModel.propertyWithPhotos.property.addressSecond}"
+                        app:city="@{viewModel.propertyWithPhotos.property.city}"
+                        app:zip_code="@{viewModel.propertyWithPhotos.property.zipCode}"
+                        map:drawableStartCompat="@drawable/ic_baseline_location_24" />
+
+                    <androidx.fragment.app.FragmentContainerView
+                        android:id="@+id/fragment_property_details_map_container"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="@dimen/default_big_margin"
+                        map:liteMode="true" />
+                </LinearLayout>
+
             </LinearLayout>
+        </ScrollView>
 
-        </LinearLayout>
-    </ScrollView>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fragment_property_details_modification_fab"
+            style="@style/FabStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/modification_button"
+            android:src="@drawable/ic_baseline_edit_24"
+            app:layout_anchor="@+id/fragment_property_details_scroll_view" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fragment_property_details_modification_fab"
-        style="@style/FabStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/modification_button"
-        android:src="@drawable/ic_baseline_edit_24"
-        app:layout_anchor="@+id/fragment_property_details_scroll_view" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout></layout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
