@@ -436,7 +436,7 @@
                             android:layout_marginBottom="@dimen/default_small_margin"
                             android:layout_weight="30"
                             android:enabled="@{viewModel.propertySearch.isSold()}"
-                            android:text="@{viewModel.propertySearch.minSaleTimestamp != null ? Converter.formatTimestamp(viewModel.propertySearch.minSaleTimestamp) : @string/sold_before}"
+                            android:text="@{viewModel.propertySearch.minSaleTimestamp != null ? Converter.formatTimestamp(viewModel.propertySearch.minSaleTimestamp) : @string/sold_after}"
                             android:textSize="12sp" />
 
                         <com.google.android.material.button.MaterialButton

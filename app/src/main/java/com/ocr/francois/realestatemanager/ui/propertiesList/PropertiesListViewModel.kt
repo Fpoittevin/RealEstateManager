@@ -1,20 +1,18 @@
 package com.ocr.francois.realestatemanager.ui.propertiesList
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.*
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 import com.ocr.francois.realestatemanager.repositories.CurrencyRepository
 import com.ocr.francois.realestatemanager.repositories.PropertyRepository
-import com.ocr.francois.realestatemanager.ui.base.BaseCurrencyViewModel
 import com.ocr.francois.realestatemanager.ui.propertySearch.PropertySearch
+import com.ocr.francois.realestatemanager.utils.Currency
 
 class PropertiesListViewModel(
     private val propertyRepository: PropertyRepository,
     private val currencyRepository: CurrencyRepository
-) : BaseCurrencyViewModel(currencyRepository) {
+) : ViewModel() {
 
+    private lateinit var currency: Currency
     val currencyLiveData = currencyRepository.getCurrencyLiveData()
     var propertySearchLiveData = MutableLiveData<PropertySearch?>().apply {
         postValue(null)

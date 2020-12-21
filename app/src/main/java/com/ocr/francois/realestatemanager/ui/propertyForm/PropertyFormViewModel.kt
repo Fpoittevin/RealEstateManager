@@ -3,6 +3,7 @@ package com.ocr.francois.realestatemanager.ui.propertyForm
 import android.net.Uri
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ocr.francois.realestatemanager.models.Photo
 import com.ocr.francois.realestatemanager.models.Property
@@ -10,7 +11,6 @@ import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
 import com.ocr.francois.realestatemanager.repositories.CurrencyRepository
 import com.ocr.francois.realestatemanager.repositories.PhotoRepository
 import com.ocr.francois.realestatemanager.repositories.PropertyRepository
-import com.ocr.francois.realestatemanager.ui.base.BaseCurrencyViewModel
 import com.ocr.francois.realestatemanager.utils.Currency
 import com.ocr.francois.realestatemanager.utils.ImageUtil
 import com.ocr.francois.realestatemanager.utils.Utils
@@ -22,7 +22,7 @@ class PropertyFormViewModel(
     currencyRepository: CurrencyRepository,
     private val photoRepository: PhotoRepository
 
-) : BaseCurrencyViewModel(currencyRepository) {
+) : ViewModel() {
 
     var propertyWithPhotosLiveData = MediatorLiveData<PropertyWithPhotos>().apply {
         value = PropertyWithPhotos(
@@ -139,7 +139,7 @@ class PropertyFormViewModel(
                 clear()
                 photosListLiveData.value?.let { addAll(it) }
             }
-            if(currencyLiveData.value == Currency.EURO) {
+            if (currencyLiveData.value == Currency.EURO) {
                 property.price?.let {
                     property.price = Utils.convertEuroToDollar(it)
                 }

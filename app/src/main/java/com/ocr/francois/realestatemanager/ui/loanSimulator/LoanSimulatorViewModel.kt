@@ -3,14 +3,13 @@ package com.ocr.francois.realestatemanager.ui.loanSimulator
 import android.view.View
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.ocr.francois.realestatemanager.repositories.CurrencyRepository
-import com.ocr.francois.realestatemanager.ui.base.BaseCurrencyViewModel
+import com.ocr.francois.realestatemanager.utils.Currency
 import com.ocr.francois.realestatemanager.utils.Utils
 import kotlin.math.pow
 
-class LoanSimulatorViewModel(currencyRepository: CurrencyRepository) : BaseCurrencyViewModel(
-    currencyRepository
-), View.OnClickListener {
+class LoanSimulatorViewModel(currencyRepository: CurrencyRepository) : ViewModel(), View.OnClickListener {
     val priceLiveData = MutableLiveData<String>()
     private var price: Double? = null
     val contributionLiveData = MutableLiveData<String>()
@@ -24,6 +23,7 @@ class LoanSimulatorViewModel(currencyRepository: CurrencyRepository) : BaseCurre
 
     private val monthlyPaymentLiveData = MutableLiveData<Double>()
     private val loanPriceLiveData = MutableLiveData<Double>()
+    private lateinit var currency: Currency
 
     val haveResultToDisplay = MutableLiveData<Boolean>().apply { value = false }
 

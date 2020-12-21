@@ -3,7 +3,6 @@ package com.ocr.francois.realestatemanager.ui.mapView
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
 import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.databinding.ActivityMapViewBinding

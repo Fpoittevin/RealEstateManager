@@ -1,12 +1,12 @@
 package com.ocr.francois.realestatemanager.ui.settings
 
+import androidx.lifecycle.ViewModel
 import com.ocr.francois.realestatemanager.repositories.CurrencyRepository
-import com.ocr.francois.realestatemanager.ui.base.BaseCurrencyViewModel
 import com.ocr.francois.realestatemanager.utils.Currency
 
 class SettingsViewModel(
     private val currencyRepository: CurrencyRepository
-) : BaseCurrencyViewModel(currencyRepository) {
+) : ViewModel() {
 
     val currencyLiveData = currencyRepository.getCurrencyLiveData()
 

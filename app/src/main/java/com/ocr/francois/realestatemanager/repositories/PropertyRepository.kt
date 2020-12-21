@@ -7,7 +7,6 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
 import androidx.work.*
 import com.google.android.gms.maps.model.LatLngBounds
-import com.ocr.francois.realestatemanager.R
 import com.ocr.francois.realestatemanager.database.dao.PropertyDao
 import com.ocr.francois.realestatemanager.models.Property
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
@@ -96,18 +95,14 @@ class PropertyRepository(private val propertyDao: PropertyDao, private val conte
 
             //  Price
             propertySearch.minMaxPrice[0]?.let {
-                if (it != context.resources.getIntArray(R.array.initial_price_slider_values)[0]) {
-                    addWhereOrAnd()
-                    append("price >= ?")
-                    args.add(it)
-                }
+                addWhereOrAnd()
+                append("price >= ?")
+                args.add(it)
             }
             propertySearch.minMaxPrice[1]?.let {
-                if (it != context.resources.getIntArray(R.array.initial_price_slider_values)[1]) {
-                    addWhereOrAnd()
-                    append("price <= ?")
-                    args.add(it)
-                }
+                addWhereOrAnd()
+                append("price <= ?")
+                args.add(it)
             }
 
             //  Surface
@@ -133,12 +128,12 @@ class PropertyRepository(private val propertyDao: PropertyDao, private val conte
                 append("numberOfRooms <= ?")
                 args.add(it)
             }
-            propertySearch.minMaxBathrooms[0]?.let  {
+            propertySearch.minMaxBathrooms[0]?.let {
                 addWhereOrAnd()
                 append("numberOfBathrooms >= ?")
                 args.add(it)
             }
-            propertySearch.minMaxBathrooms[1]?.let  {
+            propertySearch.minMaxBathrooms[1]?.let {
                 addWhereOrAnd()
                 append("numberOfBathrooms <= ?")
                 args.add(it)

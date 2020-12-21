@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">RealEstateManager</string>
 
-    <string name="google_geocode_base_url">https://maps.google.com/maps/api/geocode/</string>
-
     // NOTIFICATION
     <string name="notification_title">Real Estate Manager</string>
     <string name="notification_text">A new property has been added</string>
@@ -44,13 +42,13 @@
     <string name="all">all</string>
     <string name="for_sale">for sale</string>
     <string name="no_property">no property</string>
+    <string name="select_property_from_list">select a property from the list to see details</string>
 
     // PREFERENCES
     <string name="preferences_file_key">rem_preference</string>
 
     // ALERTS
     <string name="unknown_error_message">an unknown error occurred</string>
-    <string name="form_not_completed_error">some required fields are not filled in</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
@@ -63,14 +61,9 @@
 
     // FORMS
     <string name="required_info">* required</string>
-    <string name="required_field">this field is required</string>
-    <string name="photo_description_error">each photo must have a description</string>
 
     // INFORMATION
     <string name="sold">sold</string>
-    <string name="rooms_with_number">%1$d rooms</string>
-    <string name="bathrooms_with_number">%1$d bathrooms</string>
-    <string name="bedrooms_with_number">%1$d bedrooms</string>
 
     // NAVIGATION
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -110,7 +103,5 @@
     <string name="save_button">save button</string>
     <string name="gallery_photo">gallery photo</string>
     <string name="property_photo">property_photo</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

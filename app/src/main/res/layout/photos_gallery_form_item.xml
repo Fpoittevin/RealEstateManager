@@ -39,7 +39,7 @@
                     app:backgroundTint="@color/blackOpacity"
                     android:layout_margin="@dimen/default_margin"
                     app:icon="@drawable/ic_baseline_delete_24"
-                    app:drawableTint="@color/colorAccent"
+                    app:drawableTint="@color/secondaryColor"
                     app:layout_constraintEnd_toEndOf="@+id/photos_gallery_item_image_view"
                     app:layout_constraintTop_toTopOf="@+id/photos_gallery_item_image_view" />
             </androidx.constraintlayout.widget.ConstraintLayout>
