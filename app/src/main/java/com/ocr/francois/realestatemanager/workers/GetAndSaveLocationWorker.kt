@@ -40,23 +40,25 @@ class GetAndSaveLocationWorker(context: Context, params: WorkerParameters) :
                         ) {
                             response.body()?.let { body ->
                                 body.results?.let { results ->
-                                    val result = results[0]
+                                    if (results.isNotEmpty()) {
+                                        val result = results[0]
 
-                                    result.geometry?.let { geometry ->
-                                        geometry.location?.let { location ->
-                                            location.lat?.let { lat ->
-                                                location.lng?.let { lng ->
-                                                    val propertyRepository =
-                                                        Injection
-                                                            .providePropertyRepository(
-                                                                applicationContext
+                                        result.geometry?.let { geometry ->
+                                            geometry.location?.let { location ->
+                                                location.lat?.let { lat ->
+                                                    location.lng?.let { lng ->
+                                                        val propertyRepository =
+                                                            Injection
+                                                                .providePropertyRepository(
+                                                                    applicationContext
+                                                                )
+                                                        GlobalScope.launch {
+                                                            propertyRepository.saveLocation(
+                                                                propertyId,
+                                                                lat,
+                                                                lng
                                                             )
-                                                    GlobalScope.launch {
-                                                        propertyRepository.saveLocation(
-                                                            propertyId,
-                                                            lat,
-                                                            lng
-                                                        )
+                                                        }
                                                     }
                                                 }
                                             }
