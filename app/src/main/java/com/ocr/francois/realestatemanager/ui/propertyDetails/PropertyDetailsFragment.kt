@@ -1,6 +1,7 @@
 package com.ocr.francois.realestatemanager.ui.propertyDetails
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,6 +68,7 @@ class PropertyDetailsFragment : Fragment(), OnMapReadyCallback {
 
         arguments?.let {
             val propertyId = it.getLong(PROPERTY_ID_KEY)
+            Log.e("id", it.getLong(PROPERTY_ID_KEY).toString())
 
             propertyDetailsViewModel.getPropertyWithPhotos(propertyId)
             binding.fragmentPropertyDetailsModificationFab.setOnClickListener {

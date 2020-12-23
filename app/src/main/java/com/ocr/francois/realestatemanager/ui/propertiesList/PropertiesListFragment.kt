@@ -59,9 +59,9 @@ class PropertiesListFragment : Fragment() {
             propertyIdSelectedLiveData.observe(viewLifecycleOwner, {
                 with(propertiesAdapter) {
                     updatePropertySelected(it)
-                    itemSelectedPosition?.let { position ->
+                    /*itemSelectedPosition?.let { position ->
                         recyclerView.scrollToPosition(position)
-                    }
+                    }*/
                 }
             })
         }

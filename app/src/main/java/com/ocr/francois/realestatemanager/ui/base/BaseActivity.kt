@@ -17,10 +17,13 @@ import org.greenrobot.eventbus.Subscribe
 open class BaseActivity : AppCompatActivity() {
 
     fun displayFragment(layoutId: Int, fragment: Fragment) {
+
         supportFragmentManager
             .beginTransaction()
             .replace(layoutId, fragment)
             .commit()
+
+
     }
 
     override fun onStart() {

@@ -145,11 +145,12 @@ class MainActivity : BaseActivity(),
     }
 
     private fun showPropertyDetails(propertyId: Long) {
-        binding.activityMainSelectTextView?.let{
+        binding.activityMainSelectTextView?.let {
             it.visibility = View.GONE
         }
         binding.activityMainFrameLayoutSecond?.let {
             propertiesListViewModel.propertyIdSelectedLiveData.value = propertyId
+
             displayFragment(
                 R.id.activity_main_frame_layout_second,
                 PropertyDetailsFragment.newInstance(propertyId, this)
@@ -160,7 +161,7 @@ class MainActivity : BaseActivity(),
     }
 
     private fun showMapView() {
-        binding.activityMainSelectTextView?.let{
+        binding.activityMainSelectTextView?.let {
             it.visibility = View.GONE
         }
         binding.activityMainFrameLayoutSecond?.let {

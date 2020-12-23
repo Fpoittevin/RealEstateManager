@@ -65,6 +65,9 @@ interface PropertyDao {
     @Update
     suspend fun updateProperty(property: Property)
 
+    @Delete
+    fun deleteProperty(property: Property)
+
     @Query("DELETE FROM Photo WHERE propertyId= :propertyId")
     fun deletePhotosOfProperty(propertyId: Long)
 }
