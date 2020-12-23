@@ -8,6 +8,7 @@
     // TITLES
     <string name="settings">Settings</string>
     <string name="search">Search</string>
+    <string name="refresh">Refresh</string>
     <string name="creation">Creation</string>
     <string name="modification">Modification</string>
     <string name="map">Map</string>
