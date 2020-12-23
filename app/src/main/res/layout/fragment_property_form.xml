@@ -435,7 +435,6 @@
             android:id="@+id/fragment_property_form_save_fab"
             style="@style/FabStyle"
             android:contentDescription="@string/save_button"
-            android:enabled="@{viewModel.isFormValid()}"
             android:src="@drawable/ic_baseline_save_24"
             app:layout_anchor="@+id/fragment_property_form_scroll_view" />
 

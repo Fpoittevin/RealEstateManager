@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -121,14 +122,24 @@ class PropertyFormFragment : Fragment() {
 
     private fun configureSaveButton() {
         binding.fragmentPropertyFormSaveFab.setOnClickListener {
-            when (formTarget) {
-                FormTarget.CREATION -> {
-                    propertyFormViewModel.createPropertyWithPhotos(NotificationSender(requireContext()))
+            propertyFormViewModel.isFormValid.value?.let {
+                if (it) {
+                    when (formTarget) {
+                        FormTarget.CREATION -> {
+                            propertyFormViewModel.createPropertyWithPhotos(
+                                NotificationSender(
+                                    requireContext()
+                                )
+                            )
+                        }
+                        FormTarget.MODIFICATION ->
+                            propertyFormViewModel.updatePropertyWithPhotos()
+                    }
+                    activity?.finish()
+                } else {
+                    Toast.makeText(requireContext(), getString(R.string.required_fields_error), Toast.LENGTH_SHORT).show()
                 }
-                FormTarget.MODIFICATION ->
-                    propertyFormViewModel.updatePropertyWithPhotos()
             }
-            activity?.finish()
         }
     }
 }

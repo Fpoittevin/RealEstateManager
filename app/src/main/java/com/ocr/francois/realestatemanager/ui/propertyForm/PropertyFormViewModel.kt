@@ -46,6 +46,7 @@ class PropertyFormViewModel(
     private var isAddressChanged = false
 
     val isFormValid = MediatorLiveData<Boolean>().apply {
+        value = false
         addSource(isPhotosListValid) {
             value = areRequiredFieldsCompleted.value?.let { areRequiredFieldsCompleted ->
                 areRequiredFieldsCompleted && it

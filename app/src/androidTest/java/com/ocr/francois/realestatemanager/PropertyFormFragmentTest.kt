@@ -4,16 +4,14 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ocr.francois.realestatemanager.models.Photo
 import com.ocr.francois.realestatemanager.models.Property
+import com.ocr.francois.realestatemanager.testUtils.LiveDataTestUtil
 import com.ocr.francois.realestatemanager.ui.propertyCreation.PropertyCreationActivity
 import com.ocr.francois.realestatemanager.ui.propertyForm.PropertyFormViewModel
-import org.hamcrest.CoreMatchers.not
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -53,47 +51,40 @@ class PropertyFormFragmentTest {
             propertyFormViewModel = activity.propertyFormFragment.propertyFormViewModel
         }
 
-        onView(withId(R.id.fragment_property_form_save_fab))
-            .check(matches(not(isEnabled())))
+        assertFalse(formIsValid())
 
         onView(withId(R.id.fragment_property_form_type_text_input))
             .perform(replaceText(property.type))
 
-        onView(withId(R.id.fragment_property_form_save_fab))
-            .check(matches(not(isEnabled())))
+        assertFalse(formIsValid())
 
         onView(withId(R.id.fragment_property_form_price_text_input))
             .perform(replaceText(property.price.toString()))
 
-        onView(withId(R.id.fragment_property_form_save_fab))
-            .check(matches(not(isEnabled())))
+        assertFalse(formIsValid())
 
         onView(withId(R.id.fragment_property_form_surface_text_input))
             .perform(replaceText(property.surface.toString()))
 
-        onView(withId(R.id.fragment_property_form_save_fab))
-            .check(matches(not(isEnabled())))
+        assertFalse(formIsValid())
 
         onView(withId(R.id.fragment_property_form_address_first_text_input))
             .perform(scrollTo())
             .perform(replaceText(property.addressFirst))
 
-        onView(withId(R.id.fragment_property_form_save_fab))
-            .check(matches(not(isEnabled())))
+        assertFalse(formIsValid())
 
         onView(withId(R.id.fragment_property_form_zip_code_text_input))
             .perform(scrollTo())
             .perform(replaceText(property.zipCode))
 
-        onView(withId(R.id.fragment_property_form_save_fab))
-            .check(matches(not(isEnabled())))
+        assertFalse(formIsValid())
 
         onView(withId(R.id.fragment_property_form_city_text_input))
             .perform(scrollTo())
             .perform(replaceText(property.city))
 
-        onView(withId(R.id.fragment_property_form_save_fab))
-            .check(matches(isEnabled()))
+        assertTrue(formIsValid())
 
         onView(withId(R.id.fragment_property_form_estate_agent_text_input))
             .perform(scrollTo())
@@ -153,6 +144,12 @@ class PropertyFormFragmentTest {
             assertEquals(it.nearShops, property.nearShops)
             assertEquals(it.nearParks, property.nearParks)
         }
+    }
+
+    private fun formIsValid(): Boolean {
+        LiveDataTestUtil.getValue(propertyFormViewModel.isFormValid)?.let {
+            return it
+        } ?: return false
     }
 
     private val property = Property(
