@@ -9,6 +9,7 @@ import com.ocr.francois.realestatemanager.databinding.ActivityPropertyDetailsBin
 import com.ocr.francois.realestatemanager.injection.Injection
 import com.ocr.francois.realestatemanager.ui.base.BaseActivity
 import com.ocr.francois.realestatemanager.ui.propertyDetails.PropertyDetailsFragment.Companion.PROPERTY_ID_KEY
+import com.ocr.francois.realestatemanager.ui.propertyForm.PropertyFormFragment
 import com.ocr.francois.realestatemanager.ui.propertyModification.PropertyModificationActivity
 
 class PropertyDetailsActivity : BaseActivity(),
@@ -30,9 +31,9 @@ class PropertyDetailsActivity : BaseActivity(),
             lifecycleOwner = this@PropertyDetailsActivity
         }
 
-        propertyId = intent.getLongExtra(PROPERTY_ID_KEY, 1)
         configureToolbar(binding.activityPropertyDetailsToolbar, true)
 
+        propertyId = intent.getLongExtra(PropertyFormFragment.PROPERTY_ID_KEY, 1)
         displayFragment(
             R.id.activity_details_frame_layout,
             PropertyDetailsFragment.newInstance(propertyId!!, this)

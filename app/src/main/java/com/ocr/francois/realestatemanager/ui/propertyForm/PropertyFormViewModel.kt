@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.ocr.francois.realestatemanager.models.Photo
 import com.ocr.francois.realestatemanager.models.Property
 import com.ocr.francois.realestatemanager.models.PropertyWithPhotos
+import com.ocr.francois.realestatemanager.notification.NotificationSender
 import com.ocr.francois.realestatemanager.repositories.CurrencyRepository
 import com.ocr.francois.realestatemanager.repositories.PhotoRepository
 import com.ocr.francois.realestatemanager.repositories.PropertyRepository
@@ -99,14 +100,17 @@ class PropertyFormViewModel(
         }
     }
 
-    fun createPropertyWithPhotos() {
+    fun createPropertyWithPhotos(notificationSender: NotificationSender) {
         val propertyWithPhotos = generateDataBeforeSave()?.apply {
             property.creationTimestamp = Utils.getTodayTimestamp()
         }
 
         viewModelScope.launch(Dispatchers.IO) {
-            if (propertyWithPhotos != null) {
-                propertyRepository.insertPropertyWithPhotos(propertyWithPhotos)
+            propertyWithPhotos?.let {
+                propertyRepository.insertPropertyWithPhotos(it)
+                it.property.id?.let{ propertyId ->
+                    notificationSender.sendNotification(propertyId)
+                }
             }
         }
     }

@@ -56,6 +56,13 @@ class MainActivity : BaseActivity(),
             lifecycleOwner = this@MainActivity
         }
 
+        intent.extras?.let {
+            if (it.containsKey(PROPERTY_ID_KEY)) {
+                val propertyId = it.getLong(PROPERTY_ID_KEY)
+                showPropertyDetails(propertyId)
+            }
+        }
+
         configureToolbar(binding.activityMainToolbar, false)
         configureDrawerLayout()
         configureNavigationView()
@@ -145,6 +152,7 @@ class MainActivity : BaseActivity(),
     }
 
     private fun showPropertyDetails(propertyId: Long) {
+
         binding.activityMainSelectTextView?.let {
             it.visibility = View.GONE
         }
@@ -187,7 +195,8 @@ class MainActivity : BaseActivity(),
         when (item.itemId) {
             R.id.main_activity_toolbar_menu_creation_button -> startPropertyCreationActivity()
             R.id.main_activity_toolbar_menu_filter_button -> startPropertySearchActivity()
-            R.id.main_activity_toolbar_menu_refresh_button -> propertiesListViewModel.propertySearchLiveData.value = null
+            R.id.main_activity_toolbar_menu_refresh_button -> propertiesListViewModel.propertySearchLiveData.value =
+                null
         }
         return super.onOptionsItemSelected(item)
     }
