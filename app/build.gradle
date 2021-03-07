@@ -26,12 +26,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            buildConfigField "String", "GOOGLE_API_KEY", "\"AIzaSyAF9UHLhqtzUeWQ3HdbMQmV6xkTLYJrYCc\""
-            resValue("string", "google_api_key", "AIzaSyAF9UHLhqtzUeWQ3HdbMQmV6xkTLYJrYCc")
+            buildConfigField "String", "GOOGLE_API_KEY", "\"XXXXX\""
+            resValue("string", "google_api_key", "XXXXX")
         }
         debug {
-            buildConfigField "String", "GOOGLE_API_KEY", "\"AIzaSyAF9UHLhqtzUeWQ3HdbMQmV6xkTLYJrYCc\""
-            resValue("string", "google_api_key", "AIzaSyAF9UHLhqtzUeWQ3HdbMQmV6xkTLYJrYCc")
+            buildConfigField "String", "GOOGLE_API_KEY", "\"XXXXX\""
+            resValue("string", "google_api_key", "XXXXX")
         }
     }
 

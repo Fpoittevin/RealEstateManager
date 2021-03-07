@@ -1,7 +1,6 @@
 package com.ocr.francois.realestatemanager.repositories
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery

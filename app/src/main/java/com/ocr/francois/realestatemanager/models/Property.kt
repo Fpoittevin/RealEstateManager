@@ -33,5 +33,5 @@ data class Property(
     var nearParks: Boolean = false,
 
     var lat: Double? = null,
-    var lng: Double? = null,
+    var lng: Double? = null
 )
