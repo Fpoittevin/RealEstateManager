@@ -3,6 +3,10 @@
 ## Presentation
 Real estate manager is a real estate management application for real estate agents. It allows you to display the list of properties on offer, to view their details (price, surface area, sold or not, location, photos), and also to see the properties around you on a Google Maps via geolocation.
 
+## Requirements
+
+This application run on the API 19 or more.
+
 ## Installation
 
 * Clone or Download the project from https://github.com/Fpoittevin/RealEstateManager.git
